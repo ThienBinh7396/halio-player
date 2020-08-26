@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="dimen_24">24dp</dimen>
+  <dimen name="splash_logo_width_size">184dp</dimen>
+  <dimen name="splash_logo_font_size">12sp</dimen>
+  <dimen name="splash_logo_font_size__sm">184dp</dimen>
+  <dimen name="dimen_4">4dp</dimen>
+</resources>
