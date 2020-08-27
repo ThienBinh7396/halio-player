@@ -7,6 +7,7 @@
   tools:context=".MainActivity">
 
   <TextView
+    android:id="@+id/greeting_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Hello World!"
@@ -14,5 +15,34 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
+
+
+  <Button
+    android:id="@+id/play"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Play music"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/greeting_text" />
+
+
+  <Button
+    android:id="@+id/toggle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Toggle State"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/play" />
+
+  <Button
+    android:id="@+id/next"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="N music"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toggle" />
 
 </android.support.constraint.ConstraintLayout>
