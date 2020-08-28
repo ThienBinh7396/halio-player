@@ -1,5 +1,6 @@
 package com.thienbinh.halioplayer.service
 
+import android.app.Notification
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -14,6 +15,10 @@ import android.os.PowerManager
 import android.util.Log
 import android.widget.Toast
 import com.thienbinh.halioplayer.constant.*
+import com.thienbinh.halioplayer.model.Music
+import com.thienbinh.halioplayer.notification.MusicInterfaceNotification
+import com.thienbinh.halioplayer.store
+import com.thienbinh.halioplayer.store.action.MusicAction
 import java.lang.Error
 import java.util.*
 import java.util.concurrent.ScheduledExecutorService
@@ -34,7 +39,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
   private var scheduledFuture: ScheduledFuture<*>? = null
 
-  private val TIME_DELAY = 5000L
+  private val TIME_DELAY = 500L
 
   override fun onCreate() {
     super.onCreate()
@@ -65,8 +70,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     intent?.apply {
       when (action) {
         ACTION_MUSIC_UPDATE -> {
-          updateSourceMediaFromIntent(context, this)
-          mMediaPlayer!!.prepareAsync()
+          val checkDataReceiver = updateMusicFromIntent(context, this)
+          if (checkDataReceiver) mMediaPlayer!!.prepareAsync()
         }
 
         ACTION_MUSIC_TOGGLE -> {
@@ -96,30 +101,31 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     }
   }
 
-  private fun updateSourceMediaFromIntent(context: Context?, intent: Intent) {
-    val type = intent.getIntExtra(ACTION_MUSIC_TYPE_SOURCE, 0)
-    val data = intent.getStringExtra(ACTION_MUSIC_SOURCE_DATA)
+  private fun updateMusicFromIntent(context: Context?, intent: Intent): Boolean {
+    val bundle = intent.getBundleExtra(ACTION_MUSIC_DATA_BUNDLE)
+    val data = bundle?.getSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC)
 
     try {
-      when (type) {
-        EActionMusicTypeSource.FILE_FROM_ASSETS.ordinal -> {
-          val assetFileDescriptor = assets.openFd(data!!)
-          mMediaPlayer!!.reset()
-          mMediaPlayer!!.setDataSource(
-            assetFileDescriptor.fileDescriptor,
-            assetFileDescriptor.startOffset,
-            assetFileDescriptor.length
-          )
-        }
-        EActionMusicTypeSource.URI.ordinal -> {
+      if (data is Music) {
+        val assetFileDescriptor = assets.openFd(data.href)
+        mMediaPlayer!!.reset()
+        mMediaPlayer!!.setDataSource(
+          assetFileDescriptor.fileDescriptor,
+          assetFileDescriptor.startOffset,
+          assetFileDescriptor.length
+        )
 
-        }
+        store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_CURRENT_MUSIC(data))
+
+        return true
       }
+
     } catch (err: Error) {
       context?.apply {
         Toast.makeText(this, err.message, Toast.LENGTH_SHORT).show()
       }
     }
+    return false
   }
 
   private fun initializeMediaPlayer() {
@@ -170,8 +176,17 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     pauseScheduleWhenMusicStop()
 
+    store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(true))
+
     scheduledFuture = mScheduledExecutorService!!.scheduleWithFixedDelay({
-      Log.d("Binh", "Time update: ${mMediaPlayer?.currentPosition}")
+//      Log.d("Binh", "Time update: ${mMediaPlayer?.currentPosition}")
+      store.dispatch(
+        MusicAction.MUSIC_ACTION_UPDATE_CURRENT_POSITION(
+          mMediaPlayer?.currentPosition ?: 0
+        )
+      )
+
+      MusicInterfaceNotification.showNotification(applicationContext)
     }, TIME_DELAY, TIME_DELAY, TimeUnit.MILLISECONDS)
   }
 
@@ -179,6 +194,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     if (scheduledFuture != null) {
       scheduledFuture!!.cancel(true)
     }
+    store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(false))
   }
 
   override fun onPrepared(p0: MediaPlayer?) {

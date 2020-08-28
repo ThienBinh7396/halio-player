@@ -1,8 +1,10 @@
 package com.thienbinh.halioplayer.store.state
 
+import com.thienbinh.halioplayer.model.Music
 import org.rekotlin.StateType
 
-class MusicState(
-  totalDuration: Int = 0,
-  currentPosition: Int = 0
+data class MusicState(
+  var isPlaying: Boolean = false,
+  var currentMusic: Music? = null,
+  var currentPosition: Int = 0
 ) : StateType

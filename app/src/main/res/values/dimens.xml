@@ -5,4 +5,10 @@
   <dimen name="splash_logo_font_size">12sp</dimen>
   <dimen name="splash_logo_font_size__sm">184dp</dimen>
   <dimen name="dimen_4">4dp</dimen>
+
+  <dimen name="notification_interface_music_container_padding_horizontal">12dp</dimen>
+  <dimen name="notification_interface_music_image_size">48dp</dimen>
+  <dimen name="notification_interface_music_background_radius">4dp</dimen>
+  <dimen name="notification_interface_music_image_size__sm">42dp</dimen>
+  <dimen name="dimen_8">8dp</dimen>
 </resources>

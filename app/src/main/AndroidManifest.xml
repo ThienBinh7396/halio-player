@@ -6,10 +6,11 @@
   <uses-permission android:name="android.permission.WAKE_LOCK" />
 
   <application
+    android:name=".MainApplication"
     android:allowBackup="true"
-    android:icon="@mipmap/ic_launcher"
+    android:icon="@drawable/logo_sm"
     android:label="@string/app_name"
-    android:roundIcon="@mipmap/ic_launcher_round"
+    android:roundIcon="@drawable/logo_sm"
     android:supportsRtl="true"
     android:theme="@style/MainTheme">
     <activity android:name=".SplashActivity">

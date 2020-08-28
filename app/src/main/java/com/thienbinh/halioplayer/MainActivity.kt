@@ -1,14 +1,15 @@
 package com.thienbinh.halioplayer
 
+import android.app.Activity
 import android.content.Intent
 import android.media.MediaPlayer
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.thienbinh.halioplayer.constant.*
+import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.service.MusicService
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
@@ -20,8 +21,13 @@ class MainActivity : AppCompatActivity() {
 
     play.setOnClickListener {
       val intent = Intent()
+
+      val bundle = Bundle()
+      bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, Music.getMusicById(1))
+
       intent.action = ACTION_MUSIC_UPDATE
-      intent.putExtra(ACTION_MUSIC_SOURCE_DATA, "file_small.mp3")
+      intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
+
       sendBroadcast(intent)
     }
 
@@ -30,16 +36,9 @@ class MainActivity : AppCompatActivity() {
       intent.action = ACTION_MUSIC_TOGGLE
       sendBroadcast(intent)
     }
-
-    next.setOnClickListener {
-      val intent = Intent()
-      intent.action = ACTION_MUSIC_UPDATE
-      intent.putExtra(ACTION_MUSIC_SOURCE_DATA, "let_me_down_slowly.mp3")
-      sendBroadcast(intent)
-    }
   }
 
-  private fun startMusicService(){
+  private fun startMusicService() {
     val intent = Intent(this@MainActivity, MusicService::class.java)
     intent.action = ACTION_MUSIC_INITIALIZE
     startService(intent)

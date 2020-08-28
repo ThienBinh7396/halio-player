@@ -1,6 +1,8 @@
 package com.thienbinh.halioplayer.model
 
-class Genre(var id: Int, var title: String, var thumbnail: String) {
+import java.io.Serializable
+
+class Genre(var id: Int, var title: String, var thumbnail: String) : Serializable {
   companion object {
     private var instance: MutableList<Genre>? = null
 
