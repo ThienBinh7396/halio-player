@@ -91,5 +91,16 @@
     android:layout_height="2dp"
     android:layout_alignParentTop="true"
     android:max="100"
-    android:progressDrawable="@drawable/notification_interface_music_progressbar_background" />
+    android:progressDrawable="@drawable/music_progressbar_background" />
+
+  <TextView
+    android:id="@+id/tvCurrentDuration"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentEnd="true"
+    android:layout_marginTop="@dimen/dimen_4"
+    android:layout_marginEnd="@dimen/dimen_12"
+    android:textColor="@color/textColor"
+    android:textSize="@dimen/font_size__sm" />
 </RelativeLayout>

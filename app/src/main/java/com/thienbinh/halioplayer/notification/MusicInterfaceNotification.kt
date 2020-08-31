@@ -2,8 +2,10 @@ package com.thienbinh.halioplayer.notification
 
 import android.app.Notification
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
@@ -17,7 +19,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.NotificationTarget
 import com.thienbinh.halioplayer.GlideApp
 import com.thienbinh.halioplayer.R
+import com.thienbinh.halioplayer.constant.ACTION_MUSIC_TOGGLE
 import com.thienbinh.halioplayer.store
+import com.thienbinh.halioplayer.utils.Helper
 import com.thienbinh.halioplayer.utils.RotateImageTransformation
 
 class MusicInterfaceNotification {
@@ -37,8 +41,24 @@ class MusicInterfaceNotification {
         Notification.PRIORITY_MAX
       }
 
-    private fun onButtonNotificationClick(@IdRes id: Int) {
+    private var mContext: Context? = null
 
+    private fun onButtonNotificationClick(remoteViews: RemoteViews, @IdRes id: Int) {
+      if (mContext == null) return
+
+      val intent = Intent()
+      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+      var pendingIntent: PendingIntent? = null
+
+      when (id) {
+        R.id.btnToggleState -> {
+          intent.action = ACTION_MUSIC_TOGGLE
+          pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0)
+        }
+      }
+
+      remoteViews.setOnClickPendingIntent(id, pendingIntent)
     }
 
     private fun generateExpandLayout(context: Context): RemoteViews {
@@ -46,10 +66,9 @@ class MusicInterfaceNotification {
         RemoteViews(context.packageName, R.layout.notification_interface_music_large)
 
       store.state.musicState.apply {
-        Log.d(
-          "Binh",
-          "Music: $currentMusic $currentPosition ${(currentPosition / 10) / currentMusic!!.duration}"
-        )
+        onButtonNotificationClick(notificationLayout, R.id.btnToggleState)
+
+        notificationLayout.setTextViewText(R.id.tvCurrentDuration, Helper.formatMusicDuration(currentPosition.toLong()))
 
         notificationLayout.setTextViewText(R.id.tvTitle, currentMusic?.title)
         notificationLayout.setTextViewText(R.id.tvSinger, currentMusic?.singer)
@@ -70,8 +89,6 @@ class MusicInterfaceNotification {
     }
 
     fun showNotification(context: Context) {
-      Log.d("Binh", "Show notification")
-
       val notificationExpandLayout = generateExpandLayout(context)
 
       val notification =
@@ -81,6 +98,8 @@ class MusicInterfaceNotification {
           .setCustomContentView(notificationExpandLayout)
           .setPriority(MUSIC_INTERFACE_NOTIFICATION_CHANNEL_INPORTANCE)
           .build()
+
+      mContext = context
 
       notification.flags = Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR
 

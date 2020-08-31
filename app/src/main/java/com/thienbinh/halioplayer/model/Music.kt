@@ -55,6 +55,36 @@ class Music(
             )
           )
         )
+
+
+        /*List life sucks*/
+        instance!!.add(
+          Music(
+            2,
+            "Believe",
+            "https://i.scdn.co/image/ab67616d00001e0259099e2755405c06543f6ed0",
+            "Imagine Dragon",
+            "believer.mp3",
+            204,
+            mutableListOf(
+              Genre.getGenreById(2)!!
+            )
+          )
+        )
+
+        instance!!.add(
+          Music(
+            3,
+            "Hate u hate u",
+            "https://i.scdn.co/image/ab67616d00001e02f9a776c0d4ec78052c92882b",
+            "Olivia O'Brien",
+            "hate_u_hate_u.mp3",
+            178,
+            mutableListOf(
+              Genre.getGenreById(2)!!
+            )
+          )
+        )
       }
     }
   }

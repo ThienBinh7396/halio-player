@@ -6,7 +6,10 @@
   <color name="colorTransparent">#00000000</color>
 
   <color name="textColor">#a2a0ac</color>
+  <color name="textColorLight">#ebebeb</color>
+  <color name="textColorDarken">#cacaca</color>
   <color name="colorWhite">#fafafa</color>
 
   <color name="colorButtonDisabled">#1E1C1C</color>
+  <color name="bottom_layout_icon_default">#cad0de</color>
 </resources>

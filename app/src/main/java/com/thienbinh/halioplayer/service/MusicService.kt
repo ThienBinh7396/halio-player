@@ -75,6 +75,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         ACTION_MUSIC_TOGGLE -> {
+
+          Log.d("Binh", "Intent toggle")
           toggleStateMediaPlayer()
         }
       }
@@ -107,6 +109,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     try {
       if (data is Music) {
+
+        Log.d("Binh", "Data: $data")
         val assetFileDescriptor = assets.openFd(data.href)
         mMediaPlayer!!.reset()
         mMediaPlayer!!.setDataSource(
@@ -177,6 +181,8 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     pauseScheduleWhenMusicStop()
 
     store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(true))
+
+    MusicInterfaceNotification.showNotification(applicationContext)
 
     scheduledFuture = mScheduledExecutorService!!.scheduleWithFixedDelay({
 //      Log.d("Binh", "Time update: ${mMediaPlayer?.currentPosition}")

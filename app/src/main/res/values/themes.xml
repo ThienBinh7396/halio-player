@@ -3,5 +3,6 @@
     <style name="MainTheme" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background</item>
         <item name="android:textColor">@color/textColor</item>
+        <item name="fontFamily">@font/averta</item>
     </style>
 </resources>

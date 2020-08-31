@@ -6,7 +6,7 @@ class Genre(var id: Int, var title: String, var thumbnail: String) : Serializabl
   companion object {
     private var instance: MutableList<Genre>? = null
 
-    fun getInstance(): MutableList<Genre> {
+    private fun getInstance(): MutableList<Genre> {
       if (instance == null) {
         instance = mutableListOf(
           Genre(1, "Tâm trạng", "https://i.scdn.co/image/ab67706f00000002935d747bed47e6ae6e1bf0b8"),

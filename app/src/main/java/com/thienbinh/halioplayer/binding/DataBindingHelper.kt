@@ -13,6 +13,7 @@ class DataBindingHelper {
         GlideApp.with(imageView.context)
           .load(src)
           .centerCrop()
+          .circleCrop()
           .into(imageView)
       }
     }

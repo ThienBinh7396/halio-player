@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <variable
+      name="musicStoreViewModel"
+      type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
+  </data>
+
+  <RelativeLayout
+    android:id="@+id/bottom_music_sheet_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_music_sheet_layout_background"
+    android:clipToPadding="false"
+    android:orientation="vertical">
+
+    <RelativeLayout
+      android:id="@+id/collapsed_sheet_layout"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/bottom_music_sheet_min_height">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_music_sheet_collapsed_content_height"
+        android:orientation="horizontal"
+        android:padding="@dimen/bottom_music_sheet_padding">
+
+        <ImageView
+          android:id="@+id/imvThumbnail"
+          android:layout_width="@dimen/bottom_music_sheet_thumbnail_size"
+          android:layout_height="@dimen/bottom_music_sheet_thumbnail_size"
+          android:layout_gravity="center"
+          android:layout_marginEnd="@dimen/dimen_12"
+          android:scaleType="centerCrop"
+          android:src="@drawable/logo_sm"
+          app:bindCircleImage="@{musicStoreViewModel.music.thumbnail}" />
+
+        <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginEnd="@dimen/dimen_12"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+          <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/averta_extra"
+            android:freezesText="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@{musicStoreViewModel.music.title ?? `Music title`}"
+            android:textColor="@color/textColorLight"
+            android:textSize="16sp" />
+
+          <TextView
+            android:id="@+id/tvSinger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@{musicStoreViewModel.music.singer ?? `Music single`}"
+            android:textColor="@color/textColor"
+            android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:orientation="horizontal">
+
+          <ImageButton
+            android:id="@+id/btnPrevious"
+            android:layout_width="@dimen/notification_interface_music_button_control_size"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ripple_background_transparent_circle"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_previous"
+            android:tint="@color/textColorLight" />
+
+          <ImageButton
+            android:id="@+id/btnToggleState"
+            android:layout_width="@dimen/notification_interface_music_button_control_size__lg"
+            android:layout_height="@dimen/notification_interface_music_button_control_size__lg"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/dimen_10"
+            android:background="@drawable/ripple_background_transparent_circle"
+            android:onClick="@{() -> musicStoreViewModel.eventListener.onToggleButtonClickListener()}"
+            android:scaleType="fitXY"
+            android:src="@{musicStoreViewModel.isPlaying ?  @drawable/ic_baseline_pause_24 :  @drawable/ic_baseline_play_arrow_24 }"
+            android:tint="@color/textColorLight" />
+
+          <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="@dimen/notification_interface_music_button_control_size"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ripple_background_transparent_circle"
+            android:rotation="180"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_previous"
+            android:tint="@color/textColorLight" />
+        </LinearLayout>
+      </LinearLayout>
+
+      <ProgressBar
+        android:id="@+id/prbCurrentDuration"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentTop="true"
+        android:max="100"
+        android:progress="@{musicStoreViewModel.currentProgressText}"
+        android:progressDrawable="@drawable/music_progressbar_background" />
+    </RelativeLayout>
+
+    <LinearLayout
+      android:id="@+id/expanded_sheet_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_alignParentTop="true"
+      android:background="@drawable/bottom_music_sheet_layout_background"
+      android:translationY="@dimen/bottom_music_sheet_collapsed_content_height"
+      android:visibility="invisible">
+
+      <include
+        layout="@layout/expanded_sheet_now_playing_layout"
+        app:musicStoreViewModel="@{musicStoreViewModel}" />
+    </LinearLayout>
+  </RelativeLayout>
+</layout>

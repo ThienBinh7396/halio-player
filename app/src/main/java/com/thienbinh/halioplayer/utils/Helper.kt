@@ -7,6 +7,7 @@ class Helper {
   companion object {
     private val simpleDataFormatMusicDuration = SimpleDateFormat("mm:ss", Locale.US)
 
+    @JvmStatic
     fun formatMusicDuration(milliSec: Long): String {
       return simpleDataFormatMusicDuration.format(Date(milliSec))
     }

@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Halio Player</string>
+  <string name="app_name">Halio Player</string>
   <string name="website">lekanisaac.com</string>
   <string name="greeting_text">Crafted with love by ‘Lekan Isaac</string>
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="now_playing">Now Playing</string>
+  <string name="lyrics">Lyrics</string>
 </resources>
