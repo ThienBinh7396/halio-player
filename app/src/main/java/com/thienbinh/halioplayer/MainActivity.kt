@@ -95,6 +95,12 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener {
     startService(intent)
   }
 
+  override fun onBackPressed() {
+    if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED){
+      mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
+  }
+
   override fun onToggleButtonClickListener() {
     if (store.state.musicState.currentMusic == null) {
       startMusic()

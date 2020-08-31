@@ -28,6 +28,8 @@
   <dimen name="bottom_tab_layout_avatar_size">28dp</dimen>
   <dimen name="bottom_tab_layout_height">104dp</dimen>
 
+  <dimen name="bottom_music_sheet_icon_control_size">28dp</dimen>
+  <dimen name="bottom_music_sheet_icon_control_size__lg">32dp</dimen>
   <dimen name="bottom_music_sheet_thumbnail_size">44dp</dimen>
   <dimen name="bottom_music_sheet_padding">16dp</dimen>
   <dimen name="bottom_music_sheet_min_height">192dp</dimen>
@@ -38,4 +40,5 @@
   <dimen name="dimen_1">1dp</dimen>
   <dimen name="dimen_28">28dp</dimen>
   <dimen name="dimen_26">26dp</dimen>
+  <dimen name="dimen_18">18dp</dimen>
 </resources>
