@@ -195,6 +195,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
       scheduledFuture!!.cancel(true)
     }
     store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(false))
+    MusicInterfaceNotification.showNotification(applicationContext)
   }
 
   override fun onPrepared(p0: MediaPlayer?) {

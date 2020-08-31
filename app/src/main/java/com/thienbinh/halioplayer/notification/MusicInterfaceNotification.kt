@@ -55,7 +55,7 @@ class MusicInterfaceNotification {
         notificationLayout.setTextViewText(R.id.tvSinger, currentMusic?.singer)
         notificationLayout.setImageViewResource(
           R.id.btnToggleState,
-          if (isPlaying) R.drawable.ic_pause else R.drawable.ic_baseline_play_arrow_24
+          if (isPlaying) R.drawable.ic_baseline_pause_24 else R.drawable.ic_baseline_play_arrow_24
         )
 
         notificationLayout.setProgressBar(
