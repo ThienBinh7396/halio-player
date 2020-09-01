@@ -20,6 +20,13 @@
   <dimen name="dimen_10">10dp</dimen>
   <dimen name="dimen_6">6dp</dimen>
   <dimen name="dimen_12">12dp</dimen>
+  <dimen name="dimen_16">16dp</dimen>
+  <dimen name="dimen_20">20dp</dimen>
+  <dimen name="dimen_2">2dp</dimen>
+  <dimen name="dimen_1">1dp</dimen>
+  <dimen name="dimen_28">28dp</dimen>
+  <dimen name="dimen_26">26dp</dimen>
+  <dimen name="dimen_18">18dp</dimen>
 
   <dimen name="bottom_tab_layout_indicator_view_height">32dp</dimen>
   <dimen name="bottom_tab_layout_icon_container_height">72dp</dimen>
@@ -34,11 +41,8 @@
   <dimen name="bottom_music_sheet_padding">16dp</dimen>
   <dimen name="bottom_music_sheet_min_height">192dp</dimen>
   <dimen name="bottom_music_sheet_collapsed_content_height">88dp</dimen>
-  <dimen name="dimen_16">16dp</dimen>
-  <dimen name="dimen_20">20dp</dimen>
-  <dimen name="dimen_2">2dp</dimen>
-  <dimen name="dimen_1">1dp</dimen>
-  <dimen name="dimen_28">28dp</dimen>
-  <dimen name="dimen_26">26dp</dimen>
-  <dimen name="dimen_18">18dp</dimen>
+
+  <dimen name="bottom_music_sheet_expanded_now_playing_music_thumbnail_size">182dp</dimen>
+  <dimen name="bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size">208dp</dimen>
+
 </resources>

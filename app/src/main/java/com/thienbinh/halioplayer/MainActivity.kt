@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener {
 
         mActivityMainBinding.bottomMusicSheet.expandedSheetLayout.translationY =
           (1 - slideOffset) * expandedTotalTranslateY
-        Log.d("Binh", "Bottom sheet call ${bottomSheet.id} slide $slideOffset")
 
       }
     })

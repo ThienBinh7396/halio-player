@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+  android:shape="rectangle">
+  <solid android:color="#1B474444" />
+  <corners android:radius="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size" />
+</shape>

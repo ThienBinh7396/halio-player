@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -14,9 +15,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:cropToPadding="true"
+      android:foreground="@drawable/bottom_music_sheet_layout_background_with_alpha"
+      android:scaleType="centerCrop"
+      android:src="@drawable/song_bg"
+      app:bindGrayScale="@{true}"
+      tools:targetApi="m" />
+
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:translationZ="@dimen/dimen_1"
+      tools:targetApi="lollipop">
 
       <RelativeLayout
         android:layout_width="match_parent"
@@ -32,24 +45,54 @@
           android:paddingHorizontal="@dimen/dimen_24"
           android:text="@string/now_playing"
           android:textColor="@color/colorWhite"
-          android:textSize="26sp"
+          android:textSize="24sp"
           android:textStyle="bold" />
 
-        <ImageView
-          android:id="@+id/imvThumbnail"
-          android:layout_width="160dp"
-          android:layout_height="160dp"
+        <RelativeLayout
+          android:id="@+id/imvThumbnailWrapper"
+          android:layout_width="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
+          android:layout_height="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
           android:layout_below="@+id/now_playing"
           android:layout_centerHorizontal="true"
-          android:layout_marginTop="@dimen/dimen_26"
-          android:src="@drawable/music_thumbnail_large" />
+          android:layout_marginTop="@dimen/dimen_6"
+          android:layout_marginBottom="@dimen/dimen_10"
+          android:clipToPadding="false">
+
+          <View
+            android:layout_width="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
+            android:layout_height="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
+            android:layout_centerInParent="true"
+            android:alpha="0.2"
+            android:background="@drawable/black_mask_background_circle"
+            android:tag="unique_thumbnail_cover_expanded_sheet_now_playing"
+            app:bindScaleViewAnimation="@{musicStoreViewModel.isPlaying}" />
+
+          <ImageView
+            android:id="@+id/imvThumbnail"
+            android:layout_width="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_size"
+            android:layout_height="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_size"
+            android:layout_centerInParent="true"
+            android:cropToPadding="true"
+            android:foreground="@drawable/black_mask_background_circle"
+            android:tag="unique_thumbnail_expanded_sheet_now_playing"
+            app:bindCircleImage="@{musicStoreViewModel.music.thumbnail ?? @drawable/music_thumbnail_default}"
+            app:bindDarkenView="@{true}"
+            tools:targetApi="m" />
+
+          <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_play" />
+        </RelativeLayout>
 
         <TextView
           android:id="@+id/tvTitle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@+id/imvThumbnail"
-          android:layout_marginTop="@dimen/dimen_20"
+          android:layout_below="@+id/imvThumbnailWrapper"
+          android:fontFamily="@font/averta_extra"
           android:text="@{musicStoreViewModel.music.title ?? `Music Title`}"
           android:textAlignment="center"
           android:textColor="@color/colorWhite"
@@ -64,22 +107,47 @@
           android:layout_marginTop="@dimen/dimen_2"
           android:text="@{musicStoreViewModel.music.singer ?? `Music Singer`}"
           android:textAlignment="center"
-          android:textColor="@color/textColorDarken"
           android:textSize="12sp" />
 
-        <ImageView
-          android:id="@+id/imvEqualizer"
+        <RelativeLayout
+          android:id="@+id/imvEqualizerWrapper"
           android:layout_width="match_parent"
-          android:layout_height="68dp"
+          android:layout_height="wrap_content"
           android:layout_below="@+id/tvSinger"
-          android:layout_marginVertical="@dimen/dimen_20"
-          android:scaleType="centerCrop"
-          android:src="@drawable/equalizer" />
+          android:layout_marginTop="@dimen/dimen_20"
+          android:layout_marginBottom="@dimen/dimen_24">
+
+          <ImageView
+            android:id="@+id/imvEqualizer"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/equalizer" />
+
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dimen_24"
+            android:textSize="12sp"
+            app:bindMusicDurationText="@{musicStoreViewModel.currentPosition}" />
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:text="0:00"
+            android:textSize="12sp"
+            app:bindMusicDurationText="@{musicStoreViewModel.musicDuration }" />
+        </RelativeLayout>
 
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@+id/imvEqualizer"
+          android:layout_below="@+id/imvEqualizerWrapper"
           android:layout_gravity="center"
           android:orientation="horizontal"
           android:paddingHorizontal="@dimen/dimen_24">
@@ -93,11 +161,11 @@
               android:id="@+id/btnPrevious"
               android:layout_width="@dimen/bottom_music_sheet_icon_control_size"
               android:layout_height="@dimen/bottom_music_sheet_icon_control_size"
-              android:scaleType="fitCenter"
               android:layout_centerInParent="true"
               android:background="@drawable/ripple_background_transparent_circle"
+              android:scaleType="fitCenter"
               android:src="@drawable/ic_previous"
-              android:translationX="@dimen/dimen_4"/>
+              android:translationX="@dimen/dimen_4" />
           </RelativeLayout>
 
           <RelativeLayout
@@ -109,11 +177,11 @@
               android:id="@+id/btnToggleState"
               android:layout_width="@dimen/bottom_music_sheet_icon_control_size__lg"
               android:layout_height="@dimen/bottom_music_sheet_icon_control_size__lg"
-              android:scaleType="fitXY"
-              android:onClick="@{() -> musicStoreViewModel.eventListener.onToggleButtonClickListener() }"
               android:layout_centerInParent="true"
               android:layout_marginHorizontal="@dimen/dimen_10"
               android:background="@drawable/ripple_background_transparent_circle"
+              android:onClick="@{() -> musicStoreViewModel.eventListener.onToggleButtonClickListener() }"
+              android:scaleType="fitXY"
               android:src="@{musicStoreViewModel.isPlaying ?  @drawable/ic_baseline_pause_24 :  @drawable/ic_baseline_play_arrow_24 }" />
           </RelativeLayout>
 
@@ -126,12 +194,12 @@
               android:id="@+id/btnNext"
               android:layout_width="@dimen/bottom_music_sheet_icon_control_size"
               android:layout_height="@dimen/bottom_music_sheet_icon_control_size"
-              android:scaleType="fitCenter"
               android:layout_centerInParent="true"
               android:background="@drawable/ripple_background_transparent_circle"
               android:rotation="180"
+              android:scaleType="fitCenter"
               android:src="@drawable/ic_previous"
-              android:translationX="-4dp"/>
+              android:translationX="-4dp" />
           </RelativeLayout>
         </LinearLayout>
       </RelativeLayout>
@@ -147,14 +215,14 @@
       android:clickable="true"
       android:focusable="true"
       android:orientation="horizontal"
-      android:paddingBottom="@dimen/dimen_10">
+      android:paddingBottom="@dimen/dimen_6">
 
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lyrics"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
       <ImageView
@@ -162,7 +230,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/dimen_1"
-        android:layout_marginTop="@dimen/dimen_2"
+        android:scaleY="0.9"
         android:src="@drawable/ic_baseline_chevron_right_24" />
     </LinearLayout>
   </RelativeLayout>

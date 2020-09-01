@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -34,9 +35,14 @@
           android:layout_height="@dimen/bottom_music_sheet_thumbnail_size"
           android:layout_gravity="center"
           android:layout_marginEnd="@dimen/dimen_12"
+          android:foreground="@drawable/black_mask_background_circle"
           android:scaleType="centerCrop"
-          android:src="@drawable/logo_sm"
-          app:bindCircleImage="@{musicStoreViewModel.music.thumbnail}" />
+          android:src="@drawable/music_thumbnail_default"
+          android:tag="unique_imageView_thumbnail_bottom_music_sheet"
+          app:bindCircleImage="@{musicStoreViewModel.music.thumbnail}"
+          app:bindDarkenView="@{true}"
+          app:bindRotateViewAnimation="@{musicStoreViewModel.isPlaying}"
+          tools:targetApi="m" />
 
         <LinearLayout
           android:layout_width="0dp"

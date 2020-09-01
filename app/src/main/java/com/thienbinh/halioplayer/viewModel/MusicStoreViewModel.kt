@@ -32,6 +32,9 @@ class MusicStoreViewModel(private var musicControlEventListener: IMusicControlEv
   val music
     get() = mMusic
 
+  @Bindable
+  fun getMusicDuration() = if (mMusic?.duration != null) mMusic!!.duration * 1000 else 0
+
   @get:Bindable
   val currentPosition
     get() = mCurrentPosition
@@ -57,6 +60,8 @@ class MusicStoreViewModel(private var musicControlEventListener: IMusicControlEv
       notifyPropertyChanged(BR.currentProgressText)
       notifyPropertyChanged(BR.music)
       notifyPropertyChanged(BR.playing)
+      notifyPropertyChanged(BR.currentPosition)
+      notifyPropertyChanged(BR.musicDuration)
     }
   }
 }

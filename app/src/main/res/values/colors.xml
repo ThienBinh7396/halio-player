@@ -5,7 +5,7 @@
   <color name="colorAccent">#03DAC5</color>
   <color name="colorTransparent">#00000000</color>
 
-  <color name="textColor">#a2a0ac</color>
+  <color name="textColor">#999</color>
   <color name="textColorLight">#ebebeb</color>
   <color name="textColorDarken">#cacaca</color>
   <color name="colorWhite">#fafafa</color>
