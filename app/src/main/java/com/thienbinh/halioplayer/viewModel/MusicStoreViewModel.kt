@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.thienbinh.halioplayer.BR
+import com.thienbinh.halioplayer.MainActivity
+import com.thienbinh.halioplayer.customInterface.IMainActivityEventListener
 import com.thienbinh.halioplayer.customInterface.IMusicControlEventListener
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.store
@@ -11,7 +13,10 @@ import com.thienbinh.halioplayer.store.state.MusicState
 import com.thienbinh.halioplayer.utils.Helper
 import org.rekotlin.StoreSubscriber
 
-class MusicStoreViewModel(private var musicControlEventListener: IMusicControlEventListener) :
+class MusicStoreViewModel(
+  private var musicControlEventListener: IMusicControlEventListener,
+  private var mainActivityEventListener: IMainActivityEventListener
+) :
   BaseObservable(),
   StoreSubscriber<MusicState> {
   private var mMusic: Music? = null
@@ -48,20 +53,33 @@ class MusicStoreViewModel(private var musicControlEventListener: IMusicControlEv
     get() = musicControlEventListener
 
   @get:Bindable
+  val mainActivityListener
+    get() = mainActivityEventListener
+
+  @get:Bindable
   val currentProgressText
     get() = if (mMusic != null) mCurrentPosition / 10 / mMusic!!.duration else 0
 
   override fun newState(state: MusicState) {
     state.apply {
-      mMusic = currentMusic
-      mCurrentPosition = currentPosition
-      mIsPlaying = isPlaying
+      if (currentMusic != null && (mMusic == null || mMusic!!.id != currentMusic?.id)) {
+        mMusic = currentMusic
+        notifyPropertyChanged(BR.musicDuration)
+        notifyPropertyChanged(BR.music)
+      }
 
-      notifyPropertyChanged(BR.currentProgressText)
-      notifyPropertyChanged(BR.music)
-      notifyPropertyChanged(BR.playing)
-      notifyPropertyChanged(BR.currentPosition)
-      notifyPropertyChanged(BR.musicDuration)
+      if (mCurrentPosition != currentPosition) {
+        mCurrentPosition = currentPosition
+
+        notifyPropertyChanged(BR.currentProgressText)
+        notifyPropertyChanged(BR.currentPosition)
+      }
+
+      if (mIsPlaying != isPlaying) {
+        mIsPlaying = isPlaying
+
+        notifyPropertyChanged(BR.playing)
+      }
     }
   }
 }

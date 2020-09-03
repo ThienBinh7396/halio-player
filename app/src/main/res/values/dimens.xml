@@ -11,8 +11,8 @@
   <dimen name="notification_interface_music_background_radius">4dp</dimen>
   <dimen name="notification_interface_music_image_size__sm">42dp</dimen>
   <dimen name="notification_interface_music_button_control_size_sm">15dp</dimen>
-  <dimen name="notification_interface_music_button_control_size">16dp</dimen>
-  <dimen name="notification_interface_music_button_control_size__lg">22dp</dimen>
+  <dimen name="notification_interface_music_button_control_size">18dp</dimen>
+  <dimen name="notification_interface_music_button_control_size__lg">24dp</dimen>
 
   <dimen name="font_size__sm">12sp</dimen>
 
@@ -44,5 +44,7 @@
 
   <dimen name="bottom_music_sheet_expanded_now_playing_music_thumbnail_size">182dp</dimen>
   <dimen name="bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size">208dp</dimen>
+  <dimen name="dimen_0">0dp</dimen>
+  <dimen name="dimen_14">14dp</dimen>
 
 </resources>

@@ -64,8 +64,24 @@
             android:layout_centerInParent="true"
             android:alpha="0.2"
             android:background="@drawable/black_mask_background_circle"
+            android:scaleX="0.875"
+            android:scaleY="0.875"
             android:tag="unique_thumbnail_cover_expanded_sheet_now_playing"
+            app:bindAnimationDelay="@{0}"
             app:bindScaleViewAnimation="@{musicStoreViewModel.isPlaying}" />
+
+          <View
+            android:layout_width="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
+            android:layout_height="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
+            android:layout_centerInParent="true"
+            android:alpha="0.25"
+            android:background="@drawable/black_mask_background_circle"
+            android:scaleX="0.875"
+            android:scaleY="0.875"
+            android:tag="unique_thumbnail_cover_expanded_sheet_now_playing_slower_animation"
+            app:bindAnimationDelay="@{1500}"
+            app:bindScaleViewAnimation="@{musicStoreViewModel.isPlaying}" />
+
 
           <ImageView
             android:id="@+id/imvThumbnail"
@@ -118,12 +134,10 @@
           android:layout_marginBottom="@dimen/dimen_24">
 
           <ImageView
-            android:id="@+id/imvEqualizer"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="68dp"
             android:scaleType="centerCrop"
             android:src="@drawable/equalizer" />
-
 
           <TextView
             android:layout_width="wrap_content"

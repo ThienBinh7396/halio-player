@@ -3,10 +3,7 @@ package com.thienbinh.halioplayer.binding
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
+import android.graphics.*
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
@@ -80,7 +77,8 @@ class DataBindingHelper {
       view: View,
       viewTag: String,
       isAnimate: Boolean,
-      typeAnimator: String = "rotation"
+      typeAnimator: String = "rotation",
+      animationDelay: Int = 0
     ): Boolean? {
       val checkViewTagExists = mapViewTagWithIsAnimating[viewTag]
 
@@ -98,10 +96,12 @@ class DataBindingHelper {
             animator = ObjectAnimator.ofPropertyValuesHolder(
               view,
               PropertyValuesHolder.ofFloat("scaleX", 0.875f),
-              PropertyValuesHolder.ofFloat("scaleY", 0.875f)
+              PropertyValuesHolder.ofFloat("scaleY", 0.875f),
+              PropertyValuesHolder.ofFloat("alpha", 0.05f)
             )
+            animator.startDelay = animationDelay.toLong()
+            animator.duration = 3000
             animator.repeatMode = ObjectAnimator.REVERSE
-            animator.duration = 1000
           }
         }
 
@@ -148,18 +148,22 @@ class DataBindingHelper {
       }
     }
 
-    @BindingAdapter("app:bindScaleViewAnimation")
+    @BindingAdapter(value = ["app:bindScaleViewAnimation", "app:bindAnimationDelay"])
     @JvmStatic
-    fun bindScaleViewAnimation(view: View, isAnimate: Boolean) {
+    fun bindScaleViewAnimation(view: View, isAnimate: Boolean, animationDelay: Int = 0) {
       var viewTag = view.tag ?: return
 
       viewTag = viewTag as String
 
-      val checkViewIsAnimatingFromMap = checkViewIsAnimating(view, viewTag, isAnimate, "scale")
+      val checkViewIsAnimatingFromMap =
+        checkViewIsAnimating(view, viewTag, isAnimate, "scale", animationDelay)
 
       if (!isAnimate && checkViewIsAnimatingFromMap == null) return
 
       if (isAnimate && checkViewIsAnimatingFromMap == null) {
+        view.scaleX = 1f
+        view.scaleY = 1f
+
         mapViewTagWithIsAnimating[viewTag]!!.animation.start()
         mapViewTagWithIsAnimating[viewTag]!!.isAnimating = true
 
@@ -183,7 +187,7 @@ class DataBindingHelper {
     @BindingAdapter("app:bindMusicDurationText")
     @JvmStatic
     fun bindMusicDurationText(textView: TextView, time: Int?) {
-      if(time == null) return
+      if (time == null) return
 
       textView.text = Helper.formatMusicDuration(time.toLong())
     }

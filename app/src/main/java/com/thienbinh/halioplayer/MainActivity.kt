@@ -9,18 +9,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.thienbinh.halioplayer.constant.*
+import com.thienbinh.halioplayer.customInterface.IMainActivityEventListener
 import com.thienbinh.halioplayer.customInterface.IMusicControlEventListener
 import com.thienbinh.halioplayer.databinding.ActivityMainBinding
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.service.MusicService
 import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
 
-class MainActivity : AppCompatActivity(), IMusicControlEventListener {
+class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActivityEventListener {
+  companion object {
+    private var navControllerMainActivity: NavController? = null
+
+    fun navigate(id: Int, bundle: Bundle?) {
+      navControllerMainActivity?.navigate(id, bundle)
+    }
+  }
+
   private lateinit var mActivityMainBinding: ActivityMainBinding
 
   private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
@@ -40,12 +52,14 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener {
 
       initView()
 
-      mMusicStoreViewModel = MusicStoreViewModel(this@MainActivity)
+      mMusicStoreViewModel = MusicStoreViewModel(this@MainActivity, this@MainActivity)
 
       bottomMusicSheet.expandedSheetLayout.layoutParams = RelativeLayout.LayoutParams(
         RelativeLayout.LayoutParams.MATCH_PARENT,
         Resources.getSystem().displayMetrics.heightPixels - getStatusBarHeight(this@MainActivity).toInt()
       )
+
+      navControllerMainActivity = findNavController(R.id.nav_host)
     }
 
     overridePendingTransition(R.anim.enter_slide_right_anim, R.anim.exit_slide_left_anim)
@@ -95,7 +109,7 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener {
   }
 
   override fun onBackPressed() {
-    if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED){
+    if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
       mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
   }
@@ -109,5 +123,14 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener {
     val intent = Intent()
     intent.action = ACTION_MUSIC_TOGGLE
     sendBroadcast(intent)
+  }
+
+  override fun toggleStateMusicBottomSheet(isExpanded: Boolean) {
+    try {
+      mBottomSheetBehavior.state =
+        if (isExpanded) BottomSheetBehavior.STATE_EXPANDED else BottomSheetBehavior.STATE_COLLAPSED
+    } catch (err: Error) {
+      Toast.makeText(applicationContext, err.message, Toast.LENGTH_SHORT).show()
+    }
   }
 }

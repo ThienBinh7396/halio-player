@@ -18,6 +18,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.NotificationTarget
 import com.thienbinh.halioplayer.GlideApp
+import com.thienbinh.halioplayer.MainActivity
 import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_TOGGLE
 import com.thienbinh.halioplayer.store
@@ -56,9 +57,13 @@ class MusicInterfaceNotification {
           intent.action = ACTION_MUSIC_TOGGLE
           pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0)
         }
+
+        else -> {
+          pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0)
+        }
       }
 
-      remoteViews.setOnClickPendingIntent(id, pendingIntent)
+      if (id != 0) remoteViews.setOnClickPendingIntent(id, pendingIntent)
     }
 
     private fun generateExpandLayout(context: Context): RemoteViews {
@@ -68,7 +73,10 @@ class MusicInterfaceNotification {
       store.state.musicState.apply {
         onButtonNotificationClick(notificationLayout, R.id.btnToggleState)
 
-        notificationLayout.setTextViewText(R.id.tvCurrentDuration, Helper.formatMusicDuration(currentPosition.toLong()))
+        notificationLayout.setTextViewText(
+          R.id.tvCurrentDuration,
+          Helper.formatMusicDuration(currentPosition.toLong())
+        )
 
         notificationLayout.setTextViewText(R.id.tvTitle, currentMusic?.title)
         notificationLayout.setTextViewText(R.id.tvSinger, currentMusic?.singer)
@@ -89,6 +97,8 @@ class MusicInterfaceNotification {
     }
 
     fun showNotification(context: Context) {
+      mContext = context
+
       val notificationExpandLayout = generateExpandLayout(context)
 
       val notification =
@@ -97,9 +107,16 @@ class MusicInterfaceNotification {
           .setSmallIcon(R.drawable.logo_sm)
           .setCustomContentView(notificationExpandLayout)
           .setPriority(MUSIC_INTERFACE_NOTIFICATION_CHANNEL_INPORTANCE)
-          .build()
+          .apply {
+            val notifyIntent = Intent(context, MainActivity::class.java).apply {
+            }
+            val notifyPendingIntent = PendingIntent.getActivity(
+              context, 1, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
-      mContext = context
+            setContentIntent(notifyPendingIntent)
+          }
+          .build()
 
       notification.flags = Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR
 
