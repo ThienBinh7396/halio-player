@@ -18,7 +18,9 @@ class Music(
   @SerializedName("duration")
   var duration: Int,
   @SerializedName("genre")
-  var genre: MutableList<Genre>
+  var genre: MutableList<Genre>,
+  @SerializedName("count_play")
+  var count_play: Int = 0
 ) : Serializable {
   companion object {
     private var instance: MutableList<Music>? = null

@@ -6,8 +6,8 @@
   <color name="colorTransparent">#00000000</color>
 
   <color name="textColor">#999</color>
-  <color name="textColorLight">#ebebeb</color>
-  <color name="textColorDarken">#cacaca</color>
+  <color name="textColorLight">#d8d8d8</color>
+  <color name="textColorDarken">#ababab</color>
   <color name="colorWhite">#fafafa</color>
 
   <color name="colorButtonDisabled">#1E1C1C</color>

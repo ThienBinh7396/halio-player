@@ -46,5 +46,6 @@
   <dimen name="bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size">208dp</dimen>
   <dimen name="dimen_0">0dp</dimen>
   <dimen name="dimen_14">14dp</dimen>
+  <dimen name="music_block_width">120dp</dimen>
 
 </resources>
