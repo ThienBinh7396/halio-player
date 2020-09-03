@@ -11,6 +11,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.thienbinh.halioplayer.GlideApp
@@ -228,18 +229,26 @@ class DataBindingHelper {
       displayStyle: EDisplayStyle = EDisplayStyle.BLOCK_STYLE
     ) {
       if (rcv.adapter == null) {
+        rcv.setHasFixedSize(true)
+
         rcv.adapter = MusicListAdapter(displayStyle = displayStyle)
 
-        rcv.layoutManager = LinearLayoutManager(
+        rcv.layoutManager = if (displayStyle == EDisplayStyle.BLOCK_STYLE) LinearLayoutManager(
           rcv.context,
-          if (displayStyle == EDisplayStyle.BLOCK_STYLE) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL,
+          LinearLayoutManager.HORIZONTAL,
           false
-        )
+        ) else
+          GridLayoutManager(
+            rcv.context,
+            1,
+            GridLayoutManager.VERTICAL,
+            false
+          )
 
         if (displayStyle == EDisplayStyle.BLOCK_STYLE)
           rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
         else
-          rcv.addItemDecoration(SpaceItemDecoration(12 * SCALE_DP_PX.toInt(), 0))
+          rcv.addItemDecoration(SpaceItemDecoration(18 * SCALE_DP_PX.toInt(), 0))
       }
 
       if (musicList != null) {

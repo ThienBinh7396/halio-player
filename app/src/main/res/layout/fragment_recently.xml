@@ -16,53 +16,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/dimen_24"
     tools:context=".ui.fragment.RecentlyFragment">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
       android:layout_width="match_parent"
-      android:layout_height="64dp"
-      android:orientation="horizontal">
+      android:layout_height="wrap_content"
+      app:cardBackgroundColor="@color/colorTransparent">
 
-      <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_10"
-        android:layout_gravity="center"
-        android:background="@color/colorTransparent"
-        android:rotation="90"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_left_back" />
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dimen_20">
 
-      <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:fontFamily="@font/averta_extra"
-        android:text="@string/recent_played"
-        android:textAlignment="center"
-        android:textColor="@color/colorWhite"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <ImageButton
+          android:id="@+id/ibnBack"
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/dimen_10"
+          android:layout_gravity="center"
+          android:background="@color/colorTransparent"
+          android:rotation="90"
+          android:scaleType="fitCenter"
+          android:src="@drawable/ic_left_back" />
 
-      <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_18"
-        android:layout_gravity="center"
-        android:background="@color/colorTransparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_filter" />
-    </LinearLayout>
+        <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:fontFamily="@font/averta_extra"
+          android:text="@string/recent_played"
+          android:textAlignment="center"
+          android:textColor="@color/colorWhite"
+          android:textSize="16sp"
+          android:textStyle="bold" />
+
+        <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/dimen_18"
+          android:layout_gravity="center"
+          android:background="@color/colorTransparent"
+          android:scaleType="fitCenter"
+          android:src="@drawable/ic_filter" />
+      </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
-      android:paddingVertical="@dimen/dimen_24">
+      android:paddingBottom="@dimen/bottom_music_sheet_min_height">
 
       <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_24"
+        android:paddingVertical="@dimen/dimen_16"
         app:bindMusicList="@{ genreViewModel.getGenreById(0).musicList }"
         app:bindMusicListDisplayStyle="@{EDisplayStyle.LIST_STYLE}" />
     </androidx.core.widget.NestedScrollView>

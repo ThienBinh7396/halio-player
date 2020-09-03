@@ -14,6 +14,7 @@
   </data>
 
   <RelativeLayout
+    android:id="@+id/showMore"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dimen_28">
@@ -38,7 +39,6 @@
       android:textSize="14sp" />
 
     <ImageButton
-      android:id="@+id/btnShowMore"
       android:layout_width="@dimen/dimen_14"
       android:layout_height="@dimen/dimen_14"
       android:layout_below="@id/tvTitle"

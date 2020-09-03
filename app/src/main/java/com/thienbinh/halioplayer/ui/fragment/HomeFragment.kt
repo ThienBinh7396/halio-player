@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
     ).apply {
       mGenreViewModel = GenreViewModel()
 
-      recentPlayedLayout.btnShowMore.setOnClickListener {
+      recentPlayedLayout.showMore.setOnClickListener {
         MainActivity.navigate(R.id.action_homeFragment_to_recentlyFragment)
       }
     }

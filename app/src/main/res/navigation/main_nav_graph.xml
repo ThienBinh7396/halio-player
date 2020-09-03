@@ -23,5 +23,9 @@
     android:label="fragment_recently"
     app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
     app:exitAnim="@anim/exit_slide_fade_effect_from_half_size"
-    tools:layout="@layout/fragment_recently" />
+    tools:layout="@layout/fragment_recently" >
+    <action
+      android:id="@+id/action_recentlyFragment_to_homeFragment"
+      app:destination="@id/homeFragment" />
+  </fragment>
 </navigation>
