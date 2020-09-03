@@ -4,18 +4,46 @@ import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.graphics.*
+import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.thienbinh.halioplayer.GlideApp
+import com.thienbinh.halioplayer.adapter.EDisplayStyle
+import com.thienbinh.halioplayer.adapter.GenreListAdapter
+import com.thienbinh.halioplayer.adapter.MusicListAdapter
+import com.thienbinh.halioplayer.constant.SCALE_DP_PX
+import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.utils.Helper
+import com.thienbinh.halioplayer.utils.SpaceItemDecoration
 
 
 class DataBindingHelper {
   companion object {
+    @BindingAdapter("app:showUnless")
+    @JvmStatic
+    fun showUnless(view: View, isShow: Boolean) {
+      view.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    @BindingAdapter("app:bindSrcImage")
+    @JvmStatic
+    fun bindSrcImage(imageView: ImageView, src: Any?) {
+      if (src != null) {
+        Log.d("Binh", "Thumbnail: $src")
+
+        GlideApp.with(imageView.context)
+          .load(src)
+          .centerCrop()
+          .into(imageView)
+      }
+    }
+
     @BindingAdapter("app:bindCircleImage")
     @JvmStatic
     fun bindCircleImage(imageView: ImageView, src: Any?) {
@@ -56,9 +84,9 @@ class DataBindingHelper {
     @JvmStatic
     fun bindDarkenView(imageView: ImageView, someThing: Any) {
       val matrix = floatArrayOf(
-        0.22f, 0.22f, 0.22f, 0f, 0f,
-        0.22f, 0.22f, 0.22f, 0f, 0f,
-        0.22f, 0.22f, 0.22f, 0f, 0f,
+        0.2f, 0.2f, 0.2f, 0f, 0f,
+        0.2f, 0.2f, 0.2f, 0f, 0f,
+        0.2f, 0.2f, 0.2f, 0f, 0f,
         0f, 0f, 0f, 1f, 0f
       )
 
@@ -190,6 +218,53 @@ class DataBindingHelper {
       if (time == null) return
 
       textView.text = Helper.formatMusicDuration(time.toLong())
+    }
+
+    @BindingAdapter(value = ["app:bindMusicList", "app:bindMusicListDisplayStyle"])
+    @JvmStatic
+    fun bindMusicList(
+      rcv: RecyclerView,
+      musicList: MutableList<Music>? = null,
+      displayStyle: EDisplayStyle = EDisplayStyle.BLOCK_STYLE
+    ) {
+      if (rcv.adapter == null) {
+        rcv.adapter = MusicListAdapter(displayStyle = displayStyle)
+
+        rcv.layoutManager = LinearLayoutManager(
+          rcv.context,
+          if (displayStyle == EDisplayStyle.BLOCK_STYLE) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL,
+          false
+        )
+
+        if (displayStyle == EDisplayStyle.BLOCK_STYLE)
+          rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
+        else
+          rcv.addItemDecoration(SpaceItemDecoration(12 * SCALE_DP_PX.toInt(), 0))
+      }
+
+      if (musicList != null) {
+        (rcv.adapter as MusicListAdapter).updateList(musicList)
+      }
+    }
+
+    @BindingAdapter(value = ["app:bindGenreList"])
+    @JvmStatic
+    fun bindGenreList(
+      rcv: RecyclerView,
+      someThing: Any
+    ) {
+      if (rcv.adapter == null) {
+        rcv.adapter = GenreListAdapter()
+
+        rcv.layoutManager = LinearLayoutManager(
+          rcv.context,
+          LinearLayoutManager.HORIZONTAL,
+          false
+        )
+
+        rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
+      }
+
     }
   }
 }

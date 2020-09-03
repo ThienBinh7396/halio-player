@@ -20,19 +20,20 @@ class Music(
   @SerializedName("genre")
   var genre: MutableList<Genre>,
   @SerializedName("count_play")
-  var count_play: Int = 0
+  var count_play: Int = 0,
+  @SerializedName("localHref")
+  var localHref: String? = null,
 ) : Serializable {
   companion object {
     private var instance: MutableList<Music>? = null
 
-    fun getInstance(): MutableList<Music> {
-      if (instance == null) {
-        instance = mutableListOf()
-        initializeList()
-      }
+     fun getInstance(): MutableList<Music> {
+      initializeList()
 
       return instance!!
     }
+
+    fun checkInstanceIsNull() = instance == null
 
     fun getMusicById(id: Int): Music? {
       if (instance == null) getInstance()
@@ -40,53 +41,135 @@ class Music(
       return instance!!.find { it.id == id }
     }
 
-    private fun initializeList() {
-      if (instance != null) {
-        /*List mood music*/
+    fun initializeList() {
+      if (instance == null) {
+        instance = mutableListOf()
 
-        instance!!.add(
-          Music(
-            1,
-            "Let me down slowly",
-            "https://i.scdn.co/image/ab67616d00001e02459d675aa0b6f3b211357370",
-            "Alec Benjamin",
-            "let_me_down_slowly.mp3",
-            169,
-            mutableListOf(
-              Genre.getGenreById(1)!!
+        instance!!.apply {
+          /*List Made for you music*/
+          add(
+            Music(
+              size,
+              "Different World",
+              "https://avatar-nct.nixcdn.com/playlist/2018/12/13/2/1/5/3/1544707823259_500.jpg",
+              "Alan Walker",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1599107938/mp3/DifferentWorld-AlanWalkerK391SofiaCarsonCORSAK-5815054_ti6gva.mp3",
+              202,
+              mutableListOf(
+                Genre.getGenreById(0)!!
+              )
             )
           )
-        )
 
 
-        /*List life sucks*/
-        instance!!.add(
-          Music(
-            2,
-            "Believe",
-            "https://i.scdn.co/image/ab67616d00001e0259099e2755405c06543f6ed0",
-            "Imagine Dragon",
-            "believer.mp3",
-            204,
-            mutableListOf(
-              Genre.getGenreById(2)!!
+          /*List mood music*/
+
+          add(
+            Music(
+              size,
+              "Let me down slowly",
+              "https://i.scdn.co/image/ab67616d00001e02459d675aa0b6f3b211357370",
+              "Alec Benjamin",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1599104385/mp3/let_me_down_slowly_l7moih.mp3",
+              169,
+              mutableListOf(
+                Genre.getGenreById(1)!!,
+                Genre.getGenreById(0)!!
+              )
             )
           )
-        )
 
-        instance!!.add(
-          Music(
-            3,
-            "Hate u hate u",
-            "https://i.scdn.co/image/ab67616d00001e02f9a776c0d4ec78052c92882b",
-            "Olivia O'Brien",
-            "hate_u_hate_u.mp3",
-            178,
-            mutableListOf(
-              Genre.getGenreById(2)!!
+          add(
+            Music(
+              size,
+              "Memories",
+              "https://i.scdn.co/image/ab67616d00001e02b8c0135a218de2d10a8435f5",
+              "Maroon 5",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1599106966/mp3/Memories-Maroon5-6091839_vwr1va.mp3",
+              190,
+              mutableListOf(
+                Genre.getGenreById(1)!!,
+                Genre.getGenreById(0)!!
+              )
             )
           )
-        )
+
+          add(
+            Music(
+              size,
+              "Sing Me To Sleep",
+              "https://avatar-nct.nixcdn.com/song/2017/10/20/a/9/1/8/1508495764582.jpg",
+              "Aland Walker",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1599108050/mp3/SingMetoSleep-AlanWalker-5815065_jmshmd.mp3",
+              187,
+              mutableListOf(
+                Genre.getGenreById(1)!!,
+                Genre.getGenreById(0)!!
+              )
+            )
+          )
+          /*List life sucks*/
+          add(
+            Music(
+              size,
+              "Believe",
+              "https://i.scdn.co/image/ab67616d00001e0259099e2755405c06543f6ed0",
+              "Imagine Dragon",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1599104385/mp3/believer_kzu21c.mp3",
+              204,
+              mutableListOf(
+                Genre.getGenreById(2)!!
+              )
+            )
+          )
+
+          add(
+            Music(
+              size,
+              "Hate u hate u",
+              "https://i.scdn.co/image/ab67616d00001e02f9a776c0d4ec78052c92882b",
+              "Olivia O'Brien",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1599104385/mp3/hate_u_hate_u_vj6ilg.mp3",
+              178,
+              mutableListOf(
+                Genre.getGenreById(2)!!,
+                Genre.getGenreById(0)!!
+              )
+            )
+          )
+
+          /*Peaceful Piano*/
+
+          add(
+            Music(
+              size,
+              "Shape of You",
+              "https://i.scdn.co/image/ab67616d00001e02efe2aadb93b4aaa8f4981cd7",
+              "Music Lab Collective",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1599107296/mp3/ShapeOfYou-MusicLabCollective-4964499_xiqrbi.mp3",
+              178,
+              mutableListOf(
+                Genre.getGenreById(3)!!,
+                Genre.getGenreById(0)!!
+              )
+            )
+          )
+
+          add(
+            Music(
+              size,
+              "I Took A Pill In Ibiza",
+              "https://avatar-nct.nixcdn.com/singer/avatar/2017/05/10/2/7/6/e/1494386279547.jpg",
+              "Music Lab Collective",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1599107686/mp3/ITookAPillInIbiza-MusicLabCollective-4964524_t7rhlf.mp3",
+              196,
+              mutableListOf(
+                Genre.getGenreById(3)!!
+              )
+            )
+          )
+
+        }
       }
     }
   }

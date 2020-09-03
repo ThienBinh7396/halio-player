@@ -71,7 +71,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
       when (action) {
         ACTION_MUSIC_UPDATE -> {
           val checkDataReceiver = updateMusicFromIntent(context, this)
-          if (checkDataReceiver) mMediaPlayer!!.prepareAsync()
+          if (checkDataReceiver) {
+            mMediaPlayer!!.prepareAsync()
+          }
         }
 
         ACTION_MUSIC_TOGGLE -> {
@@ -109,16 +111,22 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     try {
       if (data is Music) {
+        mMediaPlayer!!.reset()
 
         Log.d("Binh", "Data: $data")
-        val assetFileDescriptor = assets.openFd(data.href)
-        mMediaPlayer!!.reset()
-        mMediaPlayer!!.setDataSource(
-          assetFileDescriptor.fileDescriptor,
-          assetFileDescriptor.startOffset,
-          assetFileDescriptor.length
-        )
+        if (data.localHref != null) {
+          val assetFileDescriptor = assets.openFd(data.href)
 
+          mMediaPlayer!!.setDataSource(
+            assetFileDescriptor.fileDescriptor,
+            assetFileDescriptor.startOffset,
+            assetFileDescriptor.length
+          )
+        } else {
+          mMediaPlayer!!.setDataSource(data.href)
+        }
+
+        store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PREPARING_STATE(true))
         store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_CURRENT_MUSIC(data))
 
         return true
@@ -205,7 +213,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
   }
 
   override fun onPrepared(p0: MediaPlayer?) {
-    if (isRunning && mMediaPlayer != null) mMediaPlayer!!.start()
+    if (isRunning && mMediaPlayer != null) {
+      store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PREPARING_STATE(false))
+      mMediaPlayer!!.start()
+    }
     startScheduleWhenMusicRunning()
   }
 

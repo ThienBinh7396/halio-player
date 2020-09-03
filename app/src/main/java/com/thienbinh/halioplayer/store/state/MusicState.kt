@@ -5,6 +5,7 @@ import org.rekotlin.StateType
 
 data class MusicState(
   var isPlaying: Boolean = false,
+  var isPreparing: Boolean = false,
   var currentMusic: Music? = null,
   var currentPosition: Int = 0
 ) : StateType

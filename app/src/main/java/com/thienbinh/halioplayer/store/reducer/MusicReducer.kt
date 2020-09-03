@@ -20,9 +20,15 @@ fun musicReducer(action: Action, musicState: MusicState?): MusicState {
       )
     }
 
+    is MusicAction.MUSIC_ACTION_UPDATE_PREPARING_STATE -> {
+      mMusicState = mMusicState.copy(
+        isPreparing = action.isPreparing
+      )
+    }
+
     is MusicAction.MUSIC_ACTION_UPDATE_CURRENT_MUSIC -> {
       mMusicState = mMusicState.copy(
-        currentMusic =  action.music
+        currentMusic = action.music
       )
     }
   }

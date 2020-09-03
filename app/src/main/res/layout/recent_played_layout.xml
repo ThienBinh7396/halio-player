@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="com.thienbinh.halioplayer.adapter.EDisplayStyle" />
+
+    <import type="com.thienbinh.halioplayer.utils.Helper" />
+
+    <variable
+      name="genreViewModel"
+      type="com.thienbinh.halioplayer.viewModel.GenreViewModel" />
+  </data>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_28">
+
+    <TextView
+      android:id="@+id/tvTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/averta_extra"
+      android:text="@string/recent_played"
+      android:textColor="@color/textColorLight"
+      android:textSize="20sp"
+      android:textStyle="bold" />
+
+    <TextView
+      android:id="@+id/tvCaption"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvTitle"
+      android:layout_marginTop="@dimen/dimen_4"
+      android:text="@string/from_the_radio"
+      android:textSize="14sp" />
+
+    <ImageButton
+      android:id="@+id/btnShowMore"
+      android:layout_width="@dimen/dimen_14"
+      android:layout_height="@dimen/dimen_14"
+      android:layout_below="@id/tvTitle"
+      android:layout_alignParentEnd="true"
+      android:layout_marginEnd="@dimen/dimen_24"
+      android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvCaption"
+      android:layout_marginTop="@dimen/dimen_16">
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bindMusicList="@{ genreViewModel.getGenreById(-1).musicList }"
+        app:bindMusicListDisplayStyle="@{EDisplayStyle.BLOCK_STYLE}" />
+
+      <include
+        layout="@layout/no_items"
+        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.getGenreById(-1).musicList)}" />
+    </FrameLayout>
+  </RelativeLayout>
+</layout>

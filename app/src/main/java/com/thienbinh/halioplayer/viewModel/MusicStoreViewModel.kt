@@ -23,6 +23,8 @@ class MusicStoreViewModel(
 
   private var mIsPlaying = false
 
+  private var mIsPreparing: Boolean = false
+
   private var mCurrentPosition: Int = 0
 
   init {
@@ -47,6 +49,10 @@ class MusicStoreViewModel(
   @get:Bindable
   val isPlaying
     get() = mIsPlaying
+
+  @get:Bindable
+  val isPreparing
+    get() = mIsPreparing
 
   @get:Bindable
   val eventListener
@@ -79,6 +85,11 @@ class MusicStoreViewModel(
         mIsPlaying = isPlaying
 
         notifyPropertyChanged(BR.playing)
+      }
+
+      if (mIsPreparing != isPreparing) {
+        mIsPreparing = isPreparing
+        notifyPropertyChanged(BR.preparing)
       }
     }
   }

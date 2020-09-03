@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
   companion object {
     private var navControllerMainActivity: NavController? = null
 
-    fun navigate(id: Int, bundle: Bundle?) {
+    fun navigate(id: Int, bundle: Bundle? = null) {
       navControllerMainActivity?.navigate(id, bundle)
     }
   }

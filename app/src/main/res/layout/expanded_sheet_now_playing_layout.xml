@@ -62,7 +62,7 @@
             android:layout_width="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
             android:layout_height="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
             android:layout_centerInParent="true"
-            android:alpha="0.2"
+            android:alpha="0.3"
             android:background="@drawable/black_mask_background_circle"
             android:scaleX="0.875"
             android:scaleY="0.875"
@@ -74,7 +74,7 @@
             android:layout_width="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
             android:layout_height="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size"
             android:layout_centerInParent="true"
-            android:alpha="0.25"
+            android:alpha="0.35"
             android:background="@drawable/black_mask_background_circle"
             android:scaleX="0.875"
             android:scaleY="0.875"
@@ -184,8 +184,15 @@
 
           <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/bottom_music_sheet_preparing_progress_size"
             android:layout_weight="1">
+
+            <ProgressBar
+              android:layout_width="@dimen/bottom_music_sheet_preparing_progress_size"
+              android:layout_height="@dimen/bottom_music_sheet_preparing_progress_size"
+              android:layout_centerInParent="true"
+              android:indeterminateDrawable="@drawable/circular_indeterminate_background"
+              app:showUnless="@{musicStoreViewModel.isPreparing}" />
 
             <ImageButton
               android:id="@+id/btnToggleState"
@@ -196,7 +203,10 @@
               android:background="@drawable/ripple_background_transparent_circle"
               android:onClick="@{() -> musicStoreViewModel.eventListener.onToggleButtonClickListener() }"
               android:scaleType="fitXY"
-              android:src="@{musicStoreViewModel.isPlaying ?  @drawable/ic_baseline_pause_24 :  @drawable/ic_baseline_play_arrow_24 }" />
+              android:scaleX="@{musicStoreViewModel.isPreparing ? 0.92f : 1.0f }"
+              android:scaleY="@{musicStoreViewModel.isPreparing ? 0.92f : 1.0f }"
+              android:src="@{musicStoreViewModel.isPlaying ?  @drawable/ic_baseline_pause_24 :  @drawable/ic_baseline_play_arrow_24 }"
+              android:tint="@{musicStoreViewModel.isPreparing ? @color/textColor :  @color/colorWhite}" />
           </RelativeLayout>
 
           <RelativeLayout

@@ -1,14 +1,24 @@
 package com.thienbinh.halioplayer.model
 
+import android.util.Log
 import java.io.Serializable
 
-class Genre(var id: Int, var title: String, var thumbnail: String) : Serializable {
+class Genre(
+  var id: Int,
+  var title: String,
+  var thumbnail: String?,
+  var musicList: MutableList<Music> = mutableListOf()
+) : Serializable {
   companion object {
     private var instance: MutableList<Genre>? = null
 
-    private fun getInstance(): MutableList<Genre> {
+    fun checkInstanceIsNull() = instance == null
+
+    fun createInstance() {
       if (instance == null) {
         instance = mutableListOf(
+          Genre(-1, "Recently Played", null),
+          Genre(0, "Made for you", null),
           Genre(1, "Tâm trạng", "https://i.scdn.co/image/ab67706f00000002935d747bed47e6ae6e1bf0b8"),
           Genre(
             2,
@@ -28,6 +38,20 @@ class Genre(var id: Int, var title: String, var thumbnail: String) : Serializabl
           )
         )
       }
+    }
+
+    fun mapMusicToGenre() {
+      if (Music.checkInstanceIsNull() || checkInstanceIsNull()) return
+
+      instance!!.forEach {
+        it.musicList.addAll(Music.getInstance().filter { music -> music.genre.contains(it) })
+
+        Log.d("Binh", "Music : ${it.title} ${it.musicList}")
+      }
+    }
+
+    fun getInstance(): MutableList<Genre> {
+      createInstance()
       return instance!!
     }
 

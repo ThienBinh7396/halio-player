@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="com.thienbinh.halioplayer.adapter.EDisplayStyle" />
+
+    <variable
+      name="genreViewModel"
+      type="com.thienbinh.halioplayer.viewModel.GenreViewModel" />
+  </data>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_24">
+
+    <TextView
+      android:id="@+id/tvTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/averta_extra"
+      android:text="@string/made_for_you"
+      android:textColor="@color/textColorLight"
+      android:textSize="20sp"
+      android:textStyle="bold" />
+
+    <TextView
+      android:id="@+id/tvCaption"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvTitle"
+      android:layout_marginTop="@dimen/dimen_4"
+      android:text="@string/more_genre"
+      android:textSize="14sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/tvCaption"
+      android:layout_marginTop="@dimen/dimen_16"
+      app:bindGenreList="@{true}" />
+  </RelativeLayout>
+</layout>

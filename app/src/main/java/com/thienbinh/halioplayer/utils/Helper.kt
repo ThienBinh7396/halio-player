@@ -1,6 +1,8 @@
 package com.thienbinh.halioplayer.utils
 
 import android.graphics.Color
+import android.util.Log
+import com.thienbinh.halioplayer.model.Music
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -21,5 +23,8 @@ class Helper {
       val blue: Int = Color.blue(color)
       return Color.argb(alpha, red, green, blue)
     }
+
+    @JvmStatic
+    fun checkListIsEmpty(list: MutableList<Music>?) = list == null || list.size == 0
   }
 }
