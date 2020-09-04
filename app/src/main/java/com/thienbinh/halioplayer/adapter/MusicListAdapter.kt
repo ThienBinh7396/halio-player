@@ -10,6 +10,7 @@ import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.databinding.MusicBlockLayoutBinding
 import com.thienbinh.halioplayer.databinding.MusicListLayoutBinding
 import com.thienbinh.halioplayer.model.Music
+import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
 
 enum class EDisplayStyle {
   BLOCK_STYLE,
@@ -25,6 +26,7 @@ class MusicListAdapter(
 
     fun bindingData(data: Music) {
       binding.music = data
+
     }
   }
 
@@ -32,6 +34,10 @@ class MusicListAdapter(
     RecyclerView.ViewHolder(binding.root) {
     fun bindingData(data: Music) {
       binding.music = data
+
+      if(binding.musicStoreViewModel == null){
+        binding.musicStoreViewModel = MusicStoreViewModel()
+      }
     }
   }
 
@@ -68,6 +74,8 @@ class MusicListAdapter(
         (holder as MusicBlockStyleViewHolder).bindingData(data = mMusicList[position])
     }
   }
+
+  fun getItemAt(position: Int) = if (position < mMusicList.size) mMusicList[position] else null
 
   override fun getItemCount(): Int = mMusicList.size
 

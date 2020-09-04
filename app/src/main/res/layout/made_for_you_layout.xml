@@ -6,6 +6,8 @@
 
     <import type="com.thienbinh.halioplayer.adapter.EDisplayStyle" />
 
+    <import type="com.thienbinh.halioplayer.utils.Helper" />
+
     <variable
       name="genreViewModel"
       type="com.thienbinh.halioplayer.viewModel.GenreViewModel" />
@@ -43,12 +45,22 @@
       android:layout_marginEnd="@dimen/dimen_24"
       android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/tvCaption"
-      android:layout_marginTop="@dimen/dimen_16"
-      app:bindMusicList="@{ genreViewModel.getGenreById(1).musicList }"
-      app:bindMusicListDisplayStyle="@{EDisplayStyle.BLOCK_STYLE}" />
+      android:layout_marginTop="@dimen/dimen_16">
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bindMusicList="@{ genreViewModel.getGenreById(1).musicList }"
+        app:bindMusicListDisplayStyle="@{EDisplayStyle.BLOCK_STYLE}" />
+
+      <include
+        layout="@layout/no_items"
+        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.getGenreById(1).musicList)}" />
+    </FrameLayout>
+
   </RelativeLayout>
 </layout>

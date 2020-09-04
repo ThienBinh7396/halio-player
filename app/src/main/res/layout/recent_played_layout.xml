@@ -55,12 +55,12 @@
       <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bindMusicList="@{ genreViewModel.getGenreById(-1).musicList }"
+        app:bindMusicList="@{ genreViewModel.recentlyPlayed}"
         app:bindMusicListDisplayStyle="@{EDisplayStyle.BLOCK_STYLE}" />
 
       <include
         layout="@layout/no_items"
-        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.getGenreById(-1).musicList)}" />
+        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.recentlyPlayed)}" />
     </FrameLayout>
   </RelativeLayout>
 </layout>

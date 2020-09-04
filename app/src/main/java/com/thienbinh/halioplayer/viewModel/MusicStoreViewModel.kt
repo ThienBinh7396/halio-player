@@ -14,8 +14,8 @@ import com.thienbinh.halioplayer.utils.Helper
 import org.rekotlin.StoreSubscriber
 
 class MusicStoreViewModel(
-  private var musicControlEventListener: IMusicControlEventListener,
-  private var mainActivityEventListener: IMainActivityEventListener
+  private var musicControlEventListener: IMusicControlEventListener? = null,
+  private var mainActivityEventListener: IMainActivityEventListener? = null
 ) :
   BaseObservable(),
   StoreSubscriber<MusicState> {

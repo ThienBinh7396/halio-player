@@ -50,4 +50,7 @@
   <dimen name="music_block_width">140dp</dimen>
   <dimen name="music_block_height">158dp</dimen>
 
+  <dimen name="mask_block_radius">6dp</dimen>
+  <dimen name="dimen_22">22dp</dimen>
+
 </resources>

@@ -20,17 +20,15 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:clipToPadding="true"
-      app:cardBackgroundColor="@color/colorTransparent"
-      app:cardCornerRadius="@dimen/dimen_6">
+      android:foreground="@drawable/music_thumbnail_mask"
+      app:cardCornerRadius="@dimen/mask_block_radius">
 
       <ImageView
         android:layout_width="@dimen/music_block_width"
         android:layout_height="@dimen/music_block_height"
-        android:foreground="@drawable/music_thumbnail_mask"
         android:scaleType="centerCrop"
         app:bindDarkenView="@{true}"
-        app:bindSrcImage="@{genre.thumbnail}"
-        tools:targetApi="m" />
+        app:bindSrcImage="@{genre.thumbnail}" />
     </androidx.cardview.widget.CardView>
 
     <TextView

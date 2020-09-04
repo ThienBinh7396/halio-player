@@ -15,3 +15,10 @@ fun getStatusBarHeight(context: Context): Float {
   else
     ceil((if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) 24 else 25) * resources.displayMetrics.density);
 }
+
+class VariableData {
+  companion object{
+    @JvmStatic
+    val LOADING_GIF_URL =  "https://res.cloudinary.com/do1xjyyru/image/upload/v1599212684/public/icon_playing_white_rwleu9.gif"
+  }
+}

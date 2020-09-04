@@ -1,5 +1,6 @@
 package com.thienbinh.halioplayer.model
 
+import androidx.constraintlayout.solver.widgets.Helper
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -27,7 +28,7 @@ class Music(
   companion object {
     private var instance: MutableList<Music>? = null
 
-     fun getInstance(): MutableList<Music> {
+    fun getInstance(): MutableList<Music> {
       initializeList()
 
       return instance!!
@@ -55,8 +56,10 @@ class Music(
               "Alan Walker",
               "https://res.cloudinary.com/do1xjyyru/video/upload/v1599107938/mp3/DifferentWorld-AlanWalkerK391SofiaCarsonCORSAK-5815054_ti6gva.mp3",
               202,
-              mutableListOf(
-                Genre.getGenreById(0)!!
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(0)!!
+                )
               )
             )
           )
@@ -72,9 +75,11 @@ class Music(
               "Alec Benjamin",
               "https://res.cloudinary.com/do1xjyyru/video/upload/v1599104385/mp3/let_me_down_slowly_l7moih.mp3",
               169,
-              mutableListOf(
-                Genre.getGenreById(1)!!,
-                Genre.getGenreById(0)!!
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(1)!!,
+                  Genre.getGenreById(0)!!
+                )
               )
             )
           )
@@ -87,9 +92,11 @@ class Music(
               "Maroon 5",
               "https://res.cloudinary.com/do1xjyyru/video/upload/v1599106966/mp3/Memories-Maroon5-6091839_vwr1va.mp3",
               190,
-              mutableListOf(
-                Genre.getGenreById(1)!!,
-                Genre.getGenreById(0)!!
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(1)!!,
+                  Genre.getGenreById(0)!!
+                )
               )
             )
           )
@@ -102,9 +109,11 @@ class Music(
               "Aland Walker",
               "https://res.cloudinary.com/do1xjyyru/video/upload/v1599108050/mp3/SingMetoSleep-AlanWalker-5815065_jmshmd.mp3",
               187,
-              mutableListOf(
-                Genre.getGenreById(1)!!,
-                Genre.getGenreById(0)!!
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(1)!!,
+                  Genre.getGenreById(0)!!
+                )
               )
             )
           )
@@ -117,8 +126,10 @@ class Music(
               "Imagine Dragon",
               "https://res.cloudinary.com/do1xjyyru/video/upload/v1599104385/mp3/believer_kzu21c.mp3",
               204,
-              mutableListOf(
-                Genre.getGenreById(2)!!
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(2)!!
+                )
               )
             )
           )
@@ -131,9 +142,11 @@ class Music(
               "Olivia O'Brien",
               "https://res.cloudinary.com/do1xjyyru/video/upload/v1599104385/mp3/hate_u_hate_u_vj6ilg.mp3",
               178,
-              mutableListOf(
-                Genre.getGenreById(2)!!,
-                Genre.getGenreById(0)!!
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(2)!!,
+                  Genre.getGenreById(0)!!
+                )
               )
             )
           )
@@ -148,9 +161,11 @@ class Music(
               "Music Lab Collective",
               "https://res.cloudinary.com/do1xjyyru/video/upload/v1599107296/mp3/ShapeOfYou-MusicLabCollective-4964499_xiqrbi.mp3",
               178,
-              mutableListOf(
-                Genre.getGenreById(3)!!,
-                Genre.getGenreById(0)!!
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(3)!!,
+                  Genre.getGenreById(0)!!
+                )
               )
             )
           )
@@ -163,14 +178,34 @@ class Music(
               "Music Lab Collective",
               "https://res.cloudinary.com/do1xjyyru/video/upload/v1599107686/mp3/ITookAPillInIbiza-MusicLabCollective-4964524_t7rhlf.mp3",
               196,
-              mutableListOf(
-                Genre.getGenreById(3)!!
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(3)!!
+                )
               )
             )
           )
 
         }
       }
+    }
+
+    fun checkMusicListAreTheSame(
+      listOne: MutableList<Music>,
+      listSecond: MutableList<Music>
+    ): Boolean {
+      if (listOne.size != listSecond.size) return false
+
+      var check = true
+
+      listOne.forEachIndexed { index, music ->
+        if (music.id != listSecond[index].id) {
+          check = false
+          return@forEachIndexed
+        }
+      }
+
+      return check
     }
   }
 }

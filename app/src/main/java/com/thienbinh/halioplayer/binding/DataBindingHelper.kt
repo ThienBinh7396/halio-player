@@ -3,7 +3,9 @@ package com.thienbinh.halioplayer.binding
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.content.Intent
 import android.graphics.*
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -14,13 +16,20 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.thienbinh.halioplayer.GlideApp
+import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.adapter.EDisplayStyle
 import com.thienbinh.halioplayer.adapter.GenreListAdapter
 import com.thienbinh.halioplayer.adapter.MusicListAdapter
+import com.thienbinh.halioplayer.constant.ACTION_MUSIC_DATA_BUNDLE
+import com.thienbinh.halioplayer.constant.ACTION_MUSIC_DATA_BUNDLE_MUSIC
+import com.thienbinh.halioplayer.constant.ACTION_MUSIC_UPDATE
 import com.thienbinh.halioplayer.constant.SCALE_DP_PX
 import com.thienbinh.halioplayer.model.Music
+import com.thienbinh.halioplayer.store
 import com.thienbinh.halioplayer.utils.Helper
+import com.thienbinh.halioplayer.utils.RecyclerViewTouchListener
 import com.thienbinh.halioplayer.utils.SpaceItemDecoration
 
 
@@ -32,12 +41,17 @@ class DataBindingHelper {
       view.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
+    @BindingAdapter("app:hideView")
+    @JvmStatic
+    fun hideView(view: View, isShow: Boolean) {
+      view.visibility = if (!isShow) View.INVISIBLE else View.VISIBLE
+    }
+
+
     @BindingAdapter("app:bindSrcImage")
     @JvmStatic
     fun bindSrcImage(imageView: ImageView, src: Any?) {
       if (src != null) {
-        Log.d("Binh", "Thumbnail: $src")
-
         GlideApp.with(imageView.context)
           .load(src)
           .centerCrop()
@@ -228,10 +242,13 @@ class DataBindingHelper {
       musicList: MutableList<Music>? = null,
       displayStyle: EDisplayStyle = EDisplayStyle.BLOCK_STYLE
     ) {
+      val adapter =
+        if (rcv.adapter == null) MusicListAdapter(displayStyle = displayStyle) else (rcv.adapter as MusicListAdapter)
+
       if (rcv.adapter == null) {
         rcv.setHasFixedSize(true)
 
-        rcv.adapter = MusicListAdapter(displayStyle = displayStyle)
+        rcv.adapter = adapter
 
         rcv.layoutManager = if (displayStyle == EDisplayStyle.BLOCK_STYLE) LinearLayoutManager(
           rcv.context,
@@ -249,10 +266,34 @@ class DataBindingHelper {
           rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
         else
           rcv.addItemDecoration(SpaceItemDecoration(18 * SCALE_DP_PX.toInt(), 0))
+
+        rcv.addOnItemTouchListener(
+          RecyclerViewTouchListener(
+            rcv.context,
+            rcv,
+            object : RecyclerViewTouchListener.ClickListener {
+              override fun onClick(view: View?, position: Int) {
+                val music = adapter.getItemAt(position) ?: return
+
+                val intent = Intent()
+
+                val bundle = Bundle()
+                bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, adapter.getItemAt(position))
+
+                intent.action = ACTION_MUSIC_UPDATE
+                intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
+
+                rcv.context.sendBroadcast(intent)
+              }
+
+              override fun onLongClick(view: View?, position: Int) {
+              }
+            })
+        )
       }
 
       if (musicList != null) {
-        (rcv.adapter as MusicListAdapter).updateList(musicList)
+        adapter.updateList(musicList)
       }
     }
 
@@ -273,7 +314,19 @@ class DataBindingHelper {
 
         rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
       }
+    }
 
+    @BindingAdapter("app:bindGift")
+    @JvmStatic
+    fun bindGift(imageView: ImageView, gift: Any?) {
+      if (gift != null) {
+        Log.d("Binh", "Bind gift: $gift")
+
+        Glide.with(imageView.context)
+          .asGif()
+          .load(gift)
+          .into(imageView)
+      }
     }
   }
 }

@@ -10,6 +10,7 @@
     android:allowBackup="true"
     android:icon="@drawable/logo_sm"
     android:label="@string/app_name"
+    android:largeHeap="true"
     android:roundIcon="@drawable/logo_sm"
     android:supportsRtl="true"
     android:theme="@style/MainTheme">

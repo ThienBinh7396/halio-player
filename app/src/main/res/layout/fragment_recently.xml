@@ -7,6 +7,8 @@
 
     <import type="com.thienbinh.halioplayer.adapter.EDisplayStyle" />
 
+    <import type="com.thienbinh.halioplayer.utils.Helper" />
+
     <variable
       name="genreViewModel"
       type="com.thienbinh.halioplayer.viewModel.GenreViewModel" />
@@ -62,7 +64,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
@@ -73,8 +75,14 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/dimen_24"
         android:paddingVertical="@dimen/dimen_16"
-        app:bindMusicList="@{ genreViewModel.getGenreById(0).musicList }"
+        app:bindMusicList="@{ genreViewModel.recentlyPlayed }"
         app:bindMusicListDisplayStyle="@{EDisplayStyle.LIST_STYLE}" />
-    </androidx.core.widget.NestedScrollView>
+
+      <include
+        layout="@layout/no_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.recentlyPlayed)}" />
+    </FrameLayout>
   </LinearLayout>
 </layout>

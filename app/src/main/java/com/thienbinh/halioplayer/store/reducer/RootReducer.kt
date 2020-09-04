@@ -5,5 +5,6 @@ import org.rekotlin.Action
 
 fun rootReducer(action: Action, rootState: RootState?): RootState =
   RootState(
-    musicState = musicReducer(action, rootState?.musicState)
+    musicState = musicReducer(action, rootState?.musicState),
+    genreState = genreReducer(action, rootState?.genreState)
   )

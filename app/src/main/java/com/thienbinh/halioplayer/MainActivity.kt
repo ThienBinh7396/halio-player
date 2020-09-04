@@ -22,6 +22,7 @@ import com.thienbinh.halioplayer.customInterface.IMusicControlEventListener
 import com.thienbinh.halioplayer.databinding.ActivityMainBinding
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.service.MusicService
+import com.thienbinh.halioplayer.utils.FirstActionInitializeData
 import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
 
 class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActivityEventListener {
@@ -65,6 +66,8 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
     overridePendingTransition(R.anim.enter_slide_right_anim, R.anim.exit_slide_left_anim)
 
     startMusicService()
+
+    FirstActionInitializeData.initialize(this)
   }
 
   private fun initView() {
@@ -90,18 +93,6 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
     })
   }
 
-  private fun startMusic() {
-    val intent = Intent()
-
-    val bundle = Bundle()
-    bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, Music.getMusicById(1))
-
-    intent.action = ACTION_MUSIC_UPDATE
-    intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
-
-    sendBroadcast(intent)
-  }
-
   private fun startMusicService() {
     val intent = Intent(this@MainActivity, MusicService::class.java)
     intent.action = ACTION_MUSIC_INITIALIZE
@@ -116,7 +107,7 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
 
   override fun onToggleButtonClickListener() {
     if (store.state.musicState.currentMusic == null) {
-      startMusic()
+      Toast.makeText(this, "Choose at least one music to play!", Toast.LENGTH_SHORT).show()
       return
     }
 

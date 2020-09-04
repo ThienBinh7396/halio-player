@@ -5,4 +5,5 @@
     android:angle="-45"
     android:endColor="#7e818a"
     android:startColor="#8A525253" />
+  <corners android:radius="@dimen/mask_block_radius"/>
 </shape>
