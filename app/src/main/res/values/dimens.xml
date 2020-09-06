@@ -27,6 +27,10 @@
   <dimen name="dimen_28">28dp</dimen>
   <dimen name="dimen_26">26dp</dimen>
   <dimen name="dimen_18">18dp</dimen>
+  <dimen name="dimen_0">0dp</dimen>
+  <dimen name="dimen_14">14dp</dimen>
+  <dimen name="dimen_22">22dp</dimen>
+  <dimen name="dimen_36">36dp</dimen>
 
   <dimen name="bottom_tab_layout_indicator_view_height">32dp</dimen>
   <dimen name="bottom_tab_layout_icon_container_height">72dp</dimen>
@@ -45,12 +49,11 @@
 
   <dimen name="bottom_music_sheet_expanded_now_playing_music_thumbnail_size">182dp</dimen>
   <dimen name="bottom_music_sheet_expanded_now_playing_music_thumbnail_container_size">208dp</dimen>
-  <dimen name="dimen_0">0dp</dimen>
-  <dimen name="dimen_14">14dp</dimen>
+
   <dimen name="music_block_width">140dp</dimen>
   <dimen name="music_block_height">158dp</dimen>
 
   <dimen name="mask_block_radius">6dp</dimen>
-  <dimen name="dimen_22">22dp</dimen>
+  <dimen name="dimen_40">40dp</dimen>
 
 </resources>

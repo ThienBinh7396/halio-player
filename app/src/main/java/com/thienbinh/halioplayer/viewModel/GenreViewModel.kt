@@ -43,7 +43,7 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
   override fun newState(state: GenreState) {
     if (!Genre.checkListAreTheSame(mGenres!!, state.genres)) {
       Log.d("Binh", "Update new genres")
-      mGenres = state.genres
+      mGenres = Genre.deepCloneGenreList(state.genres)
       notifyPropertyChanged(BR.genreViewModel)
       notifyPropertyChanged(BR.genres)
     }

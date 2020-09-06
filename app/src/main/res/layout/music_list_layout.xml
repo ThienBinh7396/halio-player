@@ -5,6 +5,12 @@
 
   <data>
 
+    <import type="com.thienbinh.halioplayer.constant.VariableData" />
+
+    <variable
+      name="musicStoreViewModel"
+      type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
+
     <variable
       name="music"
       type="com.thienbinh.halioplayer.model.Music" />
@@ -34,7 +40,19 @@
         android:layout_height="16dp"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_play" />
+        android:src="@drawable/ic_play"
+        app:hideView="@{musicStoreViewModel.music == null || !musicStoreViewModel.playing || musicStoreViewModel.music.id != music.id}" />
+
+      <ImageView
+        android:layout_width="@dimen/dimen_20"
+        android:layout_height="@dimen/dimen_20"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:scaleX="0.86"
+        android:scaleY="0.86"
+        app:bindGift="@{VariableData.LOADING_GIF_URL}"
+        app:hideView="@{musicStoreViewModel.music != null &amp;&amp; musicStoreViewModel.playing &amp;&amp; musicStoreViewModel.music.id == music.id}" />
+
     </RelativeLayout>
 
     <LinearLayout

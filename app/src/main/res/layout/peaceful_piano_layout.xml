@@ -23,7 +23,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:fontFamily="@font/averta_extra"
-      android:text="@string/made_for_you"
+      android:text="@string/peaceful_piano"
       android:textColor="@color/colorWhite"
       android:textSize="20sp"
       android:textStyle="bold" />
@@ -34,7 +34,7 @@
       android:layout_height="wrap_content"
       android:layout_below="@+id/tvTitle"
       android:layout_marginTop="@dimen/dimen_4"
-      android:text="@string/daily_mixes"
+      android:text="@string/music_to_help_you_concentrate"
       android:textSize="14sp" />
 
     <ImageButton
@@ -49,17 +49,18 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/tvCaption"
-      android:layout_marginTop="@dimen/dimen_16">
+      android:layout_marginTop="@dimen/dimen_16"
+      android:paddingHorizontal="@dimen/dimen_24">
 
       <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:bindMusicList="@{ genreViewModel.getGenreById(0).musicList }"
-        app:bindMusicListDisplayStyle="@{EDisplayStyle.BLOCK_STYLE}" />
+        app:bindMusicList="@{ genreViewModel.getGenreById(3).musicList }"
+        app:bindMusicListDisplayStyle="@{EDisplayStyle.LIST_STYLE}" />
 
       <include
         layout="@layout/no_items"
-        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.getGenreById(0).musicList)}" />
+        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.getGenreById(3).musicList)}" />
     </FrameLayout>
 
   </RelativeLayout>

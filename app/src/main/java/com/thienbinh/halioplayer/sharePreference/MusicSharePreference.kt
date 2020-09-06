@@ -52,12 +52,12 @@ class MusicSharePreference(val context: Context) {
       if (index == 0) return
 
       if (index > -1) {
-        musicList.removeAt(index)
-
         mMusic = musicList[index]
 
-        mMusic.count_play++
+        musicList.removeAt(index)
       }
+
+      mMusic.count_play++
 
       musicList.add(0, mMusic)
 

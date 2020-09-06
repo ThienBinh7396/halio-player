@@ -320,10 +320,9 @@ class DataBindingHelper {
     @JvmStatic
     fun bindGift(imageView: ImageView, gift: Any?) {
       if (gift != null) {
-        Log.d("Binh", "Bind gift: $gift")
-
         Glide.with(imageView.context)
           .asGif()
+          .fitCenter()
           .load(gift)
           .into(imageView)
       }

@@ -27,6 +27,9 @@ class MusicListAdapter(
     fun bindingData(data: Music) {
       binding.music = data
 
+      if(binding.musicStoreViewModel == null){
+        binding.musicStoreViewModel = MusicStoreViewModel()
+      }
     }
   }
 
@@ -102,7 +105,7 @@ class MusicListAdapter(
       oldList[oldItemPosition].id == newList[newItemPosition].id
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-      oldList[oldItemPosition].title == newList[newItemPosition].title
+      oldList[oldItemPosition].count_play == newList[newItemPosition].count_play
 
   }
 }

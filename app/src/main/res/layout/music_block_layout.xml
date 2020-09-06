@@ -46,16 +46,19 @@
       </androidx.cardview.widget.CardView>
 
       <RelativeLayout
-        android:layout_width="@dimen/dimen_28"
-        android:layout_height="@dimen/dimen_28"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_40"
         android:layout_centerInParent="true"
         android:background="@drawable/circle_box_with_border_background"
         app:hideView="@{musicStoreViewModel.music != null &amp;&amp; musicStoreViewModel.playing &amp;&amp; musicStoreViewModel.music.id == music.id}">
 
         <ImageView
-          android:layout_width="@dimen/dimen_22"
-          android:layout_height="@dimen/dimen_22"
+          android:layout_width="@dimen/dimen_20"
+          android:layout_height="@dimen/dimen_20"
           android:layout_centerInParent="true"
+          android:scaleType="centerCrop"
+          android:scaleX="0.94"
+          android:scaleY="0.94"
           app:bindGift="@{VariableData.LOADING_GIF_URL}" />
       </RelativeLayout>
     </RelativeLayout>

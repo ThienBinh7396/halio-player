@@ -12,4 +12,7 @@
   <string name="more_genre">Add more good hints as you hear more.</string>
   <string name="no_items">No Items</string>
   <string name="no_content">No Content</string>
+  <string name="genre">Genre</string>
+  <string name="peaceful_piano">Peaceful piano</string>
+  <string name="music_to_help_you_concentrate">Music to help you concentrate.</string>
 </resources>

@@ -38,6 +38,9 @@
         layout="@layout/genres_layout"
         app:genreViewModel="@{mGenreViewModel}" />
 
+      <include
+        layout="@layout/peaceful_piano_layout"
+        app:genreViewModel="@{mGenreViewModel}" />
     </LinearLayout>
   </ScrollView>
 </layout>
