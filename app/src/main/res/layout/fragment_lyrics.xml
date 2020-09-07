@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="com.thienbinh.halioplayer.adapter.EDisplayStyle" />
+
+    <import type="com.thienbinh.halioplayer.utils.Helper" />
+
+    <variable
+      name="mFragmentLyricsViewModel"
+      type="com.thienbinh.halioplayer.viewModel.FragmentLyricsViewModel" />
+  </data>
+
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:cardElevation="@dimen/dimen_0">
+
+      <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/track_cover" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      tools:context=".ui.fragment.LyricsFragment"
+      android:paddingBottom="@dimen/bottom_music_sheet_min_height">
+
+      <com.example.shoptify.ui.custom.ScaleClickView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+          android:id="@+id/goBack"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_app_bar_height"
+          android:orientation="horizontal"
+          android:paddingHorizontal="@dimen/dimen_20">
+
+          <ImageButton
+            android:id="@+id/ibnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_8"
+            android:layout_gravity="center"
+            android:background="@color/colorTransparent"
+            android:rotation="90"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_left_back"
+            android:tint="@color/textColorLight" />
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/averta_extra"
+            android:text="@string/back_text"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        </LinearLayout>
+      </com.example.shoptify.ui.custom.ScaleClickView>
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvLyrics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_16"
+        app:bindLyricText="@{ mFragmentLyricsViewModel.lyrics }" />
+
+    </LinearLayout>
+  </FrameLayout>
+</layout>

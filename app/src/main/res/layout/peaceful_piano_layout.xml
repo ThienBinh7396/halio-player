@@ -50,7 +50,8 @@
       android:layout_height="wrap_content"
       android:layout_below="@+id/tvCaption"
       android:layout_marginTop="@dimen/dimen_16"
-      android:paddingHorizontal="@dimen/dimen_24">
+      android:paddingEnd="@dimen/dimen_24"
+      android:paddingStart="@dimen/dimen_0">
 
       <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

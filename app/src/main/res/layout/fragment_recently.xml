@@ -27,7 +27,7 @@
 
       <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/dimen_app_bar_height"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dimen_20">
 

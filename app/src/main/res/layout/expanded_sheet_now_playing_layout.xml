@@ -5,6 +5,8 @@
 
   <data>
 
+    <import type="com.thienbinh.halioplayer.constant.EFragmentName" />
+
     <variable
       name="musicStoreViewModel"
       type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
@@ -20,8 +22,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:foreground="@drawable/bottom_music_sheet_layout_background_with_alpha"
-      app:cardElevation="0dp"
-      >
+      app:cardElevation="0dp">
 
       <ImageView
         android:layout_width="match_parent"
@@ -100,8 +101,8 @@
               android:layout_centerInParent="true"
               android:clipToPadding="true"
               android:foreground="@drawable/black_mask_background_circle"
-              app:cardElevation="0dp"
-              app:cardBackgroundColor="@color/colorTransparent">
+              app:cardBackgroundColor="@color/colorTransparent"
+              app:cardElevation="0dp">
 
               <ImageView
                 android:id="@+id/imvThumbnail"
@@ -246,7 +247,7 @@
         </RelativeLayout>
       </androidx.core.widget.NestedScrollView>
 
-      <LinearLayout
+      <com.example.shoptify.ui.custom.ScaleClickView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -255,8 +256,11 @@
         android:layout_marginBottom="@dimen/bottom_tab_layout_height"
         android:clickable="true"
         android:focusable="true"
+        android:onClick="@{() -> musicStoreViewModel.mainActivityListener.onGoToFragmentClick(EFragmentName.LYRIC_FRAGMENT, null)}"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/dimen_6">
+        android:translationZ="@dimen/dimen_1"
+        android:paddingBottom="@dimen/dimen_8"
+        tools:targetApi="lollipop">
 
         <TextView
           android:layout_width="wrap_content"
@@ -271,9 +275,10 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:layout_marginStart="@dimen/dimen_1"
+          android:layout_marginTop="-2dp"
           android:scaleY="0.9"
           android:src="@drawable/ic_baseline_chevron_right_24" />
-      </LinearLayout>
+      </com.example.shoptify.ui.custom.ScaleClickView>
     </RelativeLayout>
   </RelativeLayout>
 </layout>

@@ -13,24 +13,27 @@ import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.thienbinh.halioplayer.GlideApp
 import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.adapter.EDisplayStyle
 import com.thienbinh.halioplayer.adapter.GenreListAdapter
+import com.thienbinh.halioplayer.adapter.LyricTextAdapter
 import com.thienbinh.halioplayer.adapter.MusicListAdapter
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_DATA_BUNDLE
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_DATA_BUNDLE_MUSIC
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_UPDATE
 import com.thienbinh.halioplayer.constant.SCALE_DP_PX
+import com.thienbinh.halioplayer.model.Lyric
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.store
+import com.thienbinh.halioplayer.utils.CenterSmpothScroller
 import com.thienbinh.halioplayer.utils.Helper
 import com.thienbinh.halioplayer.utils.RecyclerViewTouchListener
 import com.thienbinh.halioplayer.utils.SpaceItemDecoration
+import kotlin.math.max
+import kotlin.math.min
 
 
 class DataBindingHelper {
@@ -325,6 +328,98 @@ class DataBindingHelper {
           .fitCenter()
           .load(gift)
           .into(imageView)
+      }
+    }
+
+    @BindingAdapter(value = ["app:bindGradientLyricText", "app:bindPosition"])
+    @JvmStatic
+    fun bindGradientText(textView: TextView, isBinding: Boolean, position: Int = 0) {
+      Log.d("Binh", "IS Binding: $isBinding ${textView.height} , $position")
+
+      if (isBinding) {
+        var shaderGradientLyric = LinearGradient(
+          0f, 0f, 0f, textView.height.toFloat(),
+          Color.parseColor("#2d2d2d"),
+          Color.parseColor("#d8d8d8"),
+          Shader.TileMode.CLAMP
+        )
+
+        textView.paint.shader = shaderGradientLyric
+      } else {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+          textView.setTextColor(textView.resources.getColor(R.color.colorWhite, null))
+        } else {
+          textView.setTextColor(textView.resources.getColor(R.color.colorWhite))
+        }
+      }
+    }
+
+    @BindingAdapter("app:bindLyricText")
+    @JvmStatic
+    fun bindLyricText(rcv: RecyclerView, lyrics: MutableList<Lyric>?) {
+      var adapter = rcv.adapter ?: LyricTextAdapter()
+
+      if (rcv.adapter == null) {
+        rcv.adapter = adapter
+
+        rcv.layoutManager = object: GridLayoutManager(
+          rcv.context,
+          1,
+          GridLayoutManager.VERTICAL,
+          false
+        ){
+          override fun smoothScrollToPosition(
+            recyclerView: RecyclerView?,
+            state: RecyclerView.State?,
+            position: Int
+          ) {
+            val smoothScroller = CenterSmpothScroller(recyclerView!!.context)
+            smoothScroller.targetPosition = position
+            startSmoothScroll(smoothScroller)
+          }
+        }
+
+//        val snapHelper = object : LinearSnapHelper() {
+//          override fun findTargetSnapPosition(
+//            layoutManager: RecyclerView.LayoutManager?,
+//            velocityX: Int,
+//            velocityY: Int
+//          ): Int {
+//            val centerView = findSnapView(layoutManager) ?: return RecyclerView.NO_POSITION
+//
+//            val position = layoutManager?.getPosition(centerView)
+//
+//            var targetPosition = -1
+//
+//            if (layoutManager != null && layoutManager.canScrollVertically() && position != null) {
+//              targetPosition = if (velocityY < 0) {
+//                position - 1
+//              } else {
+//                position + 1
+//              }
+//            }
+//
+//            val firstItem = 0
+//            val lastItem = layoutManager?.itemCount ?: 1 - 1
+//
+//            targetPosition = min(lastItem, max(targetPosition, firstItem))
+//
+//            Log.d("Binh", "Target position: $targetPosition")
+//
+//            return targetPosition
+//          }
+//        }
+
+        val snapHelper = PagerSnapHelper()
+
+        snapHelper.attachToRecyclerView(rcv)
+        rcv.onFlingListener = snapHelper
+      }
+
+      adapter = adapter as LyricTextAdapter
+
+      if (lyrics != null) {
+        adapter.updateList(lyrics)
       }
     }
   }

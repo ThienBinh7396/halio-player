@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
   companion object {
     private var navControllerMainActivity: NavController? = null
 
+    var mFragmentName = EFragmentName.HOME_FRAGMENT
+
     fun navigate(id: Int, bundle: Bundle? = null) {
       navControllerMainActivity?.navigate(id, bundle)
     }
@@ -122,6 +124,24 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
         if (isExpanded) BottomSheetBehavior.STATE_EXPANDED else BottomSheetBehavior.STATE_COLLAPSED
     } catch (err: Error) {
       Toast.makeText(applicationContext, err.message, Toast.LENGTH_SHORT).show()
+    }
+  }
+
+  override fun onGoToFragmentClick(fragmentName: EFragmentName, data: Any?) {
+    if (mFragmentName == fragmentName) {
+      Toast.makeText(applicationContext, fragmentName.titleFragment, Toast.LENGTH_SHORT).show()
+      return
+    }
+
+    when (fragmentName) {
+      EFragmentName.LYRIC_FRAGMENT -> {
+        navigate(R.id.action_homeFragment_to_lyricsFragment)
+        toggleStateMusicBottomSheet(false)
+      }
+
+      else -> {
+
+      }
     }
   }
 }

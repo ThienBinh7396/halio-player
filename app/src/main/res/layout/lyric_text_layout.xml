@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <variable
+      name="lyric"
+      type="com.thienbinh.halioplayer.model.Lyric" />
+  </data>
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/averta_extra"
+    android:lineSpacingExtra="3dp"
+    android:lineSpacingMultiplier="1"
+    android:paddingHorizontal="@dimen/dimen_36"
+    android:paddingBottom="@dimen/dimen_12"
+    android:text="@{lyric.content}"
+    android:textAlignment="center"
+    android:textSize="42sp"
+    android:textStyle="bold"
+    android:textColor="@{lyric.active ? @color/colorLyricActive : @color/colorLyricTextDarken}"/>
+</layout>

@@ -15,17 +15,33 @@
       app:destination="@id/recentlyFragment"
       app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
       app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+    <action
+      android:id="@+id/action_homeFragment_to_lyricsFragment"
+      app:destination="@id/lyricsFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
 
   </fragment>
   <fragment
     android:id="@+id/recentlyFragment"
     android:name="com.thienbinh.halioplayer.ui.fragment.RecentlyFragment"
     android:label="fragment_recently"
-    tools:layout="@layout/fragment_recently" >
+    tools:layout="@layout/fragment_recently">
     <action
-      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
-      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size"
       android:id="@+id/action_recentlyFragment_to_homeFragment"
-      app:destination="@id/homeFragment" />
+      app:destination="@id/homeFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+  </fragment>
+  <fragment
+    android:id="@+id/lyricsFragment"
+    android:name="com.thienbinh.halioplayer.ui.fragment.LyricsFragment"
+    android:label="fragment_lyrics"
+    tools:layout="@layout/fragment_lyrics">
+    <action
+      android:id="@+id/action_lyricsFragment_to_homeFragment"
+      app:destination="@id/homeFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
   </fragment>
 </navigation>

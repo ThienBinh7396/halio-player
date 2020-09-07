@@ -62,6 +62,6 @@ dependencies {
     kapt 'androidx.databinding:databinding-compiler:4.0.1'
 
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    implementation 'joda-time:joda-time:2.10.6'
 }

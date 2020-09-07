@@ -2,18 +2,41 @@ package com.thienbinh.halioplayer.utils
 
 import android.graphics.Color
 import android.util.Log
+import com.thienbinh.halioplayer.model.Lyric
 import com.thienbinh.halioplayer.model.Music
+import org.joda.time.format.DateTimeFormat.forPattern
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
+import kotlin.time.Duration
+import kotlin.time.milliseconds
 
 class Helper {
   companion object {
-    private val simpleDataFormatMusicDuration = SimpleDateFormat("mm:ss", Locale.US)
+    private val simpleDateFormatMusicDuration = SimpleDateFormat("mm:ss", Locale.US)
+    private val simpleDateFormatMusicTime = SimpleDateFormat("mm:ss.SS", Locale.US)
+    private val jodaTimeFormatMusicTime = forPattern("mm:ss.SS")
+
+    private val lineLyricPattern =
+      "\\[(.*?)](.*)".toRegex(setOf(RegexOption.MULTILINE, RegexOption.IGNORE_CASE))
 
     @JvmStatic
     fun formatMusicDuration(milliSec: Long): String {
-      return simpleDataFormatMusicDuration.format(Date(milliSec))
+      return simpleDateFormatMusicDuration.format(Date(milliSec))
+    }
+
+    @JvmStatic
+    fun convertTimeStringToMilliSec(time: String): Int {
+      val date = jodaTimeFormatMusicTime.parseDateTime(time)
+      return date.millisOfDay
+    }
+
+    @JvmStatic
+    fun convertLineFromLrcFileToLyric(line: String): Lyric {
+      val matchResult = lineLyricPattern.find(line)
+      val (time, content) = matchResult!!.destructured
+
+      return Lyric(time, content)
     }
 
     fun adjustAlpha(color: Int, factor: Float): Int {

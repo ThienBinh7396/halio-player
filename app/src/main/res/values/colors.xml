@@ -9,6 +9,8 @@
   <color name="textColorLight">#d4d4d4</color>
   <color name="textColorDarken">#ababab</color>
   <color name="colorWhite">#fafafa</color>
+  <color name="colorLyricActive">#cececf</color>
+  <color name="colorLyricTextDarken">#3E3D3D</color>
 
   <color name="colorButtonDisabled">#1E1C1C</color>
   <color name="bottom_layout_icon_default">#cad0de</color>

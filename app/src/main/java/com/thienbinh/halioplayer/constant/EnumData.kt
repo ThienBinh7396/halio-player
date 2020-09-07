@@ -6,8 +6,14 @@ enum class EActionMusicTypeSource {
   URI
 }
 
-enum class EMusicPlayRepeat{
+enum class EMusicPlayRepeat {
   NO_REPEAT,
   REPEAT_ONE,
   REPEAT_ALL
+}
+
+enum class EFragmentName(val titleFragment: String) {
+  LYRIC_FRAGMENT("Lyric"),
+  HOME_FRAGMENT("Home"),
+  RECENT_FRAGMENT("Recently played")
 }
