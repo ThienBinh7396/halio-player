@@ -34,11 +34,15 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
     private val mapFragmentWithDestinationId: Map<EFragmentName, Map<EFragmentName, Int>> = mapOf(
       EFragmentName.HOME_FRAGMENT to mapOf(
         EFragmentName.RECENT_FRAGMENT to R.id.action_homeFragment_to_recentlyFragment,
-        EFragmentName.LYRIC_FRAGMENT to R.id.action_homeFragment_to_lyricsFragment
+        EFragmentName.LYRIC_FRAGMENT to R.id.action_homeFragment_to_lyricsFragment,
+        EFragmentName.ALBUM_FRAGMENT to R.id.action_homeFragment_to_albumDetailsFragment
       ),
       EFragmentName.RECENT_FRAGMENT to mapOf(
         EFragmentName.HOME_FRAGMENT to R.id.action_recentlyFragment_to_homeFragment,
         EFragmentName.LYRIC_FRAGMENT to R.id.action_recentlyFragment_to_lyricsFragment
+      ),
+      EFragmentName.ALBUM_FRAGMENT to mapOf(
+        EFragmentName.HOME_FRAGMENT to R.id.action_albumDetailsFragment_to_homeFragment
       )
     )
 
@@ -150,9 +154,10 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
 
     navigate(mapFragmentWithDestinationId[mFragmentName]?.get(fragmentName))
 
+
+    toggleStateMusicBottomSheet(false)
     when (fragmentName) {
       EFragmentName.LYRIC_FRAGMENT -> {
-        toggleStateMusicBottomSheet(false)
       }
 
       else -> {

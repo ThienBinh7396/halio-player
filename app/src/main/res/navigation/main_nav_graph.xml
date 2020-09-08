@@ -20,6 +20,9 @@
       app:destination="@id/lyricsFragment"
       app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
       app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+    <action
+      android:id="@+id/action_homeFragment_to_albumDetailsFragment"
+      app:destination="@id/albumDetailsFragment" />
 
   </fragment>
   <fragment
@@ -48,5 +51,18 @@
       app:destination="@id/homeFragment"
       app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
       app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+  </fragment>
+  <fragment
+    android:id="@+id/albumDetailsFragment"
+    android:name="com.thienbinh.halioplayer.ui.fragment.AlbumDetailsFragment"
+    android:label="fragment_album_details"
+    tools:layout="@layout/fragment_album_details">
+    <argument
+      android:name="album"
+      app:argType="com.thienbinh.halioplayer.model.Album"
+      app:nullable="true" />
+    <action
+      android:id="@+id/action_albumDetailsFragment_to_homeFragment"
+      app:destination="@id/homeFragment" />
   </fragment>
 </navigation>

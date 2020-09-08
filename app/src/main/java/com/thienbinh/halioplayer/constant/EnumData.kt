@@ -21,5 +21,6 @@ enum class EMusicPlayRepeat {
 enum class EFragmentName(val titleFragment: String) {
   LYRIC_FRAGMENT("Lyric"),
   HOME_FRAGMENT("Home"),
-  RECENT_FRAGMENT("Recently played")
+  RECENT_FRAGMENT("Recently played"),
+  ALBUM_FRAGMENT("ALBUM_FRAGMENT")
 }

@@ -36,6 +36,8 @@ class AlbumListAdapter : RecyclerView.Adapter<AlbumListAdapter.AlbumListViewHold
 
   override fun getItemCount(): Int = mAlbums.size
 
+  fun getItemAt(position: Int) = mAlbums[position]
+
   fun updateList(newList: MutableList<Album>){
     val diffCallback = AlbumListCallback(mAlbums, newList)
     val diffResult = DiffUtil.calculateDiff(diffCallback)

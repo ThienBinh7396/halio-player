@@ -21,7 +21,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="wrap_content"
+      android:background="@color/colorTransparent">
 
       <com.google.android.material.appbar.CollapsingToolbarLayout
         android:layout_width="match_parent"
@@ -32,17 +33,50 @@
 
         <ImageView
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="280dp"
           android:scaleType="centerCrop"
-          android:src="@{album.thumbnail}"
+          app:bindSrcImage="@{album.thumbnail}"
           app:layout_collapseMode="parallax" />
+
+        <LinearLayout
+          android:id="@+id/goBack"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dimen_app_bar_height"
+          android:orientation="horizontal"
+          android:layout_gravity="top"
+          app:layout_collapseMode="pin"
+          android:paddingHorizontal="@dimen/dimen_20">
+
+          <ImageButton
+            android:id="@+id/ibnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_8"
+            android:layout_gravity="center"
+            android:background="@color/colorTransparent"
+            android:rotation="90"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_left_back"
+            android:tint="@color/textColorLight" />
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/averta_extra"
+            android:text="@string/back_text"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        </LinearLayout>
 
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_gravity="bottom"
           android:orientation="vertical"
-          app:layout_collapseMode="pin">
+          app:layout_collapseMode="pin"
+          android:background="@color/colorTransparent">
 
           <TextView
             android:layout_width="match_parent"

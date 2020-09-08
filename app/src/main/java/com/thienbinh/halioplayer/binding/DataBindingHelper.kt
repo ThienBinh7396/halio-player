@@ -10,10 +10,12 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.thienbinh.halioplayer.GlideApp
+import com.thienbinh.halioplayer.MainActivity
 import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.adapter.*
 import com.thienbinh.halioplayer.constant.*
@@ -314,7 +316,8 @@ class DataBindingHelper {
       someThing: Any
     ) {
       if (rcv.adapter == null) {
-        rcv.adapter = AlbumListAdapter()
+        val adapter = AlbumListAdapter()
+        rcv.adapter = adapter
 
         rcv.layoutManager = LinearLayoutManager(
           rcv.context,
@@ -323,6 +326,21 @@ class DataBindingHelper {
         )
 
         rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
+
+        rcv.addOnItemTouchListener(RecyclerViewTouchListener(
+          rcv.context,
+          rcv,
+          object : RecyclerViewTouchListener.ClickListener {
+            override fun onClick(view: View?, position: Int) {
+              val bundle = bundleOf("album" to adapter.getItemAt(position))
+
+              MainActivity.navigate(R.id.action_homeFragment_to_albumDetailsFragment, bundle)
+            }
+
+            override fun onLongClick(view: View?, position: Int) {
+            }
+          }
+        ))
       }
     }
 
@@ -369,12 +387,12 @@ class DataBindingHelper {
       if (rcv.adapter == null) {
         rcv.adapter = adapter
 
-        rcv.layoutManager = object: GridLayoutManager(
+        rcv.layoutManager = object : GridLayoutManager(
           rcv.context,
           1,
           GridLayoutManager.VERTICAL,
           false
-        ){
+        ) {
           override fun smoothScrollToPosition(
             recyclerView: RecyclerView?,
             state: RecyclerView.State?,
