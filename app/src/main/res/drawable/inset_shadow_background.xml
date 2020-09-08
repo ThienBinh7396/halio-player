@@ -18,7 +18,7 @@
         android:centerColor="#00FFFFFF"
         android:centerY="0.8"
         android:endColor="#00FFFFFF"
-        android:startColor="#79000000"
+        android:startColor="#9A000000"
         android:type="linear" />
     </shape>
   </item>
@@ -30,7 +30,7 @@
         android:centerColor="#00FFFFFF"
         android:centerY="0.8"
         android:endColor="#00FFFFFF"
-        android:startColor="#79000000"
+        android:startColor="#9A000000"
         android:type="linear" />
     </shape>
   </item>

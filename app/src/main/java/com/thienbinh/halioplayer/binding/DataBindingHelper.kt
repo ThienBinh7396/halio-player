@@ -8,8 +8,6 @@ import android.graphics.*
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -18,20 +16,13 @@ import com.bumptech.glide.Glide
 import com.thienbinh.halioplayer.GlideApp
 import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.adapter.*
-import com.thienbinh.halioplayer.constant.ACTION_MUSIC_DATA_BUNDLE
-import com.thienbinh.halioplayer.constant.ACTION_MUSIC_DATA_BUNDLE_MUSIC
-import com.thienbinh.halioplayer.constant.ACTION_MUSIC_UPDATE
-import com.thienbinh.halioplayer.constant.SCALE_DP_PX
+import com.thienbinh.halioplayer.constant.*
 import com.thienbinh.halioplayer.model.Lyric
 import com.thienbinh.halioplayer.model.Music
-import com.thienbinh.halioplayer.store
 import com.thienbinh.halioplayer.utils.CenterSmpothScroller
 import com.thienbinh.halioplayer.utils.Helper
 import com.thienbinh.halioplayer.utils.RecyclerViewTouchListener
 import com.thienbinh.halioplayer.utils.SpaceItemDecoration
-import kotlin.math.max
-import kotlin.math.min
-
 
 class DataBindingHelper {
   companion object {

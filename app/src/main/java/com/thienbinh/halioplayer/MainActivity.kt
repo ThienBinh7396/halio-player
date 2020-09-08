@@ -31,7 +31,20 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
 
     var mFragmentName = EFragmentName.HOME_FRAGMENT
 
-    fun navigate(id: Int, bundle: Bundle? = null) {
+    private val mapFragmentWithDestinationId: Map<EFragmentName, Map<EFragmentName, Int>> = mapOf(
+      EFragmentName.HOME_FRAGMENT to mapOf(
+        EFragmentName.RECENT_FRAGMENT to R.id.action_homeFragment_to_recentlyFragment,
+        EFragmentName.LYRIC_FRAGMENT to R.id.action_homeFragment_to_lyricsFragment
+      ),
+      EFragmentName.RECENT_FRAGMENT to mapOf(
+        EFragmentName.HOME_FRAGMENT to R.id.action_recentlyFragment_to_homeFragment,
+        EFragmentName.LYRIC_FRAGMENT to R.id.action_recentlyFragment_to_lyricsFragment
+      )
+    )
+
+    fun navigate(id: Int?, bundle: Bundle? = null) {
+      if (id == null) return
+
       navControllerMainActivity?.navigate(id, bundle)
     }
   }
@@ -129,13 +142,16 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
 
   override fun onGoToFragmentClick(fragmentName: EFragmentName, data: Any?) {
     if (mFragmentName == fragmentName) {
-      Toast.makeText(applicationContext, fragmentName.titleFragment, Toast.LENGTH_SHORT).show()
+      Toast.makeText(applicationContext, "${fragmentName.titleFragment} is showing", Toast.LENGTH_SHORT).show()
       return
     }
 
+    Log.d("Binh", "Recently fragment: ${mFragmentName.titleFragment}")
+
+    navigate(mapFragmentWithDestinationId[mFragmentName]?.get(fragmentName))
+
     when (fragmentName) {
       EFragmentName.LYRIC_FRAGMENT -> {
-        navigate(R.id.action_homeFragment_to_lyricsFragment)
         toggleStateMusicBottomSheet(false)
       }
 

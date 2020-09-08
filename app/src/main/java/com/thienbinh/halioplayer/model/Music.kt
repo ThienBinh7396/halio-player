@@ -280,7 +280,7 @@ class Music(
                 )
               ),
               hasLyric = true,
-              lyricHref = "https://res.cloudinary.com/do1xjyyru/raw/upload/v1599546847/mp3/thu_cuoi_edm.lrc"
+              lyricHref = "https://res.cloudinary.com/do1xjyyru/raw/upload/v1599555278/mp3/thu_cuoi_edm.lrc"
             )
           )
 

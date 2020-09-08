@@ -46,6 +46,8 @@ class LyricsFragment : Fragment(), StoreSubscriber<MusicState> {
 
   private val handlerThread = HandlerThread("URLConnection")
 
+  private var isRunning = false
+
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
@@ -89,9 +91,13 @@ class LyricsFragment : Fragment(), StoreSubscriber<MusicState> {
           var line: String?
 
           while (true) {
+            if (!isRunning) return@postDelayed
+
             line = reader.readLine()
 
             if (line == null) break
+
+            if(line.trim().isEmpty()) continue
 
             val lyric = Helper.convertLineFromLrcFileToLyric(line)
 
@@ -162,6 +168,8 @@ class LyricsFragment : Fragment(), StoreSubscriber<MusicState> {
   override fun onStart() {
     super.onStart()
 
+    isRunning = true
+
     store.subscribe(this) {
       it.select {
         it.musicState
@@ -171,6 +179,8 @@ class LyricsFragment : Fragment(), StoreSubscriber<MusicState> {
 
   override fun onDestroy() {
     super.onDestroy()
+
+    isRunning = false
 
     store.unsubscribe(this)
   }

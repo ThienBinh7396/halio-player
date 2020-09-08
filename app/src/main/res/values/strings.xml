@@ -19,4 +19,8 @@
   <string name="no_lyrics">No lyrics for this music</string>
   <string name="playlist">Playlist</string>
   <string name="more_playlist">The playlists are full of your favorite music.</string>
+  <string name="edm_hit">EDM Hits 2020</string>
+  <string name="edm_caption">The best EDM Hits of 2020!</string>
+  <string name="acoustic_hit">Acoustic Hits</string>
+  <string name="acoustic_caption">A mix of folksy hits, soulful acoustic, and beloved singer-songwriter gems.</string>
 </resources>

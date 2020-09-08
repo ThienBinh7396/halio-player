@@ -26,6 +26,11 @@ class Helper {
     }
 
     @JvmStatic
+    fun formatMusicDuration(milliSec: Int): String {
+      return simpleDateFormatMusicDuration.format(Date(milliSec.toLong()))
+    }
+
+    @JvmStatic
     fun convertTimeStringToMilliSec(time: String): Int {
       val date = jodaTimeFormatMusicTime.parseDateTime(time)
       return date.millisOfDay

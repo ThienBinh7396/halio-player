@@ -3,6 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
+    <import type="com.thienbinh.halioplayer.constant.EDisplayStyle" />
 
     <variable
       name="mGenreViewModel"
@@ -26,6 +27,14 @@
       android:paddingBottom="@dimen/bottom_music_sheet_min_height">
 
       <include
+        layout="@layout/genre_section_layout"
+        app:title="@{@string/made_for_you}"
+        app:caption="@{@string/daily_mixes}"
+        app:genreId="@{0}"
+        app:displayStyle="@{EDisplayStyle.BLOCK_STYLE}"
+        app:genreViewModel="@{mGenreViewModel}" />
+
+      <include
         layout="@layout/made_for_you_layout"
         app:genreViewModel="@{mGenreViewModel}" />
 
@@ -39,12 +48,30 @@
         app:genreViewModel="@{mGenreViewModel}" />
 
       <include
-        layout="@layout/peaceful_piano_layout"
+        layout="@layout/genre_section_layout"
+        app:title="@{@string/peaceful_piano}"
+        app:caption="@{@string/from_the_radio}"
+        app:genreId="@{3}"
+        app:displayStyle="@{EDisplayStyle.LIST_STYLE}"
         app:genreViewModel="@{mGenreViewModel}" />
 
       <include
         layout="@layout/albums_layout"
         app:genreViewModel="@{mGenreViewModel}" />
+
+      <include
+        layout="@layout/album_section_layout"
+        app:albumId="@{ 1 }"
+        app:caption="@{@string/edm_caption}"
+        app:genreViewModel="@{mGenreViewModel}"
+        app:title="@{@string/edm_hit}" />
+
+      <include
+        layout="@layout/album_section_layout"
+        app:albumId="@{ 2 }"
+        app:caption="@{@string/acoustic_caption}"
+        app:genreViewModel="@{mGenreViewModel}"
+        app:title="@{@string/acoustic_hit}" />
     </LinearLayout>
   </ScrollView>
 </layout>

@@ -41,7 +41,9 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
   @Bindable
   fun getAlbums() = mAlbums ?: Album.getInstance()
 
-  fun getAlbumById(id: Int) = mAlbums?.find { it.id == id } ?: Album.getInstance()[0]
+  fun getAlbumById(id: Int): Album {
+    return mAlbums?.find { it.id == id } ?: Album.getInstance()[0]
+  }
 
   @Bindable
   fun getRecentlyPlayed() = mRecentlyPlayedList
@@ -65,9 +67,12 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       notifyPropertyChanged(BR.recentlyPlayed)
     }
 
-    if (Album.checkListAreTheSame(mAlbums!!, state.albums)){
+    if (!Album.checkListAreTheSame(mAlbums!!, state.albums)) {
       mAlbums = state.albums
 
+      Log.d("Binh", "Albums update ${Gson().toJson(mAlbums!!)}")
+
+      notifyPropertyChanged(BR.albums)
     }
   }
 }

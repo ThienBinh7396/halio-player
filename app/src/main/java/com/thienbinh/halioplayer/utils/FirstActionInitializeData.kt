@@ -14,8 +14,8 @@ class FirstActionInitializeData {
   companion object {
     fun initialize(context: Context) {
       Genre.createInstance()
-      Music.initializeList()
       Album.createInstance()
+      Music.initializeList()
 
       if (Genre.getGenreById(0)!!.musicList.size == 0){
         Genre.mapMusicToGenre()

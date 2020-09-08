@@ -7,15 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.thienbinh.halioplayer.R
+import com.thienbinh.halioplayer.constant.EDisplayStyle
 import com.thienbinh.halioplayer.databinding.MusicBlockLayoutBinding
+import com.thienbinh.halioplayer.databinding.MusicInAlbumLayoutBinding
 import com.thienbinh.halioplayer.databinding.MusicListLayoutBinding
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
-
-enum class EDisplayStyle {
-  BLOCK_STYLE,
-  LIST_STYLE
-}
 
 class MusicListAdapter(
   private var mMusicList: MutableList<Music> = mutableListOf(),
@@ -27,7 +24,7 @@ class MusicListAdapter(
     fun bindingData(data: Music) {
       binding.music = data
 
-      if(binding.musicStoreViewModel == null){
+      if (binding.musicStoreViewModel == null) {
         binding.musicStoreViewModel = MusicStoreViewModel()
       }
     }
@@ -38,7 +35,21 @@ class MusicListAdapter(
     fun bindingData(data: Music) {
       binding.music = data
 
-      if(binding.musicStoreViewModel == null){
+      if (binding.musicStoreViewModel == null) {
+        binding.musicStoreViewModel = MusicStoreViewModel()
+      }
+    }
+  }
+
+  class MusicInAlbumStyleViewHolder(private val binding: MusicInAlbumLayoutBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    fun bindingData(data: Music, position: Int) {
+      binding.music = data
+
+      binding.position = position
+
+      if (binding.musicStoreViewModel == null) {
         binding.musicStoreViewModel = MusicStoreViewModel()
       }
     }
@@ -46,16 +57,23 @@ class MusicListAdapter(
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     when (displayStyle) {
-      EDisplayStyle.LIST_STYLE -> {
-        return MusicListStyleViewHolder(
-          DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.music_list_layout,
-            null,
-            false
-          )
+      EDisplayStyle.LIST_STYLE -> return MusicListStyleViewHolder(
+        DataBindingUtil.inflate(
+          LayoutInflater.from(parent.context),
+          R.layout.music_list_layout,
+          null,
+          false
         )
-      }
+      )
+      EDisplayStyle.IN_ALBUM -> return MusicInAlbumStyleViewHolder(
+        DataBindingUtil.inflate(
+          LayoutInflater.from(parent.context),
+          R.layout.music_in_album_layout,
+          null,
+          false
+        )
+      )
+
       else ->
         return MusicBlockStyleViewHolder(
           DataBindingUtil.inflate(
@@ -72,6 +90,12 @@ class MusicListAdapter(
     when (displayStyle) {
       EDisplayStyle.LIST_STYLE -> {
         (holder as MusicListStyleViewHolder).bindingData(data = mMusicList[position])
+      }
+      EDisplayStyle.IN_ALBUM -> {
+        (holder as MusicInAlbumStyleViewHolder).bindingData(
+          data = mMusicList[position],
+          position + 1
+        )
       }
       else ->
         (holder as MusicBlockStyleViewHolder).bindingData(data = mMusicList[position])

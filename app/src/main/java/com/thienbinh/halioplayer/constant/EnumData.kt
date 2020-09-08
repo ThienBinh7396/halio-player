@@ -6,6 +6,12 @@ enum class EActionMusicTypeSource {
   URI
 }
 
+enum class EDisplayStyle {
+  BLOCK_STYLE,
+  LIST_STYLE,
+  IN_ALBUM
+}
+
 enum class EMusicPlayRepeat {
   NO_REPEAT,
   REPEAT_ONE,

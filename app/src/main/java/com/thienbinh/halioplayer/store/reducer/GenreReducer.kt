@@ -1,5 +1,6 @@
 package com.thienbinh.halioplayer.store.reducer
 
+import android.util.Log
 import com.thienbinh.halioplayer.store.action.GenreAction
 import com.thienbinh.halioplayer.store.state.GenreState
 import com.thienbinh.halioplayer.store.state.RootState
@@ -22,6 +23,8 @@ fun genreReducer(action: Action, state: GenreState?): GenreState {
     }
 
     is GenreAction.GENRE_ACTION_UPDATE_ALBUMS -> {
+      Log.d("Binh", "GENRE_ACTION_UPDATE_ALBUMS")
+
       genreState = genreState.copy(
         albums = action.list
       )

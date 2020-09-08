@@ -79,8 +79,10 @@ class Album(
       instance!!.forEach {
         it.musics =
           Music.getInstance()
-            .filter { music -> music.albums.indexOfFirst { _genre -> _genre.id == it.id } > -1 }
+            .filter { music -> music.albums.indexOfFirst { _album -> _album.id == it.id } > -1 }
             .toMutableList()
+
+        Log.d("Binh", "Album: ${it.id} ${it.title} ${Gson().toJson(it.musics)}")
       }
 
       store.dispatch(GenreAction.GENRE_ACTION_UPDATE_ALBUMS(instance!!))
@@ -92,7 +94,7 @@ class Album(
       var check = true
 
       listOne.forEachIndexed { index, album ->
-        if (!Music.checkMusicListAreTheSame(album.musics, listSecond[index].musics)) {
+        if (album.id != listSecond[index].id || !Music.checkMusicListAreTheSame(album.musics, listSecond[index].musics)) {
           check = false
 
           return@forEachIndexed

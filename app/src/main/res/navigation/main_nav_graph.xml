@@ -32,6 +32,11 @@
       app:destination="@id/homeFragment"
       app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
       app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+    <action
+      android:id="@+id/action_recentlyFragment_to_lyricsFragment"
+      app:destination="@id/lyricsFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
   </fragment>
   <fragment
     android:id="@+id/lyricsFragment"

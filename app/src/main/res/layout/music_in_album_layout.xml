@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+  xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
+
   <data>
 
     <import type="com.thienbinh.halioplayer.constant.VariableData" />
+
+    <import type="com.thienbinh.halioplayer.utils.Helper" />
+
+    <variable
+      name="position"
+      type="Integer" />
 
     <variable
       name="musicStoreViewModel"
@@ -21,66 +29,74 @@
     android:orientation="horizontal">
 
     <RelativeLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content">
+      android:layout_width="@dimen/dimen_48"
+      android:layout_height="match_parent">
 
-      <androidx.cardview.widget.CardView
+      <ImageView
+        android:layout_width="@dimen/dimen_20"
+        android:layout_height="@dimen/dimen_20"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:scaleX="0.94"
+        android:scaleY="0.94"
+        app:bindGift="@{VariableData.LOADING_GIF_URL}"
+        app:hideView="@{musicStoreViewModel.music != null &amp;&amp; musicStoreViewModel.playing &amp;&amp; musicStoreViewModel.music.id == music.id}" />
+
+      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipToPadding="true"
-        android:foreground="@drawable/music_thumbnail_mask"
-        app:cardCornerRadius="@dimen/mask_block_radius"
-        app:cardElevation="0dp">
+        android:layout_centerHorizontal="true"
+        android:text="@{String.valueOf(position)}"
+        android:textSize="14sp"
+        app:hideView="@{musicStoreViewModel.music == null || !musicStoreViewModel.playing || musicStoreViewModel.music.id != music.id}" />
 
-
-        <ImageView
-          android:layout_width="@dimen/music_block_width"
-          android:layout_height="@dimen/music_block_height"
-          android:scaleType="centerCrop"
-          app:bindDarkenView="@{true}"
-          app:bindSrcImage="@{music.thumbnail}" />
-
-
-      </androidx.cardview.widget.CardView>
-
-      <RelativeLayout
-        android:layout_width="@dimen/dimen_40"
-        android:layout_height="@dimen/dimen_40"
-        android:layout_centerInParent="true"
-        android:background="@drawable/circle_box_with_border_background"
-        app:hideView="@{musicStoreViewModel.music != null &amp;&amp; musicStoreViewModel.playing &amp;&amp; musicStoreViewModel.music.id == music.id}">
-
-        <ImageView
-          android:layout_width="@dimen/dimen_20"
-          android:layout_height="@dimen/dimen_20"
-          android:layout_centerInParent="true"
-          android:scaleType="centerCrop"
-          android:scaleX="0.94"
-          android:scaleY="0.94"
-          app:bindGift="@{VariableData.LOADING_GIF_URL}" />
-      </RelativeLayout>
     </RelativeLayout>
 
 
-    <TextView
-      android:layout_width="@dimen/music_block_width"
+    <LinearLayout
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_8"
-      android:fontFamily="@font/averta_extra"
-      android:maxLines="1"
-      android:singleLine="true"
-      android:text="@{music.title}"
-      android:textColor="@color/textColorLight"
-      android:textSize="15sp" />
+      android:layout_weight="1"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_2"
+        android:fontFamily="@font/averta_extra"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@{music.title}"
+        android:textColor="@color/textColorLight"
+        android:textSize="15sp" />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_2"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@{music.singer}"
+        android:textColor="@color/textColorDarken"
+        android:textSize="12sp" />
+    </LinearLayout>
 
     <TextView
-      android:layout_width="@dimen/music_block_width"
+      android:layout_width="60dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dimen_2"
-      android:maxLines="1"
-      android:singleLine="true"
-      android:text="@{music.singer}"
+      android:layout_gravity="center"
+      android:text="@{Helper.formatMusicDuration(music.duration * 1000)}"
       android:textColor="@color/textColorDarken"
-      android:textSize="12sp" />
+      android:textSize="11sp"
+      tools:ignore="SmallSp" />
+
+    <ImageButton
+      android:layout_width="@dimen/dimen_12"
+      android:layout_height="@dimen/dimen_12"
+      android:layout_gravity="center"
+      android:layout_marginStart="@dimen/dimen_6"
+      android:background="@color/colorTransparent"
+      android:scaleType="fitXY"
+      android:src="@drawable/ic_plus" />
   </LinearLayout>
 </layout>
