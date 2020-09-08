@@ -136,12 +136,9 @@ class LyricsFragment : Fragment(), StoreSubscriber<MusicState> {
 
         mIndexActive = indexActive
 
-        mFragmentLyricsBinding.rcvLyrics.smoothScrollToPosition(indexActive)
-
         mFragmentLyricsBinding.mFragmentLyricsViewModel?.updateLyrics(lyrics)
 
-        Log.d("Binh", "Index: $oldIndexActive $indexActive")
-
+        mFragmentLyricsBinding.rcvLyrics.smoothScrollToPosition(indexActive)
       }
     }
   }

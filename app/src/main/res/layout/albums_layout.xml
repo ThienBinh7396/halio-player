@@ -6,8 +6,6 @@
 
     <import type="com.thienbinh.halioplayer.adapter.EDisplayStyle" />
 
-    <import type="com.thienbinh.halioplayer.utils.Helper" />
-
     <variable
       name="genreViewModel"
       type="com.thienbinh.halioplayer.viewModel.GenreViewModel" />
@@ -23,8 +21,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:fontFamily="@font/averta_extra"
-      android:text="@string/made_for_you"
-      android:textColor="@color/colorWhite"
+      android:text="@string/playlist"
+      android:textColor="@color/textColorLight"
       android:textSize="20sp"
       android:textStyle="bold" />
 
@@ -34,33 +32,14 @@
       android:layout_height="wrap_content"
       android:layout_below="@+id/tvTitle"
       android:layout_marginTop="@dimen/dimen_4"
-      android:text="@string/daily_mixes"
+      android:text="@string/more_playlist"
       android:textSize="14sp" />
 
-    <ImageButton
-      android:layout_width="@dimen/dimen_14"
-      android:layout_height="@dimen/dimen_14"
-      android:layout_below="@id/tvTitle"
-      android:layout_alignParentEnd="true"
-      android:layout_marginEnd="@dimen/dimen_24"
-      android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/tvCaption"
-      android:layout_marginTop="@dimen/dimen_16">
-
-      <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:bindMusicList="@{ genreViewModel.getGenreById(0).musicList }"
-        app:bindMusicListDisplayStyle="@{EDisplayStyle.BLOCK_STYLE}" />
-
-      <include
-        layout="@layout/no_items"
-        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.getGenreById(0).musicList)}" />
-    </FrameLayout>
-
+      android:layout_marginTop="@dimen/dimen_16"
+      app:bindAlbumList="@{true}" />
   </RelativeLayout>
 </layout>

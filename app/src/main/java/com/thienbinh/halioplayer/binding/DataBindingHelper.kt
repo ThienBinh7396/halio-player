@@ -17,10 +17,7 @@ import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
 import com.thienbinh.halioplayer.GlideApp
 import com.thienbinh.halioplayer.R
-import com.thienbinh.halioplayer.adapter.EDisplayStyle
-import com.thienbinh.halioplayer.adapter.GenreListAdapter
-import com.thienbinh.halioplayer.adapter.LyricTextAdapter
-import com.thienbinh.halioplayer.adapter.MusicListAdapter
+import com.thienbinh.halioplayer.adapter.*
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_DATA_BUNDLE
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_DATA_BUNDLE_MUSIC
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_UPDATE
@@ -319,6 +316,25 @@ class DataBindingHelper {
       }
     }
 
+    @BindingAdapter(value = ["app:bindAlbumList"])
+    @JvmStatic
+    fun bindAlbumList(
+      rcv: RecyclerView,
+      someThing: Any
+    ) {
+      if (rcv.adapter == null) {
+        rcv.adapter = AlbumListAdapter()
+
+        rcv.layoutManager = LinearLayoutManager(
+          rcv.context,
+          LinearLayoutManager.HORIZONTAL,
+          false
+        )
+
+        rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
+      }
+    }
+
     @BindingAdapter("app:bindGift")
     @JvmStatic
     fun bindGift(imageView: ImageView, gift: Any?) {
@@ -379,36 +395,6 @@ class DataBindingHelper {
           }
         }
 
-//        val snapHelper = object : LinearSnapHelper() {
-//          override fun findTargetSnapPosition(
-//            layoutManager: RecyclerView.LayoutManager?,
-//            velocityX: Int,
-//            velocityY: Int
-//          ): Int {
-//            val centerView = findSnapView(layoutManager) ?: return RecyclerView.NO_POSITION
-//
-//            val position = layoutManager?.getPosition(centerView)
-//
-//            var targetPosition = -1
-//
-//            if (layoutManager != null && layoutManager.canScrollVertically() && position != null) {
-//              targetPosition = if (velocityY < 0) {
-//                position - 1
-//              } else {
-//                position + 1
-//              }
-//            }
-//
-//            val firstItem = 0
-//            val lastItem = layoutManager?.itemCount ?: 1 - 1
-//
-//            targetPosition = min(lastItem, max(targetPosition, firstItem))
-//
-//            Log.d("Binh", "Target position: $targetPosition")
-//
-//            return targetPosition
-//          }
-//        }
 
         val snapHelper = PagerSnapHelper()
 

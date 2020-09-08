@@ -20,6 +20,12 @@ fun genreReducer(action: Action, state: GenreState?): GenreState {
         recentlyPlayed = action.list
       )
     }
+
+    is GenreAction.GENRE_ACTION_UPDATE_ALBUMS -> {
+      genreState = genreState.copy(
+        albums = action.list
+      )
+    }
   }
 
   return genreState

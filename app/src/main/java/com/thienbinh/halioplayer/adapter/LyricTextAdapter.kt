@@ -18,6 +18,8 @@ class LyricTextAdapter : RecyclerView.Adapter<LyricTextAdapter.LyricTextViewHold
     RecyclerView.ViewHolder(binding.root) {
     fun bindData(data: Lyric) {
       binding.lyric = data
+
+      binding.executePendingBindings()
     }
   }
 
@@ -43,8 +45,7 @@ class LyricTextAdapter : RecyclerView.Adapter<LyricTextAdapter.LyricTextViewHold
     val diffCallback = LyricTextDiffCallback(mLyrics, newList)
     val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-    mLyrics.clear()
-    mLyrics.addAll(newList)
+    mLyrics = newList
 
     diffResult.dispatchUpdatesTo(this)
   }
@@ -55,11 +56,15 @@ class LyricTextAdapter : RecyclerView.Adapter<LyricTextAdapter.LyricTextViewHold
 
     override fun getNewListSize(): Int = newList.size
 
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-      oldList[oldItemPosition].time == newList[newItemPosition].time
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
 
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-      oldList[oldItemPosition].isActive == newList[newItemPosition].isActive
+      return oldList[oldItemPosition].time == newList[newItemPosition].time
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+
+      return oldList[oldItemPosition].isActive == newList[newItemPosition].isActive
+    }
 
   }
 }

@@ -1,6 +1,5 @@
 package com.thienbinh.halioplayer.viewModel
 
-import android.util.Log
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.thienbinh.halioplayer.BR
@@ -13,7 +12,7 @@ class FragmentLyricsViewModel: BaseObservable() {
   fun getLyrics() = mLyrics
 
   fun updateLyrics(newList: MutableList<Lyric>){
-    mLyrics = Lyric.deepCloneGenreList(newList)
+    mLyrics = Lyric.deepCloneLyricList(newList)
 
     notifyPropertyChanged(BR.lyrics)
   }

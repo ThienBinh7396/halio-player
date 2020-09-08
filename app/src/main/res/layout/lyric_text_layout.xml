@@ -17,9 +17,9 @@
     android:lineSpacingMultiplier="1"
     android:paddingHorizontal="@dimen/dimen_36"
     android:paddingBottom="@dimen/dimen_12"
-    android:text="@{lyric.content}"
+    android:text="@{ lyric.content }"
     android:textAlignment="center"
-    android:textSize="42sp"
+    android:textSize="38sp"
     android:textStyle="bold"
     android:textColor="@{lyric.active ? @color/colorLyricActive : @color/colorLyricTextDarken}"/>
 </layout>

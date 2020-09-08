@@ -16,4 +16,7 @@
   <string name="peaceful_piano">Peaceful piano</string>
   <string name="music_to_help_you_concentrate">Music to help you concentrate.</string>
   <string name="back_text">Back</string>
+  <string name="no_lyrics">No lyrics for this music</string>
+  <string name="playlist">Playlist</string>
+  <string name="more_playlist">The playlists are full of your favorite music.</string>
 </resources>

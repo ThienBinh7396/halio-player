@@ -12,9 +12,12 @@ class Lyric(
   companion object {
     private val gson = Gson()
 
-    fun deepCloneGenreList(list: MutableList<Lyric>): MutableList<Lyric> {
+    fun deepCloneLyricList(list: MutableList<Lyric>): MutableList<Lyric> {
       return gson.fromJson(gson.toJson(list), Array<Lyric>::class.java).toMutableList()
     }
+
+
+    fun deepCloneLyric(lyric: Lyric) = gson.fromJson(gson.toJson(lyric), Lyric::class.java)
   }
 
   var time: Int = 0

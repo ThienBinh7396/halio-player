@@ -97,5 +97,6 @@ class Genre(
     fun deepCloneGenreList(list: MutableList<Genre>): MutableList<Genre> {
       return gson.fromJson(gson.toJson(list), Array<Genre>::class.java).toMutableList()
     }
+
   }
 }
