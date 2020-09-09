@@ -31,6 +31,8 @@
   <dimen name="dimen_14">14dp</dimen>
   <dimen name="dimen_22">22dp</dimen>
   <dimen name="dimen_36">36dp</dimen>
+  <dimen name="dimen_48">48dp</dimen>
+  <dimen name="dimen_32">32dp</dimen>
 
   <dimen name="bottom_tab_layout_indicator_view_height">32dp</dimen>
   <dimen name="bottom_tab_layout_icon_container_height">72dp</dimen>
@@ -56,7 +58,9 @@
   <dimen name="mask_block_radius">6dp</dimen>
   <dimen name="dimen_40">40dp</dimen>
   <dimen name="dimen_app_bar_height">56dp</dimen>
-  <dimen name="dimen_app_bar_large_height">82dp</dimen>
-  <dimen name="dimen_48">48dp</dimen>
+  <dimen name="dimen_app_bar_large_height">78dp</dimen>
+
+  <dimen name="expanded_top_image_height">280dp</dimen>
+  <dimen name="fragment_album_detail_title_font">24sp</dimen>
 
 </resources>

@@ -5,6 +5,8 @@
   <data>
 
     <import type="com.thienbinh.halioplayer.constant.EDisplayStyle" />
+    <import type="com.thienbinh.halioplayer.constant.EMusicRecycleView" />
+    <import type="com.thienbinh.halioplayer.constant.ETypeWidgetButton" />
 
     <import type="com.thienbinh.halioplayer.utils.Helper" />
 
@@ -53,10 +55,13 @@
       android:layout_marginTop="@dimen/dimen_16">
 
       <androidx.recyclerview.widget.RecyclerView
+        android:tag="@{EMusicRecycleView.RECENTLY_PLAYED_TAG}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:bindIsShowWidgetButton="@{true}"
         app:bindMusicList="@{ genreViewModel.recentlyPlayed}"
-        app:bindMusicListDisplayStyle="@{EDisplayStyle.BLOCK_STYLE}" />
+        app:bindMusicListDisplayStyle="@{EDisplayStyle.BLOCK_STYLE}"
+        app:bindWidgetButtonType="@{ETypeWidgetButton.REMOVE_FROM_RECENTLY_PLAYED_LIST}"/>
 
       <include
         layout="@layout/no_items"

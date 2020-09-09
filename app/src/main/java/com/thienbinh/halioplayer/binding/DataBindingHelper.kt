@@ -8,6 +8,8 @@ import android.graphics.*
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -19,6 +21,7 @@ import com.thienbinh.halioplayer.MainActivity
 import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.adapter.*
 import com.thienbinh.halioplayer.constant.*
+import com.thienbinh.halioplayer.customInterface.IMusicBlockEventListener
 import com.thienbinh.halioplayer.model.Lyric
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.utils.CenterSmpothScroller
@@ -34,9 +37,36 @@ class DataBindingHelper {
       view.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
-    @BindingAdapter("app:hideView")
+    private var enterSlideBottomAnimation: Animation? = null
+    private var exitSlideBottomAnimation: Animation? = null
+
+    @BindingAdapter(value = ["app:hideView", "app:withSlideBottomAnimation"], requireAll = false)
     @JvmStatic
-    fun hideView(view: View, isShow: Boolean) {
+    fun hideView(view: View, isShow: Boolean, withSlideBottomAnimation: Boolean = false) {
+      if (withSlideBottomAnimation) {
+        if (enterSlideBottomAnimation == null) {
+          enterSlideBottomAnimation = AnimationUtils.loadAnimation(
+            view.context.applicationContext,
+            R.anim.enter_slide_bottom_anim
+          )
+
+          enterSlideBottomAnimation!!.duration = 450
+        }
+
+        if (exitSlideBottomAnimation == null) {
+          exitSlideBottomAnimation = AnimationUtils.loadAnimation(
+            view.context.applicationContext,
+            R.anim.exit_slide_bottom_anim
+          )
+        }
+
+        if (isShow) {
+          enterSlideBottomAnimation?.start()
+        } else {
+          exitSlideBottomAnimation?.start()
+        }
+      }
+
       view.visibility = if (!isShow) View.INVISIBLE else View.VISIBLE
     }
 
@@ -228,17 +258,50 @@ class DataBindingHelper {
       textView.text = Helper.formatMusicDuration(time.toLong())
     }
 
-    @BindingAdapter(value = ["app:bindMusicList", "app:bindMusicListDisplayStyle"])
+    @BindingAdapter(
+      value = ["app:bindMusicList", "app:bindMusicListDisplayStyle", "app:bindIsShowWidgetButton", "app:bindWidgetButtonType"],
+      requireAll = false
+    )
     @JvmStatic
     fun bindMusicList(
       rcv: RecyclerView,
       musicList: MutableList<Music>? = null,
-      displayStyle: EDisplayStyle = EDisplayStyle.BLOCK_STYLE
+      displayStyle: EDisplayStyle = EDisplayStyle.BLOCK_STYLE,
+      isShowWidgetButton: Boolean = false,
+      widgetButtonType: ETypeWidgetButton? = null
     ) {
-      val adapter =
-        if (rcv.adapter == null) MusicListAdapter(displayStyle = displayStyle) else (rcv.adapter as MusicListAdapter)
+      var adapter: MusicListAdapter
 
       if (rcv.adapter == null) {
+
+        val musicBlockEventListener = object : IMusicBlockEventListener {
+          override fun onWidgetButtonClickListener(musicId: Int) {
+            when (widgetButtonType) {
+              ETypeWidgetButton.REMOVE_FROM_RECENTLY_PLAYED_LIST -> {
+                Log.d("Binh", "Position: $musicId")
+              }
+            }
+          }
+
+          override fun onContainerClickListener(music: Music) {
+            val intent = Intent()
+
+            val bundle = Bundle()
+            bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, music)
+
+            intent.action = ACTION_MUSIC_UPDATE
+            intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
+
+            rcv.context.sendBroadcast(intent)
+          }
+        }
+
+        adapter = MusicListAdapter(
+          displayStyle = displayStyle,
+          isShowWidgetButton = isShowWidgetButton,
+          eventListener = musicBlockEventListener
+        )
+
         rcv.setHasFixedSize(true)
 
         rcv.adapter = adapter
@@ -257,33 +320,36 @@ class DataBindingHelper {
 
         if (displayStyle == EDisplayStyle.BLOCK_STYLE)
           rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
-        else
+        else {
           rcv.addItemDecoration(SpaceItemDecoration(18 * SCALE_DP_PX.toInt(), 0))
 
-        rcv.addOnItemTouchListener(
-          RecyclerViewTouchListener(
-            rcv.context,
-            rcv,
-            object : RecyclerViewTouchListener.ClickListener {
-              override fun onClick(view: View?, position: Int) {
-                val music = adapter.getItemAt(position) ?: return
+          rcv.addOnItemTouchListener(
+            RecyclerViewTouchListener(
+              rcv.context,
+              rcv,
+              object : RecyclerViewTouchListener.ClickListener {
+                override fun onClick(view: View?, position: Int) {
+                  val music = adapter.getItemAt(position) ?: return
 
-                val intent = Intent()
+                  val intent = Intent()
 
-                val bundle = Bundle()
-                bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, adapter.getItemAt(position))
+                  val bundle = Bundle()
+                  bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, music)
 
-                intent.action = ACTION_MUSIC_UPDATE
-                intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
+                  intent.action = ACTION_MUSIC_UPDATE
+                  intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
 
-                rcv.context.sendBroadcast(intent)
-              }
+                  rcv.context.sendBroadcast(intent)
+                }
 
-              override fun onLongClick(view: View?, position: Int) {
-              }
-            })
-        )
+                override fun onLongClick(view: View?, position: Int) {
+                }
+              })
+          )
+        }
       }
+
+      adapter = rcv.adapter as MusicListAdapter
 
       if (musicList != null) {
         adapter.updateList(musicList)

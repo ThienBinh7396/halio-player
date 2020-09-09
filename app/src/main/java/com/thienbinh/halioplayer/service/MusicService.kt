@@ -114,7 +114,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
       if (data is Music) {
         mMediaPlayer!!.reset()
 
-        Log.d("Binh", "Data: $data")
+        Log.d("Binh", "Data Music: $data")
         if (data.localHref != null) {
           val assetFileDescriptor = assets.openFd(data.href)
 

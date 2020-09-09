@@ -24,3 +24,11 @@ enum class EFragmentName(val titleFragment: String) {
   RECENT_FRAGMENT("Recently played"),
   ALBUM_FRAGMENT("ALBUM_FRAGMENT")
 }
+
+enum class EMusicRecycleView{
+  RECENTLY_PLAYED_TAG
+}
+
+enum class ETypeWidgetButton{
+  REMOVE_FROM_RECENTLY_PLAYED_LIST
+}

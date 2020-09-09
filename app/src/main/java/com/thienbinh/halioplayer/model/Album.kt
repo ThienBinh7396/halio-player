@@ -81,8 +81,6 @@ class Album(
           Music.getInstance()
             .filter { music -> music.albums.indexOfFirst { _album -> _album.id == it.id } > -1 }
             .toMutableList()
-
-        Log.d("Binh", "Album: ${it.id} ${it.title} ${Gson().toJson(it.musics)}")
       }
 
       store.dispatch(GenreAction.GENRE_ACTION_UPDATE_ALBUMS(instance!!))

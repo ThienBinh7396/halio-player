@@ -14,6 +14,10 @@ class ScaleClickView @JvmOverloads constructor(
   init {
     setOnClickListener {
       startAnimation(scaleWithReverseAnim)
+
+      parent.requestDisallowInterceptTouchEvent(true)
+
+      return@setOnClickListener
     }
   }
 }

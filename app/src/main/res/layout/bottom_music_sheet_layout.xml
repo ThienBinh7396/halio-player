@@ -16,12 +16,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/bottom_music_sheet_layout_background"
     android:clipToPadding="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="invisible"
+    app:hideView="@{musicStoreViewModel.music != null}">
 
     <RelativeLayout
       android:id="@+id/collapsed_sheet_layout"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/bottom_music_sheet_min_height">
+      android:layout_height="@dimen/bottom_music_sheet_min_height"
+      app:showUnless="@{musicStoreViewModel.music != null}">
 
       <LinearLayout
         android:layout_width="match_parent"

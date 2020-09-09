@@ -1,15 +1,15 @@
 package com.thienbinh.halioplayer.utils
 
+import android.content.Context
 import android.graphics.Color
-import android.util.Log
+import android.util.TypedValue
 import com.thienbinh.halioplayer.model.Lyric
 import com.thienbinh.halioplayer.model.Music
 import org.joda.time.format.DateTimeFormat.forPattern
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
-import kotlin.time.Duration
-import kotlin.time.milliseconds
+
 
 class Helper {
   companion object {
@@ -54,5 +54,16 @@ class Helper {
 
     @JvmStatic
     fun checkListIsEmpty(list: MutableList<Music>?) = list == null || list.size == 0
+
+
+    @JvmStatic
+    fun spToPx(sp: Float, context: Context): Int {
+      return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_SP,
+        sp,
+        context.resources.displayMetrics
+      )
+        .toInt()
+    }
   }
 }

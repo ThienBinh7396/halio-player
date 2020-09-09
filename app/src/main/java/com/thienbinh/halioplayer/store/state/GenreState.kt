@@ -8,5 +8,6 @@ import org.rekotlin.StateType
 data class GenreState(
   val genres: MutableList<Genre> = mutableListOf(),
   val recentlyPlayed: MutableList<Music> = mutableListOf(),
+  val playlists: MutableList<Music> = mutableListOf(),
   val albums: MutableList<Album> = mutableListOf()
 ) : StateType

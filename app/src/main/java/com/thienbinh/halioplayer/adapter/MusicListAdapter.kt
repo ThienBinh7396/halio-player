@@ -1,13 +1,14 @@
 package com.thienbinh.halioplayer.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.constant.EDisplayStyle
+import com.thienbinh.halioplayer.customInterface.IMusicBlockEventListener
 import com.thienbinh.halioplayer.databinding.MusicBlockLayoutBinding
 import com.thienbinh.halioplayer.databinding.MusicInAlbumLayoutBinding
 import com.thienbinh.halioplayer.databinding.MusicListLayoutBinding
@@ -16,8 +17,12 @@ import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
 
 class MusicListAdapter(
   private var mMusicList: MutableList<Music> = mutableListOf(),
-  private val displayStyle: EDisplayStyle = EDisplayStyle.BLOCK_STYLE
+  private val displayStyle: EDisplayStyle = EDisplayStyle.BLOCK_STYLE,
+  private val isShowWidgetButton: Boolean = false,
+  private val eventListener: IMusicBlockEventListener? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+  private var mRecyclerView: RecyclerView? = null
+
   class MusicListStyleViewHolder(private val binding: MusicListLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -30,14 +35,32 @@ class MusicListAdapter(
     }
   }
 
-  class MusicBlockStyleViewHolder(private val binding: MusicBlockLayoutBinding) :
+  class MusicBlockStyleViewHolder(
+    private val binding: MusicBlockLayoutBinding,
+    isShowWidgetButton: Boolean,
+    mEventListener: IMusicBlockEventListener? = null
+  ) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bindingData(data: Music) {
-      binding.music = data
 
-      if (binding.musicStoreViewModel == null) {
-        binding.musicStoreViewModel = MusicStoreViewModel()
+    init {
+      binding.isShowWidgetButton = isShowWidgetButton
+
+      if (mEventListener != null) {
+        binding.apply {
+          eventListener = mEventListener
+        }
       }
+    }
+
+    fun bindingData(data: Music) {
+      binding.apply {
+        music = data
+
+        if (musicStoreViewModel == null) {
+          musicStoreViewModel = MusicStoreViewModel()
+        }
+      }
+
     }
   }
 
@@ -53,6 +76,14 @@ class MusicListAdapter(
         binding.musicStoreViewModel = MusicStoreViewModel()
       }
     }
+  }
+
+  override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+    super.onAttachedToRecyclerView(recyclerView)
+
+    mRecyclerView = recyclerView
+
+    Log.d("Binh", "Tag: ${recyclerView.tag}")
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -81,7 +112,9 @@ class MusicListAdapter(
             R.layout.music_block_layout,
             null,
             false
-          )
+          ),
+          isShowWidgetButton,
+          eventListener
         )
     }
   }

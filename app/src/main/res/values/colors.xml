@@ -14,4 +14,6 @@
 
   <color name="colorButtonDisabled">#1E1C1C</color>
   <color name="bottom_layout_icon_default">#cad0de</color>
+
+  <color name="card_darken_background">#555863</color>
 </resources>

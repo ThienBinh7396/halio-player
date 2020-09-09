@@ -8,6 +8,14 @@
     <import type="com.thienbinh.halioplayer.constant.VariableData" />
 
     <variable
+      name="eventListener"
+      type="com.thienbinh.halioplayer.customInterface.IMusicBlockEventListener" />
+
+    <variable
+      name="isShowWidgetButton"
+      type="Boolean" />
+
+    <variable
       name="musicStoreViewModel"
       type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
 
@@ -23,8 +31,11 @@
     android:orientation="vertical">
 
     <RelativeLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content">
+      android:layout_width="@dimen/music_block_width"
+      android:layout_height="wrap_content"
+      android:clickable="true"
+      android:focusable="true"
+      android:onClick="@{() -> eventListener.onContainerClickListener(music)}">
 
       <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -61,6 +72,28 @@
           android:scaleY="0.94"
           app:bindGift="@{VariableData.LOADING_GIF_URL}" />
       </RelativeLayout>
+
+      <LinearLayout
+        android:id="@+id/widgetRemove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/dimen_4"
+        android:paddingBottom="@dimen/dimen_16"
+        android:translationZ="@dimen/dimen_4"
+        app:showUnless="@{isShowWidgetButton}"
+        tools:targetApi="lollipop"
+        android:gravity="end">
+
+        <ImageView
+          android:onClick="@{() -> eventListener.onWidgetButtonClickListener(music.id)}"
+          android:layout_width="@dimen/dimen_22"
+          android:layout_height="@dimen/dimen_22"
+          android:clickable="true"
+          android:focusable="true"
+          android:scaleType="centerCrop"
+          android:src="@drawable/ic_baseline_close_24" />
+      </LinearLayout>
     </RelativeLayout>
 
 
