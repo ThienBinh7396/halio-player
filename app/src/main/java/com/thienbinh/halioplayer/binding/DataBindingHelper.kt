@@ -49,8 +49,6 @@ class DataBindingHelper {
             view.context.applicationContext,
             R.anim.enter_slide_bottom_anim
           )
-
-          enterSlideBottomAnimation!!.duration = 450
         }
 
         if (exitSlideBottomAnimation == null) {
