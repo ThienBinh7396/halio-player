@@ -39,10 +39,12 @@
       app:musicStoreViewModel="@{mMusicStoreViewModel}" />
 
     <include
+      android:id="@+id/bottom_tab_layout"
       layout="@layout/bottom_tab_layout"
       android:layout_width="match_parent"
       android:layout_height="@dimen/bottom_tab_layout_height"
       android:layout_alignParentBottom="true"
-      android:layout_gravity="bottom" />
+      android:layout_gravity="bottom"
+      app:musicStoreViewModel="@{mMusicStoreViewModel}"/>
   </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

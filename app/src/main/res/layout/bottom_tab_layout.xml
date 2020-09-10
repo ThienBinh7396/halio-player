@@ -2,76 +2,133 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
+  <data>
+
+    <import type="com.thienbinh.halioplayer.constant.VariableData" />
+
+    <variable
+      name="musicStoreViewModel"
+      type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
+
+    <variable
+      name="eventListener"
+      type="com.thienbinh.halioplayer.customInterface.IMainTabLayoutClickListener" />
+  </data>
+
+
   <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="@dimen/bottom_tab_layout_height"
     android:background="@drawable/bottom_tab_layout_background">
 
-    <LinearLayout
+    <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="@dimen/bottom_tab_layout_icon_container_height"
-      android:paddingHorizontal="@dimen/bottom_music_sheet_padding"
-      android:weightSum="4">
+      android:layout_height="wrap_content"
+      android:paddingHorizontal="@dimen/bottom_music_sheet_padding">
 
-      <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+      <View
+        android:id="@+id/mask_tab_layout_icon"
+        android:layout_width="@dimen/dimen_48"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_centerVertical="true"
+        android:background="@drawable/mask_icon_tablayout_background" />
 
-        <ImageButton
-          android:layout_width="@dimen/bottom_tab_layout_icon_size"
-          android:layout_height="@dimen/bottom_tab_layout_icon_size"
-          android:layout_centerInParent="true"
+      <LinearLayout
+        android:id="@+id/mask_tab_layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_tab_layout_icon_container_height"
+        android:weightSum="4">
+
+        <RelativeLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
           android:background="@color/colorTransparent"
-          android:scaleType="centerCrop"
-          android:src="@drawable/ic_heart"
-          app:tint="@color/bottom_layout_icon_default" />
-      </RelativeLayout>
+          android:clickable="true"
+          android:focusable="true"
+          android:onClick="@{ () -> eventListener.onTabClickListener(0)}">
 
-      <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+          <ImageView
+            android:layout_width="@dimen/dimen_20"
+            android:layout_height="@dimen/dimen_20"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:scaleX="0.94"
+            android:scaleY="0.94"
+            app:bindGift="@{VariableData.LOADING_GIF_URL}"
+            app:showUnless="@{musicStoreViewModel.music != null &amp;&amp; musicStoreViewModel.playing}" />
 
-        <ImageButton
-          android:layout_width="@dimen/bottom_tab_layout_icon_size"
-          android:layout_height="@dimen/bottom_tab_layout_icon_size"
-          android:layout_centerInParent="true"
+          <ImageView
+            android:layout_width="@dimen/dimen_20"
+            android:layout_height="@dimen/dimen_20"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:scaleX="0.94"
+            android:scaleY="0.94"
+            app:bindSrcImage="@{@drawable/icon_playing_white__pausing}"
+            app:showUnless="@{musicStoreViewModel.music == null || !musicStoreViewModel.playing}" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
           android:background="@color/colorTransparent"
-          android:scaleType="centerCrop"
-          android:src="@drawable/ic_music"
-          android:tint="@color/bottom_layout_icon_default" />
-      </RelativeLayout>
+          android:clickable="true"
+          android:focusable="true"
+          android:onClick="@{ () -> eventListener.onTabClickListener(1)}">
 
-      <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+          <ImageButton
+            android:layout_width="@dimen/bottom_tab_layout_icon_size"
+            android:layout_height="@dimen/bottom_tab_layout_icon_size"
+            android:layout_centerInParent="true"
+            android:background="@color/colorTransparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_music"
+            android:tint="@color/bottom_layout_icon_default" />
+        </RelativeLayout>
 
-        <ImageButton
-          android:layout_width="@dimen/bottom_tab_layout_icon_size"
-          android:layout_height="@dimen/bottom_tab_layout_icon_size"
-          android:layout_centerInParent="true"
+        <RelativeLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
           android:background="@color/colorTransparent"
-          android:scaleType="centerCrop"
-          android:src="@drawable/ic_search"
-          android:tint="@color/bottom_layout_icon_default" />
-      </RelativeLayout>
+          android:clickable="true"
+          android:focusable="true"
+          android:onClick="@{ () -> eventListener.onTabClickListener(2)}">
 
-      <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+          <ImageButton
+            android:layout_width="@dimen/bottom_tab_layout_icon_size"
+            android:layout_height="@dimen/bottom_tab_layout_icon_size"
+            android:layout_centerInParent="true"
+            android:background="@color/colorTransparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_search"
+            android:tint="@color/bottom_layout_icon_default" />
+        </RelativeLayout>
 
-        <ImageButton
-          android:layout_width="@dimen/bottom_tab_layout_avatar_size"
-          android:layout_height="@dimen/bottom_tab_layout_avatar_size"
-          android:layout_centerInParent="true"
+        <RelativeLayout
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
           android:background="@color/colorTransparent"
-          android:scaleType="centerCrop"
-          android:src="@drawable/avatar" />
-      </RelativeLayout>
-    </LinearLayout>
+          android:clickable="true"
+          android:focusable="true"
+          android:onClick="@{ () -> eventListener.onTabClickListener(3)}">
+
+          <ImageButton
+            android:layout_width="@dimen/bottom_tab_layout_avatar_size"
+            android:layout_height="@dimen/bottom_tab_layout_avatar_size"
+            android:layout_centerInParent="true"
+            android:background="@color/colorTransparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar" />
+        </RelativeLayout>
+      </LinearLayout>
+
+
+    </RelativeLayout>
 
     <RelativeLayout
       android:layout_width="match_parent"
@@ -87,5 +144,4 @@
         android:background="@drawable/indicator_background" />
     </RelativeLayout>
   </RelativeLayout>
-
 </layout>

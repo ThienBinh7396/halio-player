@@ -1,6 +1,7 @@
 package com.thienbinh.halioplayer.model
 
 import androidx.constraintlayout.solver.widgets.Helper
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -15,7 +16,7 @@ class Music(
   @SerializedName("singer")
   var singer: String,
   @SerializedName("href")
-  var href: String,
+  var href: String = "",
   @SerializedName("duration")
   var duration: Int,
   @SerializedName("genre")
@@ -33,6 +34,8 @@ class Music(
 ) : Serializable {
   companion object {
     private var instance: MutableList<Music>? = null
+
+    private val gson = Gson()
 
     fun getInstance(): MutableList<Music> {
       initializeList()
@@ -340,6 +343,10 @@ class Music(
       }
 
       return check
+    }
+
+    fun deepCloneMusicList(musicList: MutableList<Music>): MutableList<Music> {
+      return gson.fromJson(gson.toJson(musicList), Array<Music>::class.java).toMutableList()
     }
   }
 }

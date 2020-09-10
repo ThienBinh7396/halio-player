@@ -8,6 +8,8 @@
   <color name="textColor">#999</color>
   <color name="textColorLight">#d4d4d4</color>
   <color name="textColorDarken">#ababab</color>
+  <color name="textColorNote">#D62424</color>
+
   <color name="colorWhite">#fafafa</color>
   <color name="colorLyricActive">#cececf</color>
   <color name="colorLyricTextDarken">#595c68</color>
@@ -15,5 +17,5 @@
   <color name="colorButtonDisabled">#1E1C1C</color>
   <color name="bottom_layout_icon_default">#cad0de</color>
 
-  <color name="card_darken_background">#555863</color>
+  <color name="card_darken_background">#72767f</color>
 </resources>

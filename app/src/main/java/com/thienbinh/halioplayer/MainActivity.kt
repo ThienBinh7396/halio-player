@@ -12,20 +12,24 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.marginStart
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.thienbinh.halioplayer.constant.*
 import com.thienbinh.halioplayer.customInterface.IMainActivityEventListener
+import com.thienbinh.halioplayer.customInterface.IMainTabLayoutClickListener
 import com.thienbinh.halioplayer.customInterface.IMusicControlEventListener
 import com.thienbinh.halioplayer.databinding.ActivityMainBinding
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.service.MusicService
+import com.thienbinh.halioplayer.ui.snackbar.CustomSnackbar
 import com.thienbinh.halioplayer.utils.FirstActionInitializeData
 import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
 
-class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActivityEventListener {
+class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActivityEventListener,
+  IMainTabLayoutClickListener {
   companion object {
     private var navControllerMainActivity: NavController? = null
 
@@ -53,12 +57,20 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
     }
   }
 
+  private var tabLayoutContainerWidth = 0f
+  private var maskTabLayoutIconWidth = 0f
+  private var currentPosition = 1
+
   private lateinit var mActivityMainBinding: ActivityMainBinding
 
   private lateinit var mBottomSheetBehavior: BottomSheetBehavior<View>
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    tabLayoutContainerWidth = resources.displayMetrics.widthPixels - 16 * 2 * SCALE_DP_PX
+
+    maskTabLayoutIconWidth = 48 * SCALE_DP_PX
 
     mActivityMainBinding = DataBindingUtil.inflate(
       LayoutInflater.from(this),
@@ -87,6 +99,22 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
     startMusicService()
 
     FirstActionInitializeData.initialize(this)
+
+    CustomSnackbar.updateActivity(this)
+
+    setUpTabLayoutView()
+
+    mActivityMainBinding.bottomTabLayout.eventListener = this
+  }
+
+  private fun setUpTabLayoutView() {
+    mActivityMainBinding.bottomTabLayout.apply {
+
+      maskTabLayoutIcon.animate()
+        .translationX(currentPosition * (tabLayoutContainerWidth / 4) + (tabLayoutContainerWidth / 4 - maskTabLayoutIconWidth) / 2f)
+        .setDuration(300L)
+        .start()
+    }
   }
 
   private fun initView() {
@@ -146,7 +174,11 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
 
   override fun onGoToFragmentClick(fragmentName: EFragmentName, data: Any?) {
     if (mFragmentName == fragmentName) {
-      Toast.makeText(applicationContext, "${fragmentName.titleFragment} is showing", Toast.LENGTH_SHORT).show()
+      Toast.makeText(
+        applicationContext,
+        "${fragmentName.titleFragment} is showing",
+        Toast.LENGTH_SHORT
+      ).show()
       return
     }
 
@@ -164,5 +196,15 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
 
       }
     }
+  }
+
+  override fun onTabClickListener(position: Int) {
+    Log.d("Binh", "Tab position: $position")
+
+    if (currentPosition == position) return
+
+    currentPosition = position
+
+    setUpTabLayoutView()
   }
 }

@@ -24,6 +24,7 @@ import com.thienbinh.halioplayer.constant.*
 import com.thienbinh.halioplayer.customInterface.IMusicBlockEventListener
 import com.thienbinh.halioplayer.model.Lyric
 import com.thienbinh.halioplayer.model.Music
+import com.thienbinh.halioplayer.sharePreference.MusicSharePreference
 import com.thienbinh.halioplayer.utils.CenterSmpothScroller
 import com.thienbinh.halioplayer.utils.Helper
 import com.thienbinh.halioplayer.utils.RecyclerViewTouchListener
@@ -277,6 +278,7 @@ class DataBindingHelper {
             when (widgetButtonType) {
               ETypeWidgetButton.REMOVE_FROM_RECENTLY_PLAYED_LIST -> {
                 Log.d("Binh", "Position: $musicId")
+                MusicSharePreference.removeMusicWhere(musicId)
               }
             }
           }
@@ -408,7 +410,7 @@ class DataBindingHelper {
       }
     }
 
-    @BindingAdapter("app:bindGift")
+    @BindingAdapter(value = ["app:bindGift"], requireAll = false)
     @JvmStatic
     fun bindGift(imageView: ImageView, gift: Any?) {
       if (gift != null) {
@@ -417,6 +419,7 @@ class DataBindingHelper {
           .fitCenter()
           .load(gift)
           .into(imageView)
+
       }
     }
 

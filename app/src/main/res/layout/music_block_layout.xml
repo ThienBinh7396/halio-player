@@ -81,7 +81,7 @@
         android:padding="@dimen/dimen_4"
         android:paddingBottom="@dimen/dimen_16"
         android:translationZ="@dimen/dimen_4"
-        app:showUnless="@{isShowWidgetButton}"
+        app:showUnless="@{isShowWidgetButton &amp;&amp; (musicStoreViewModel.music == null || !musicStoreViewModel.playing || musicStoreViewModel.music.id != music.id)}"
         tools:targetApi="lollipop"
         android:gravity="end">
 

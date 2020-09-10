@@ -4,5 +4,6 @@ import org.rekotlin.StateType
 
 class RootState(
   val musicState: MusicState,
-  val genreState: GenreState
+  val genreState: GenreState,
+  val permissionState: PermissionState
 ): StateType

@@ -9,5 +9,6 @@ data class GenreState(
   val genres: MutableList<Genre> = mutableListOf(),
   val recentlyPlayed: MutableList<Music> = mutableListOf(),
   val playlists: MutableList<Music> = mutableListOf(),
+  val fromDeviceMusic: MutableList<Music> = mutableListOf(),
   val albums: MutableList<Album> = mutableListOf()
 ) : StateType

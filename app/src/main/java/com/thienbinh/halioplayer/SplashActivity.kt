@@ -2,15 +2,15 @@ package com.thienbinh.halioplayer
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import com.thienbinh.halioplayer.model.Genre
-import com.thienbinh.halioplayer.model.Music
-import com.thienbinh.halioplayer.sharePreference.MusicSharePreference
-import com.thienbinh.halioplayer.store.action.GenreAction
+import android.widget.Toast
+import com.thienbinh.halioplayer.store.action.PermissionAction
 import com.thienbinh.halioplayer.utils.FirstActionInitializeData
+import com.thienbinh.halioplayer.utils.RequestPermissionRuntime
+
 
 class SplashActivity : Activity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,5 +25,36 @@ class SplashActivity : Activity() {
       startActivity(intent)
       finish()
     }, 1000)
+  }
+
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
+    when (requestCode) {
+      RequestPermissionRuntime.REQUEST_READ_EXTERNAL_STORAGE_PERMISSION -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        store.dispatch(
+          PermissionAction.PERMISSION_ACTION_UPDATE_READ_EXTERNAL_STORAGE_PERMISSION(
+            true
+          )
+        )
+      } else {
+        Toast.makeText(
+          this, "Read external storage permission denied",
+          Toast.LENGTH_SHORT
+        ).show()
+
+        store.dispatch(
+          PermissionAction.PERMISSION_ACTION_UPDATE_READ_EXTERNAL_STORAGE_PERMISSION(
+            false
+          )
+        )
+      }
+      else -> super.onRequestPermissionsResult(
+        requestCode, permissions!!,
+        grantResults
+      )
+    }
   }
 }

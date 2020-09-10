@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -12,6 +13,7 @@
     android:src="@drawable/logo_app" />
 
   <LinearLayout
+    android:id="@+id/caption"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
@@ -28,9 +30,17 @@
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dimen_4"
       android:text="@string/website"
       android:textAlignment="center"
-      android:textSize="@dimen/splash_logo_font_size"
-      android:layout_marginTop="@dimen/dimen_4"/>
+      android:textSize="@dimen/splash_logo_font_size" />
   </LinearLayout>
+
+  <ProgressBar
+    android:layout_width="20dp"
+    android:layout_height="20dp"
+    android:layout_above="@+id/caption"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="@dimen/dimen_16"
+    android:indeterminateDrawable="@drawable/circular_indeterminate_background" />
 </RelativeLayout>
