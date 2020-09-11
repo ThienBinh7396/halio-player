@@ -1,5 +1,6 @@
 package com.thienbinh.halioplayer.model
 
+import android.graphics.Bitmap
 import androidx.constraintlayout.solver.widgets.Helper
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
@@ -12,7 +13,7 @@ class Music(
   @SerializedName("title")
   var title: String,
   @SerializedName("thumbnail")
-  var thumbnail: String,
+  var thumbnail: String? = null,
   @SerializedName("singer")
   var singer: String,
   @SerializedName("href")
@@ -27,10 +28,14 @@ class Music(
   var count_play: Int = 0,
   @SerializedName("localHref")
   var localHref: String? = null,
+  @SerializedName("localThumbnail")
+  var localThumbnail: String? = null,
   @SerializedName("hasLyric")
   var hasLyric: Boolean = false,
   @SerializedName("lyricHref")
-  var lyricHref: String? = null
+  var lyricHref: String? = null,
+  @SerializedName("isFromDevice")
+  var isFromDevice: Boolean = false
 ) : Serializable {
   companion object {
     private var instance: MutableList<Music>? = null

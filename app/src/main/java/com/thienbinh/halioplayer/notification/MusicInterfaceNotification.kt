@@ -23,6 +23,7 @@ import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_TOGGLE
 import com.thienbinh.halioplayer.store
 import com.thienbinh.halioplayer.utils.Helper
+import com.thienbinh.halioplayer.utils.MapContentUriWithBitmap
 import com.thienbinh.halioplayer.utils.RotateImageTransformation
 
 class MusicInterfaceNotification {
@@ -134,12 +135,14 @@ class MusicInterfaceNotification {
       )
 
       Handler(Looper.getMainLooper()).postDelayed({
-        GlideApp.with(context.applicationContext)
-          .asBitmap()
-          .load(store.state.musicState.currentMusic?.thumbnail)
-          .circleCrop()
-          .placeholder(R.drawable.logo_sm)
-          .into(notificationTargetExpandedThumbnailImage)
+        store.state.musicState.currentMusic?.apply {
+          GlideApp.with(context.applicationContext)
+            .asBitmap()
+            .load(thumbnail ?: MapContentUriWithBitmap.getBitmapByContentUri(localThumbnail))
+            .circleCrop()
+            .placeholder(R.drawable.logo_sm)
+            .into(notificationTargetExpandedThumbnailImage)
+        }
       }, 10)
     }
   }

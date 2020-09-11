@@ -39,14 +39,20 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
       EFragmentName.HOME_FRAGMENT to mapOf(
         EFragmentName.RECENT_FRAGMENT to R.id.action_homeFragment_to_recentlyFragment,
         EFragmentName.LYRIC_FRAGMENT to R.id.action_homeFragment_to_lyricsFragment,
-        EFragmentName.ALBUM_FRAGMENT to R.id.action_homeFragment_to_albumDetailsFragment
+        EFragmentName.ALBUM_FRAGMENT to R.id.action_homeFragment_to_albumDetailsFragment,
+        EFragmentName.PLAYLIST_FRAGMENT to R.id.action_homeFragment_to_playlistFragment
+      ),
+      EFragmentName.PLAYLIST_FRAGMENT to mapOf(
+        EFragmentName.HOME_FRAGMENT to R.id.action_playlistFragment_to_homeFragment
       ),
       EFragmentName.RECENT_FRAGMENT to mapOf(
         EFragmentName.HOME_FRAGMENT to R.id.action_recentlyFragment_to_homeFragment,
-        EFragmentName.LYRIC_FRAGMENT to R.id.action_recentlyFragment_to_lyricsFragment
+        EFragmentName.LYRIC_FRAGMENT to R.id.action_recentlyFragment_to_lyricsFragment,
+        EFragmentName.PLAYLIST_FRAGMENT to R.id.action_recentlyFragment_to_playlistFragment
       ),
       EFragmentName.ALBUM_FRAGMENT to mapOf(
-        EFragmentName.HOME_FRAGMENT to R.id.action_albumDetailsFragment_to_homeFragment
+        EFragmentName.HOME_FRAGMENT to R.id.action_albumDetailsFragment_to_homeFragment,
+        EFragmentName.PLAYLIST_FRAGMENT to R.id.action_albumDetailsFragment_to_playlistFragment
       )
     )
 
@@ -149,6 +155,8 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
   override fun onBackPressed() {
     if (mBottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
       mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }else{
+      navControllerMainActivity?.navigateUp()
     }
   }
 
@@ -186,7 +194,6 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
 
     navigate(mapFragmentWithDestinationId[mFragmentName]?.get(fragmentName))
 
-
     toggleStateMusicBottomSheet(false)
     when (fragmentName) {
       EFragmentName.LYRIC_FRAGMENT -> {
@@ -204,6 +211,13 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
     if (currentPosition == position) return
 
     currentPosition = position
+
+    when(position){
+      0 ->
+        onGoToFragmentClick(EFragmentName.PLAYLIST_FRAGMENT)
+      1 ->
+        onGoToFragmentClick(EFragmentName.HOME_FRAGMENT)
+    }
 
     setUpTabLayoutView()
   }

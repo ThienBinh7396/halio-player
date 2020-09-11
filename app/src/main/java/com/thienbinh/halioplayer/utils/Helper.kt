@@ -21,6 +21,9 @@ class Helper {
       "\\[(.*?)](.*)".toRegex(setOf(RegexOption.MULTILINE, RegexOption.IGNORE_CASE))
 
     @JvmStatic
+    fun checkIsNull(something: Any?) = something == null
+
+    @JvmStatic
     fun formatMusicDuration(milliSec: Long): String {
       return simpleDateFormatMusicDuration.format(Date(milliSec))
     }

@@ -8,6 +8,7 @@ import android.media.MediaMetadataRetriever
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
+import com.google.gson.Gson
 import com.thienbinh.halioplayer.constant.VariableData
 import com.thienbinh.halioplayer.model.Album
 import com.thienbinh.halioplayer.model.Genre
@@ -47,6 +48,8 @@ class FirstActionInitializeData {
       val musicResolver = context.contentResolver
       val musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
 
+      val localMusics = mutableListOf<Music>()
+
       val projection = arrayOf(
         MediaStore.Audio.Media.DATA,
         MediaStore.Audio.Media.TITLE,
@@ -80,14 +83,40 @@ class FirstActionInitializeData {
               0,
               thumbnailArt.size
             )
-          } else
+          } else {
             null
+          }
 
           val artist = musicCursor.getString(columnIndexArtist)
           val duration = musicCursor.getLong(columnIndexDuration)
           val name = musicCursor.getString(columnIndexDisplayName)
 
-          Log.d("Binh", "XXX: $contentUri $artist $duration ${name.hashCode()} $thumbnailBitmap")
+          val musicThumbnail =
+            if (thumbnailArt == null) VariableData.MUSIC_THUMBNAIL_PLACEHOLDER else null
+
+          val music = Music(
+            name.hashCode(),
+            name,
+            musicThumbnail,
+            artist,
+            "",
+            duration.toInt() / 1000,
+            localHref = contentUri,
+            localThumbnail = contentUri,
+            isFromDevice = true
+          )
+
+          localMusics.add(music)
+
+          Log.d("Binh", "Local music: ${Gson().toJson(music)} $musicThumbnail")
+
+          if (musicThumbnail == null)
+            MapContentUriWithBitmap.addUriToMap(contentUri, thumbnailBitmap)
+
+          Log.d(
+            "Binh",
+            "Music from device: $contentUri $artist $duration $name ${name.hashCode()} $thumbnailBitmap"
+          )
         }
 
       }
@@ -95,6 +124,7 @@ class FirstActionInitializeData {
       musicCursor?.close()
 
       store.dispatch(PermissionAction.PERMISSION_ACTION_UPDATE_IS_FIRST_LOAD_MUSIC(true))
+      store.dispatch(GenreAction.GENRE_ACTION_UPDATE_LIST_FROM_DEVICE(localMusics))
     }
   }
 }

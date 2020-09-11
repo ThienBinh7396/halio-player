@@ -22,7 +22,14 @@
       app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
     <action
       android:id="@+id/action_homeFragment_to_albumDetailsFragment"
-      app:destination="@id/albumDetailsFragment" />
+      app:destination="@id/albumDetailsFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+    <action
+      android:id="@+id/action_homeFragment_to_playlistFragment"
+      app:destination="@id/playlistFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
 
   </fragment>
   <fragment
@@ -38,6 +45,11 @@
     <action
       android:id="@+id/action_recentlyFragment_to_lyricsFragment"
       app:destination="@id/lyricsFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+    <action
+      android:id="@+id/action_recentlyFragment_to_playlistFragment"
+      app:destination="@id/playlistFragment"
       app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
       app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
   </fragment>
@@ -63,6 +75,24 @@
       app:nullable="true" />
     <action
       android:id="@+id/action_albumDetailsFragment_to_homeFragment"
-      app:destination="@id/homeFragment" />
+      app:destination="@id/homeFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+    <action
+      android:id="@+id/action_albumDetailsFragment_to_playlistFragment"
+      app:destination="@id/playlistFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+  </fragment>
+  <fragment
+    android:id="@+id/playlistFragment"
+    android:name="com.thienbinh.halioplayer.ui.fragment.PlaylistFragment"
+    android:label="PlaylistFragment">
+
+    <action
+      android:id="@+id/action_playlistFragment_to_homeFragment"
+      app:destination="@id/homeFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
   </fragment>
 </navigation>

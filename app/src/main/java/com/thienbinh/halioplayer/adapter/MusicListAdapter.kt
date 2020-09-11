@@ -11,6 +11,7 @@ import com.thienbinh.halioplayer.constant.EDisplayStyle
 import com.thienbinh.halioplayer.customInterface.IMusicBlockEventListener
 import com.thienbinh.halioplayer.databinding.MusicBlockLayoutBinding
 import com.thienbinh.halioplayer.databinding.MusicInAlbumLayoutBinding
+import com.thienbinh.halioplayer.databinding.MusicInPlaylistLayoutBinding
 import com.thienbinh.halioplayer.databinding.MusicListLayoutBinding
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
@@ -78,6 +79,22 @@ class MusicListAdapter(
     }
   }
 
+  class MusicInPlaylistStyleViewHolder(private val binding: MusicInPlaylistLayoutBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    init {
+      binding.isActive = false
+    }
+
+    fun bindingData(data: Music, position: Int) {
+      binding.music = data
+
+      if (binding.musicStoreViewModel == null) {
+        binding.musicStoreViewModel = MusicStoreViewModel()
+      }
+    }
+  }
+
   override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
     super.onAttachedToRecyclerView(recyclerView)
 
@@ -105,6 +122,15 @@ class MusicListAdapter(
         )
       )
 
+      EDisplayStyle.IN_PLAYLIST -> return MusicInPlaylistStyleViewHolder(
+        DataBindingUtil.inflate(
+          LayoutInflater.from(parent.context),
+          R.layout.music_in_playlist_layout,
+          null,
+          false
+        )
+      )
+
       else ->
         return MusicBlockStyleViewHolder(
           DataBindingUtil.inflate(
@@ -126,6 +152,12 @@ class MusicListAdapter(
       }
       EDisplayStyle.IN_ALBUM -> {
         (holder as MusicInAlbumStyleViewHolder).bindingData(
+          data = mMusicList[position],
+          position + 1
+        )
+      }
+      EDisplayStyle.IN_PLAYLIST -> {
+        (holder as MusicInPlaylistStyleViewHolder).bindingData(
           data = mMusicList[position],
           position + 1
         )

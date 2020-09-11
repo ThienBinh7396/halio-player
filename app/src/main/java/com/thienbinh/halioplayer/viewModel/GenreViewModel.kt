@@ -19,6 +19,8 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
 
   private var mAlbums: MutableList<Album>? = null
 
+  private var mMusicFromDevice: MutableList<Music>? = null
+
   init {
     store.state.genreState.apply {
       mGenres = genres
@@ -26,6 +28,8 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       mRecentlyPlayedList = recentlyPlayed
 
       mAlbums = albums
+
+      mMusicFromDevice = fromDeviceMusic
     }
 
     store.subscribe(this) {
@@ -52,6 +56,15 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
     return mGenres?.find { it.id == id } ?: Genre.getInstance()[0]
   }
 
+  @Bindable
+  fun getMusicFromDevice() = mMusicFromDevice
+
+  fun getMusicFromDeviceWithout(music: Music?) = if (music == null) mMusicFromDevice else (
+      mMusicFromDevice?.filter { it.id != music.id }
+        ?: mutableListOf()
+      )
+
+
   override fun newState(state: GenreState) {
     if (!Genre.checkListAreTheSame(mGenres!!, state.genres)) {
       Log.d("Binh", "Update new genres")
@@ -73,6 +86,12 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       Log.d("Binh", "Albums update ${Gson().toJson(mAlbums!!)}")
 
       notifyPropertyChanged(BR.albums)
+    }
+
+    if (!Music.checkMusicListAreTheSame(mMusicFromDevice!!, state.fromDeviceMusic)) {
+      mMusicFromDevice = state.fromDeviceMusic
+
+      notifyPropertyChanged(BR.musicFromDevice)
     }
   }
 }

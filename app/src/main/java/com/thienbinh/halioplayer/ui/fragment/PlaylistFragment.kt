@@ -10,35 +10,36 @@ import androidx.databinding.DataBindingUtil
 import com.thienbinh.halioplayer.MainActivity
 import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.constant.EFragmentName
-import com.thienbinh.halioplayer.databinding.FragmentHomeBinding
+import com.thienbinh.halioplayer.databinding.FragmentPlaylistBinding
 import com.thienbinh.halioplayer.viewModel.GenreViewModel
+import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
 
-class HomeFragment : Fragment() {
-  private lateinit var mFragmentHomeBinding: FragmentHomeBinding
+class PlaylistFragment : Fragment() {
+  private lateinit var mFragmentPlaylistBinding: FragmentPlaylistBinding
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    mFragmentHomeBinding = DataBindingUtil.inflate<FragmentHomeBinding>(
+    mFragmentPlaylistBinding = DataBindingUtil.inflate<FragmentPlaylistBinding>(
       inflater,
-      R.layout.fragment_home,
-      container,
+      R.layout.fragment_playlist,
+      null,
       false
     ).apply {
-      mGenreViewModel = GenreViewModel()
+      mMusicStoreViewModel = MusicStoreViewModel()
 
-      recentPlayedLayout.showMore.setOnClickListener {
-        MainActivity.navigate(R.id.action_homeFragment_to_recentlyFragment)
-      }
+      mGenreViewModel = GenreViewModel()
     }
 
-    return mFragmentHomeBinding.root
+    return mFragmentPlaylistBinding.root
   }
 
   override fun onStart() {
     super.onStart()
-    Log.d("Binh", "Home Fragment")
-    MainActivity.mFragmentName = EFragmentName.HOME_FRAGMENT
+
+    Log.d("Binh", "Playlist fragment")
+    MainActivity.mFragmentName = EFragmentName.PLAYLIST_FRAGMENT
   }
+
 }

@@ -5,6 +5,9 @@
 
   <data>
 
+    <import type="com.thienbinh.halioplayer.utils.Helper" />
+    <import type="com.thienbinh.halioplayer.utils.MapContentUriWithBitmap" />
+
     <variable
       name="musicStoreViewModel"
       type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
@@ -52,7 +55,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/music_thumbnail_default"
             android:tag="unique_imageView_thumbnail_bottom_music_sheet"
-            app:bindCircleImage="@{musicStoreViewModel.music.thumbnail}"
+            app:bindCircleImage="@{musicStoreViewModel.music != null ?  (Helper.checkIsNull(musicStoreViewModel.music.thumbnail) ? MapContentUriWithBitmap.getBitmapByContentUri(musicStoreViewModel.music.localThumbnail) : musicStoreViewModel.music.thumbnail ): @drawable/music_thumbnail_placeholder}"
             app:bindDarkenView="@{true}"
             app:bindRotateViewAnimation="@{musicStoreViewModel.isPlaying}" />
         </androidx.cardview.widget.CardView>

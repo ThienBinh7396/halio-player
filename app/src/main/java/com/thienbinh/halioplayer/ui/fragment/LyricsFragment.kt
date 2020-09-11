@@ -70,13 +70,6 @@ class LyricsFragment : Fragment(), StoreSubscriber<MusicState> {
     return mFragmentLyricsBinding.root
   }
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
-    Log.d("Binh", "Lyric fragment")
-    MainActivity.mFragmentName = EFragmentName.LYRIC_FRAGMENT
-  }
-
   private fun handleUpdateMusic() {
     if (mMusic != null && mMusic!!.hasLyric) {
       Handler(handlerThread.looper).postDelayed({
@@ -169,6 +162,9 @@ class LyricsFragment : Fragment(), StoreSubscriber<MusicState> {
     super.onStart()
 
     isRunning = true
+
+    Log.d("Binh", "Lyric fragment")
+    MainActivity.mFragmentName = EFragmentName.LYRIC_FRAGMENT
 
     store.subscribe(this) {
       it.select {

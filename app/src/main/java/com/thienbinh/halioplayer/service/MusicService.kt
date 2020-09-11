@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.media.MediaPlayer
 import android.media.TimedMetaData
+import android.net.Uri
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.WIFI_MODE_FULL_HIGH_PERF
 import android.os.IBinder
@@ -115,14 +116,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mMediaPlayer!!.reset()
 
         Log.d("Binh", "Data Music: $data")
-        if (data.localHref != null) {
-          val assetFileDescriptor = assets.openFd(data.href)
+        if (data.isFromDevice) {
+//          val assetFileDescriptor = assets.openFd(data.localHref!!)
+//
+//          mMediaPlayer!!.setDataSource(
+//            assetFileDescriptor.fileDescriptor,
+//            assetFileDescriptor.startOffset,
+//            assetFileDescriptor.length
+//          )
 
-          mMediaPlayer!!.setDataSource(
-            assetFileDescriptor.fileDescriptor,
-            assetFileDescriptor.startOffset,
-            assetFileDescriptor.length
-          )
+          mMediaPlayer!!.setDataSource(applicationContext, Uri.parse(data.localHref!!))
         } else {
           mMediaPlayer!!.setDataSource(data.href)
         }
@@ -130,7 +133,9 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PREPARING_STATE(true))
         store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_CURRENT_MUSIC(data))
 
-        MusicSharePreference.updateRecentlyPlayedMusic(data)
+        if(!data.isFromDevice){
+          MusicSharePreference.updateRecentlyPlayedMusic(data)
+        }
 
         return true
       }

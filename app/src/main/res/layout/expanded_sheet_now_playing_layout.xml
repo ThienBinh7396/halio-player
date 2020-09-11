@@ -7,6 +7,8 @@
 
     <import type="com.thienbinh.halioplayer.constant.EFragmentName" />
 
+    <import type="com.thienbinh.halioplayer.utils.MapContentUriWithBitmap" />
+
     <variable
       name="musicStoreViewModel"
       type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
@@ -109,7 +111,8 @@
                 android:layout_width="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_size"
                 android:layout_height="@dimen/bottom_music_sheet_expanded_now_playing_music_thumbnail_size"
                 android:tag="unique_thumbnail_expanded_sheet_now_playing"
-                app:bindCircleImage="@{musicStoreViewModel.music.thumbnail ?? @drawable/music_thumbnail_default}"
+                android:src="@drawable/music_thumbnail_default"
+                app:bindCircleImage="@{musicStoreViewModel.music != null ?  musicStoreViewModel.music.thumbnail == null ? MapContentUriWithBitmap.getBitmapByContentUri(musicStoreViewModel.music.localThumbnail) : musicStoreViewModel.music.thumbnail : null}"
                 app:bindDarkenView="@{true}" />
             </androidx.cardview.widget.CardView>
 

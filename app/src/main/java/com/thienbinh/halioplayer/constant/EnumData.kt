@@ -9,7 +9,8 @@ enum class EActionMusicTypeSource {
 enum class EDisplayStyle {
   BLOCK_STYLE,
   LIST_STYLE,
-  IN_ALBUM
+  IN_ALBUM,
+  IN_PLAYLIST
 }
 
 enum class EMusicPlayRepeat {
@@ -22,7 +23,8 @@ enum class EFragmentName(val titleFragment: String) {
   LYRIC_FRAGMENT("Lyric"),
   HOME_FRAGMENT("Home"),
   RECENT_FRAGMENT("Recently played"),
-  ALBUM_FRAGMENT("ALBUM_FRAGMENT")
+  ALBUM_FRAGMENT("ALBUM_FRAGMENT"),
+  PLAYLIST_FRAGMENT("PLAYLIST_FRAGMENT")
 }
 
 enum class EMusicRecycleView{

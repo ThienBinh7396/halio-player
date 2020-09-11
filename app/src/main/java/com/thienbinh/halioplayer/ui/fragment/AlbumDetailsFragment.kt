@@ -13,6 +13,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
 import com.thienbinh.halioplayer.MainActivity
 import com.thienbinh.halioplayer.R
+import com.thienbinh.halioplayer.constant.EFragmentName
 import com.thienbinh.halioplayer.constant.SCALE_DP_PX
 import com.thienbinh.halioplayer.databinding.FragmentAlbumDetailsBinding
 import com.thienbinh.halioplayer.model.Album
@@ -81,5 +82,12 @@ class AlbumDetailsFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
       }
     }
     Log.d("Binh", "Offset $verticalOffset ${context?.let { Helper.spToPx(6f, it) }} ")
+  }
+
+  override fun onStart() {
+    super.onStart()
+
+    Log.d("Binh", "Recently Fragment")
+    MainActivity.mFragmentName = EFragmentName.ALBUM_FRAGMENT
   }
 }

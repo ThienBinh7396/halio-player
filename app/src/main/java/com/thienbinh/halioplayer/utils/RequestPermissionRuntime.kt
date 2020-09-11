@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -19,7 +20,7 @@ class RequestPermissionRuntime {
     fun checkPermissionReadExternalStorage(context: Context): Boolean {
       var checkPermission = false
 
-      if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
         if (ContextCompat.checkSelfPermission(
             context,

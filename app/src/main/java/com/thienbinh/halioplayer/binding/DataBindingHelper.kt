@@ -119,7 +119,9 @@ class DataBindingHelper {
 
     @BindingAdapter("app:bindDarkenView")
     @JvmStatic
-    fun bindDarkenView(imageView: ImageView, someThing: Any) {
+    fun bindDarkenView(imageView: ImageView, someThing: Boolean = true) {
+      if (!someThing) return
+
       val matrix = floatArrayOf(
         0.2f, 0.2f, 0.2f, 0f, 0f,
         0.2f, 0.2f, 0.2f, 0f, 0f,
@@ -143,7 +145,8 @@ class DataBindingHelper {
       viewTag: String,
       isAnimate: Boolean,
       typeAnimator: String = "rotation",
-      animationDelay: Int = 0
+      animationDelay: Int = 0,
+      isFastAnimation: Boolean = false
     ): Boolean? {
       val checkViewTagExists = mapViewTagWithIsAnimating[viewTag]
 
@@ -155,7 +158,7 @@ class DataBindingHelper {
         when (typeAnimator) {
           "rotation" -> {
             animator = ObjectAnimator.ofFloat(view, "rotation", 0f, 359f)
-            animator?.duration = 20000
+            animator?.duration = if(isFastAnimation) 4500 else 20000
           }
           "scale" -> {
             animator = ObjectAnimator.ofPropertyValuesHolder(
@@ -181,14 +184,14 @@ class DataBindingHelper {
       return mapViewTagWithIsAnimating[viewTag]!!.isAnimating
     }
 
-    @BindingAdapter("app:bindRotateViewAnimation")
+    @BindingAdapter(value=["app:bindRotateViewAnimation", "app:bindIsFastAnimation"], requireAll = false)
     @JvmStatic
-    fun bindRotateViewAnimation(view: View, isAnimate: Boolean) {
+    fun bindRotateViewAnimation(view: View, isAnimate: Boolean, isFastAnimation: Boolean) {
       var viewTag = view.tag ?: return
 
       viewTag = viewTag as String
 
-      val checkViewIsAnimatingFromMap = checkViewIsAnimating(view, viewTag, isAnimate)
+      val checkViewIsAnimatingFromMap = checkViewIsAnimating(view, viewTag, isAnimate, isFastAnimation = isFastAnimation)
 
       if (!isAnimate && checkViewIsAnimatingFromMap == null) return
 

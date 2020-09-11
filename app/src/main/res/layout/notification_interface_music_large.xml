@@ -17,6 +17,7 @@
       android:layout_width="@dimen/notification_interface_music_image_size"
       android:layout_height="@dimen/notification_interface_music_image_size"
       android:layout_gravity="center"
+      android:src="@drawable/music_thumbnail_placeholder"
       android:layout_marginEnd="@dimen/dimen_8" />
 
     <LinearLayout

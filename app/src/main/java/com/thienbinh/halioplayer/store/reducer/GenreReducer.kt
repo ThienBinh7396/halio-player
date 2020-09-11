@@ -1,6 +1,7 @@
 package com.thienbinh.halioplayer.store.reducer
 
 import android.util.Log
+import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.store.action.GenreAction
 import com.thienbinh.halioplayer.store.state.GenreState
 import com.thienbinh.halioplayer.store.state.RootState
@@ -9,7 +10,7 @@ import org.rekotlin.Action
 fun genreReducer(action: Action, state: GenreState?): GenreState {
   var genreState = state ?: GenreState()
 
-  when(action){
+  when (action) {
     is GenreAction.GENRE_ACTION_UPDATE_LIST -> {
       genreState = genreState.copy(
         genres = action.list
@@ -27,6 +28,12 @@ fun genreReducer(action: Action, state: GenreState?): GenreState {
 
       genreState = genreState.copy(
         albums = action.list
+      )
+    }
+
+    is GenreAction.GENRE_ACTION_UPDATE_LIST_FROM_DEVICE -> {
+      genreState = genreState.copy(
+        fromDeviceMusic = Music.deepCloneMusicList(action.list)
       )
     }
   }

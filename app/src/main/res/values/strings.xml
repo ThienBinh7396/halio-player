@@ -23,4 +23,7 @@
   <string name="edm_caption">The best EDM Hits of 2020!</string>
   <string name="acoustic_hit">Acoustic Hits</string>
   <string name="acoustic_caption">A mix of folksy hits, soulful acoustic, and beloved singer-songwriter gems.</string>
+  <string name="next">Next</string>
+  <string name="from_current_playlist">From current playlist</string>
+  <string name="music_load_from_device">Music load from device</string>
 </resources>
