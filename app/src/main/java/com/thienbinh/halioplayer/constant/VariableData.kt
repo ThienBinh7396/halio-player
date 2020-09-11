@@ -17,8 +17,13 @@ fun getStatusBarHeight(context: Context): Float {
 }
 
 class VariableData {
-  companion object{
+  companion object {
     @JvmStatic
-    val LOADING_GIF_URL =  "https://res.cloudinary.com/do1xjyyru/image/upload/v1599212684/public/icon_playing_white_rwleu9.gif"
+    val LOADING_GIF_URL =
+      "https://res.cloudinary.com/do1xjyyru/image/upload/v1599212684/public/icon_playing_white_rwleu9.gif"
+
+    @JvmStatic
+    val MUSIC_THUMBNAIL_PLACEHOLDER =
+      "https://res.cloudinary.com/do1xjyyru/image/upload/v1599753824/public/music_thumbnail_placeholder_b4h9ku.jpg"
   }
 }

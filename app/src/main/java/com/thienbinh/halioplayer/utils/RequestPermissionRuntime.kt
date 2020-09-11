@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.thienbinh.halioplayer.store
+import com.thienbinh.halioplayer.store.action.PermissionAction
 
 
 class RequestPermissionRuntime {
@@ -15,6 +17,8 @@ class RequestPermissionRuntime {
     val REQUEST_READ_EXTERNAL_STORAGE_PERMISSION = 123
 
     fun checkPermissionReadExternalStorage(context: Context): Boolean {
+      var checkPermission = false
+
       if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
 
         if (ContextCompat.checkSelfPermission(
@@ -39,14 +43,21 @@ class RequestPermissionRuntime {
             )
           }
 
-          return false
         } else {
-          return true
+          checkPermission = true
         }
 
       } else {
-        return true
+        checkPermission = true
       }
+
+      store.dispatch(
+        PermissionAction.PERMISSION_ACTION_UPDATE_READ_EXTERNAL_STORAGE_PERMISSION(
+          checkPermission
+        )
+      )
+
+      return checkPermission
     }
 
     private fun showRequestPermissonDialog(

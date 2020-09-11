@@ -13,6 +13,12 @@ fun permissionReducer(action: Action, permissionState: PermissionState?): Permis
         readExternalStoragePermissionState = action.isGranted
       )
     }
+
+    is PermissionAction.PERMISSION_ACTION_UPDATE_IS_FIRST_LOAD_MUSIC -> {
+      _permissionState = _permissionState.copy(
+        isFirstLoadMusicFromDevice = action.isFirstLoadMusicFromDevice
+      )
+    }
   }
 
   return _permissionState

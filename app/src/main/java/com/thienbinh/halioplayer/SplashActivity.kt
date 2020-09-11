@@ -16,15 +16,20 @@ class SplashActivity : Activity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
+
     overridePendingTransition(R.anim.enter_slide_right_anim, R.anim.exit_slide_left_anim)
+
+    val requiredPermission = arrayListOf(
+      RequestPermissionRuntime.checkPermissionReadExternalStorage(this)
+    )
 
     FirstActionInitializeData.initialize(this)
 
-    Handler(Looper.getMainLooper()).postDelayed({
-      val intent = Intent(this@SplashActivity, MainActivity::class.java)
-      startActivity(intent)
-      finish()
-    }, 1000)
+    if (requiredPermission.find { !it } == null) {
+      FirstActionInitializeData.loadMusicFromDevice(this)
+
+      goToMainActivity()
+    }
   }
 
   override fun onRequestPermissionsResult(
@@ -39,6 +44,8 @@ class SplashActivity : Activity() {
             true
           )
         )
+
+        FirstActionInitializeData.loadMusicFromDevice(this)
       } else {
         Toast.makeText(
           this, "Read external storage permission denied",
@@ -50,11 +57,23 @@ class SplashActivity : Activity() {
             false
           )
         )
+
       }
       else -> super.onRequestPermissionsResult(
         requestCode, permissions!!,
         grantResults
       )
     }
+
+
+    goToMainActivity()
+  }
+
+  private fun goToMainActivity() {
+    Handler(Looper.getMainLooper()).postDelayed({
+      val intent = Intent(this@SplashActivity, MainActivity::class.java)
+      startActivity(intent)
+      finish()
+    }, 1000)
   }
 }
