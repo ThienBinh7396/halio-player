@@ -8,6 +8,7 @@ import android.media.MediaMetadataRetriever
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
+import android.widget.Toast
 import com.google.gson.Gson
 import com.thienbinh.halioplayer.constant.VariableData
 import com.thienbinh.halioplayer.model.Album
@@ -17,6 +18,7 @@ import com.thienbinh.halioplayer.sharePreference.MusicSharePreference
 import com.thienbinh.halioplayer.store
 import com.thienbinh.halioplayer.store.action.GenreAction
 import com.thienbinh.halioplayer.store.action.PermissionAction
+import java.lang.Error
 
 
 class FirstActionInitializeData {
@@ -62,6 +64,8 @@ class FirstActionInitializeData {
 
       if (musicCursor != null) {
 
+        store.dispatch(GenreAction.GENRE_ACTION_UPDATE_IS_LOADING_MUSIC_FROM_DEVICE(true))
+
         val columnIndexPath = musicCursor.getColumnIndexOrThrow(projection[0])
         val columnIndexDisplayName = musicCursor.getColumnIndexOrThrow(projection[1])
         val columnIndexArtist = musicCursor.getColumnIndexOrThrow(projection[2])
@@ -72,8 +76,12 @@ class FirstActionInitializeData {
 
         while (musicCursor.moveToNext()) {
           val contentUri = musicCursor.getString(columnIndexPath)
+          try {
 
-          metaRetriever.setDataSource(contentUri)
+            metaRetriever.setDataSource(contentUri)
+          } catch (err: Error) {
+            continue
+          }
 
           val thumbnailArt = metaRetriever.embeddedPicture
 
@@ -125,6 +133,11 @@ class FirstActionInitializeData {
 
       store.dispatch(PermissionAction.PERMISSION_ACTION_UPDATE_IS_FIRST_LOAD_MUSIC(true))
       store.dispatch(GenreAction.GENRE_ACTION_UPDATE_LIST_FROM_DEVICE(localMusics))
+      store.dispatch(GenreAction.GENRE_ACTION_UPDATE_IS_LOADING_MUSIC_FROM_DEVICE(false))
+
+      if (isForced) {
+        Toast.makeText(context, "Load end!", Toast.LENGTH_SHORT).show()
+      }
     }
   }
 }

@@ -21,6 +21,8 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
 
   private var mMusicFromDevice: MutableList<Music>? = null
 
+  private var mIsLoadingMusicFromDevice: Boolean = false
+
   init {
     store.state.genreState.apply {
       mGenres = genres
@@ -59,11 +61,18 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
   @Bindable
   fun getMusicFromDevice() = mMusicFromDevice
 
-  fun getMusicFromDeviceWithout(music: Music?) = if (music == null) mMusicFromDevice else (
-      mMusicFromDevice?.filter { it.id != music.id }
-        ?: mutableListOf()
-      )
+  fun getMusicFromDeviceWithout(
+    music: Music?
+  ): MutableList<Music> {
+    if (music == null) return mMusicFromDevice!!
 
+    var musicListFind = mMusicFromDevice?.filter { it.id != music.id }
+
+    return musicListFind?.toMutableList() ?: mutableListOf()
+  }
+
+  @Bindable
+  fun getIsLoadingMusicFromDevice() = mIsLoadingMusicFromDevice
 
   override fun newState(state: GenreState) {
     if (!Genre.checkListAreTheSame(mGenres!!, state.genres)) {
@@ -92,6 +101,26 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       mMusicFromDevice = state.fromDeviceMusic
 
       notifyPropertyChanged(BR.musicFromDevice)
+
+      Log.d("Binh", "IS LOAIDNG : ${mMusicFromDevice?.size}")
+    }
+
+    if (mIsLoadingMusicFromDevice != state.isLoadingMusicFromDevice) {
+      mIsLoadingMusicFromDevice = state.isLoadingMusicFromDevice
+
+      notifyPropertyChanged(BR.isLoadingMusicFromDevice)
+    }
+  }
+
+  companion object {
+    @JvmStatic
+    fun getMusicFromDeviceWithout(
+      music: Music?,
+      list: MutableList<Music> = mutableListOf()
+    ): MutableList<Music> {
+      if (music == null) return list
+
+      return list.filter { it.id != music.id }.toMutableList()
     }
   }
 }

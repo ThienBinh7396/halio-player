@@ -36,6 +36,12 @@ fun genreReducer(action: Action, state: GenreState?): GenreState {
         fromDeviceMusic = Music.deepCloneMusicList(action.list)
       )
     }
+
+    is GenreAction.GENRE_ACTION_UPDATE_IS_LOADING_MUSIC_FROM_DEVICE -> {
+      genreState = genreState.copy(
+        isLoadingMusicFromDevice = action.isLoading
+      )
+    }
   }
 
   return genreState

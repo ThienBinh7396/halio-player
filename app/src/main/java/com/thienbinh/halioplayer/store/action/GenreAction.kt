@@ -15,4 +15,6 @@ sealed class GenreAction: Action {
   class GENRE_ACTION_UPDATE_PLAYLISTS(var list: MutableList<Album>): Action
 
   class GENRE_ACTION_UPDATE_LIST_FROM_DEVICE(var list: MutableList<Music>): Action
+
+  class GENRE_ACTION_UPDATE_IS_LOADING_MUSIC_FROM_DEVICE(var isLoading: Boolean): Action
 }

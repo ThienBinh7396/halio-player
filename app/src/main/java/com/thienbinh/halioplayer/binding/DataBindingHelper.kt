@@ -158,7 +158,7 @@ class DataBindingHelper {
         when (typeAnimator) {
           "rotation" -> {
             animator = ObjectAnimator.ofFloat(view, "rotation", 0f, 359f)
-            animator?.duration = if(isFastAnimation) 4500 else 20000
+            animator?.duration = if(isFastAnimation) 2500 else 20000
           }
           "scale" -> {
             animator = ObjectAnimator.ofPropertyValuesHolder(
