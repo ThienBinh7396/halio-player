@@ -1,21 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <RelativeLayout
+  <data>
+
+    <import type="com.thienbinh.halioplayer.constant.EDisplayStyle" />
+
+    <import type="com.thienbinh.halioplayer.viewModel.GenreViewModel" />
+
+    <variable
+      name="musicStoreViewModel"
+      type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
+
+
+    <variable
+      name="genreViewModel"
+      type="GenreViewModel" />
+  </data>
+
+  <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="54dp"
-    android:layout_marginTop="@dimen/dimen_20"
-    android:layout_marginHorizontal="@dimen/dimen_16"
-    android:background="@drawable/bottom_sheet_layout_background_with_radius"
-    android:paddingHorizontal="@dimen/dimen_12">
+    android:layout_height="wrap_content">
 
-    <TextView
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="54dp"
+      android:layout_marginHorizontal="@dimen/dimen_16"
+      android:layout_marginTop="@dimen/dimen_20"
+      app:showUnless="@{genreViewModel.playlist != null &amp;&amp; GenreViewModel.getPlaylistWithout(musicStoreViewModel.music, genreViewModel.playlist).size() == 0}"
+      android:background="@drawable/bottom_sheet_layout_background_with_radius"
+      android:paddingHorizontal="@dimen/dimen_12">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/no_content"
+        android:textAlignment="center"
+        android:textColor="@color/colorLyricActive"
+        android:textSize="14sp" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_centerVertical="true"
-      android:text="@string/no_content"
-      android:textAlignment="center"
-      android:textColor="@color/colorLyricActive"
-      android:textSize="14sp" />
-  </RelativeLayout>
+      android:layout_margin="@dimen/dimen_16"
+      app:bindMusicList="@{GenreViewModel.getPlaylistWithout(musicStoreViewModel.music, genreViewModel.playlist)}"
+      app:bindMusicListDisplayStyle="@{EDisplayStyle.LIST_STYLE}" />
+  </FrameLayout>
 </layout>

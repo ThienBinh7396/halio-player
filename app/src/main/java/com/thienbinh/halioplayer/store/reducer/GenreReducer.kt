@@ -42,6 +42,12 @@ fun genreReducer(action: Action, state: GenreState?): GenreState {
         isLoadingMusicFromDevice = action.isLoading
       )
     }
+
+    is GenreAction.GENRE_ACTION_UPDATE_PLAYLIST -> {
+      genreState = genreState.copy(
+        playlists = action.list
+      )
+    }
   }
 
   return genreState

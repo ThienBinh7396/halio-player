@@ -20,6 +20,7 @@ import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.notification.MusicInterfaceNotification
 import com.thienbinh.halioplayer.sharePreference.MusicSharePreference
 import com.thienbinh.halioplayer.store
+import com.thienbinh.halioplayer.store.action.GenreAction
 import com.thienbinh.halioplayer.store.action.MusicAction
 import java.lang.Error
 import java.util.*
@@ -132,6 +133,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
         store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PREPARING_STATE(true))
         store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_CURRENT_MUSIC(data))
+        store.dispatch(GenreAction.GENRE_ACTION_ADD_MUSIC_INTO_PLAYLIST(data))
 
         if(!data.isFromDevice){
           MusicSharePreference.updateRecentlyPlayedMusic(data)

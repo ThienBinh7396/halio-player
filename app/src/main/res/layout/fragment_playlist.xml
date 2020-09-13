@@ -95,7 +95,10 @@
             android:textSize="12sp" />
         </LinearLayout>
 
-        <include layout="@layout/text_no_content" />
+        <include
+          layout="@layout/text_no_content"
+          app:genreViewModel="@{mGenreViewModel}"
+          app:musicStoreViewModel="@{mMusicStoreViewModel}" />
 
         <LinearLayout
           android:layout_width="match_parent"
@@ -132,7 +135,8 @@
 
         <FrameLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+          android:layout_height="wrap_content"
+          android:paddingBottom="@dimen/dimen_8">
 
           <include
             layout="@layout/text_no_content"

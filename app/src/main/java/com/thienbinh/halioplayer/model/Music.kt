@@ -132,6 +132,23 @@ class Music(
           add(
             Music(
               size,
+              "Колыбельная (Lullaby)",
+              "https://music-2020.net/images/track/812840734_Rauf__Faik_-_%D0%BA%D0%BE%D0%BB%D1%8B%D0%B1%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F(lullaby)-Piano_Melody_Instrumental_music_Music_Mix_Forever.jpg",
+              "Rauf & Faik",
+              "https://res.cloudinary.com/do1xjyyru/video/upload/v1600009745/mp3/kolybel__nar_Lullaby__-_Rauf_Faik_bjdhnm.mp3",
+              233,
+              Genre.deepCloneGenreList(
+                mutableListOf(
+                  Genre.getGenreById(1)!!,
+                  Genre.getGenreById(0)!!
+                )
+              )
+            )
+          )
+
+          add(
+            Music(
+              size,
               "Let me down slowly",
               "https://i.scdn.co/image/ab67616d00001e02459d675aa0b6f3b211357370",
               "Alec Benjamin",

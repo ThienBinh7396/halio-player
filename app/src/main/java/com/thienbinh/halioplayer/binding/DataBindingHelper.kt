@@ -8,11 +8,13 @@ import android.graphics.*
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.core.view.marginLeft
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.*
 import com.bumptech.glide.Glide
@@ -37,6 +39,16 @@ class DataBindingHelper {
     fun showUnless(view: View, isShow: Boolean) {
       view.visibility = if (isShow) View.VISIBLE else View.GONE
     }
+
+    @BindingAdapter("app:bindingMarginHorizontal")
+    @JvmStatic
+    fun bindingMarginHorizontal(view: View, dimen: Float) {
+      val layoutParams = view.layoutParams as ViewGroup.MarginLayoutParams
+      layoutParams.leftMargin = dimen.toInt()
+      layoutParams.rightMargin = dimen.toInt()
+      view.layoutParams = layoutParams
+    }
+
 
     private var enterSlideBottomAnimation: Animation? = null
     private var exitSlideBottomAnimation: Animation? = null
@@ -158,7 +170,7 @@ class DataBindingHelper {
         when (typeAnimator) {
           "rotation" -> {
             animator = ObjectAnimator.ofFloat(view, "rotation", 0f, 359f)
-            animator?.duration = if(isFastAnimation) 2500 else 20000
+            animator?.duration = if (isFastAnimation) 2500 else 20000
           }
           "scale" -> {
             animator = ObjectAnimator.ofPropertyValuesHolder(
@@ -184,14 +196,18 @@ class DataBindingHelper {
       return mapViewTagWithIsAnimating[viewTag]!!.isAnimating
     }
 
-    @BindingAdapter(value=["app:bindRotateViewAnimation", "app:bindIsFastAnimation"], requireAll = false)
+    @BindingAdapter(
+      value = ["app:bindRotateViewAnimation", "app:bindIsFastAnimation"],
+      requireAll = false
+    )
     @JvmStatic
     fun bindRotateViewAnimation(view: View, isAnimate: Boolean, isFastAnimation: Boolean) {
       var viewTag = view.tag ?: return
 
       viewTag = viewTag as String
 
-      val checkViewIsAnimatingFromMap = checkViewIsAnimating(view, viewTag, isAnimate, isFastAnimation = isFastAnimation)
+      val checkViewIsAnimatingFromMap =
+        checkViewIsAnimating(view, viewTag, isAnimate, isFastAnimation = isFastAnimation)
 
       if (!isAnimate && checkViewIsAnimatingFromMap == null) return
 

@@ -17,6 +17,8 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
 
   private var mRecentlyPlayedList: MutableList<Music>? = null
 
+  private var mPlaylist: MutableList<Music>? = null
+
   private var mAlbums: MutableList<Album>? = null
 
   private var mMusicFromDevice: MutableList<Music>? = null
@@ -28,6 +30,8 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       mGenres = genres
 
       mRecentlyPlayedList = recentlyPlayed
+
+      mPlaylist = playlists
 
       mAlbums = albums
 
@@ -54,6 +58,9 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
   @Bindable
   fun getRecentlyPlayed() = mRecentlyPlayedList
 
+  @Bindable
+  fun getPlaylist() = mPlaylist
+
   fun getGenreById(id: Int): Genre {
     return mGenres?.find { it.id == id } ?: Genre.getInstance()[0]
   }
@@ -66,7 +73,7 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
   ): MutableList<Music> {
     if (music == null) return mMusicFromDevice!!
 
-    var musicListFind = mMusicFromDevice?.filter { it.id != music.id }
+    val musicListFind = mMusicFromDevice?.filter { it.id != music.id }
 
     return musicListFind?.toMutableList() ?: mutableListOf()
   }
@@ -87,6 +94,13 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       mRecentlyPlayedList = state.recentlyPlayed
 
       notifyPropertyChanged(BR.recentlyPlayed)
+    }
+
+    if (!Music.checkMusicListAreTheSame(mPlaylist!!, state.playlists)) {
+      Log.d("Binh", "Update new recently played")
+      mPlaylist = Music.deepCloneMusicList(state.playlists)
+
+      notifyPropertyChanged(BR.playlist)
     }
 
     if (!Album.checkListAreTheSame(mAlbums!!, state.albums)) {
@@ -121,6 +135,18 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       if (music == null) return list
 
       return list.filter { it.id != music.id }.toMutableList()
+    }
+
+    @JvmStatic
+    fun getPlaylistWithout(
+      music: Music?,
+      list: MutableList<Music>? = mutableListOf()
+    ): MutableList<Music> {
+      if (music == null) return list ?: mutableListOf()
+
+      val getList = list?.filter { it.id != music.id }?.toMutableList()
+
+      return getList ?: mutableListOf()
     }
   }
 }
