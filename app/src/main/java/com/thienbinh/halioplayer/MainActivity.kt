@@ -24,6 +24,7 @@ import com.thienbinh.halioplayer.customInterface.IMusicControlEventListener
 import com.thienbinh.halioplayer.databinding.ActivityMainBinding
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.service.MusicService
+import com.thienbinh.halioplayer.store.action.MusicAction
 import com.thienbinh.halioplayer.ui.snackbar.CustomSnackbar
 import com.thienbinh.halioplayer.utils.FirstActionInitializeData
 import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
@@ -172,6 +173,10 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
     val intent = Intent()
     intent.action = ACTION_MUSIC_TOGGLE
     sendBroadcast(intent)
+  }
+
+  override fun onControlListMusicClickListener(isNext: Boolean) {
+    store.dispatch(MusicAction.MUSIC_ACTION_CONTROL_LIST_MUSIC(isNext))
   }
 
   override fun toggleStateMusicBottomSheet(isExpanded: Boolean) {

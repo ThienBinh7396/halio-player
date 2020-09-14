@@ -18,6 +18,20 @@ internal val musicMiddleware: Middleware<RootState> = { dispatch, _ ->
     { action ->
       run {
         when (action) {
+          is MusicAction.MUSIC_ACTION_UPDATE_MUSIC_TO_SERVICE -> {
+            val intent = Intent()
+
+            val bundle = Bundle()
+
+            bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, action.music)
+
+            intent.action = ACTION_MUSIC_UPDATE
+            intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
+
+            MainApplication.currentActivity?.sendBroadcast(intent)
+
+          }
+
           is MusicAction.MUSIC_ACTION_CONTROL_LIST_MUSIC -> {
             val intent = Intent()
 

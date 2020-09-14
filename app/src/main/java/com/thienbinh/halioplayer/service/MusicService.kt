@@ -229,13 +229,20 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
           store.state.apply {
             if (musicState.currentMusic != null) {
-              val checkListWithoutCurrent =
+              val checkListWithoutCurrentInPlaylist =
                 Music.getMusicListWithout(musicState.currentMusic!!, genreState.playlists)
 
-              if (checkListWithoutCurrent.size != 0) {
+              if (checkListWithoutCurrentInPlaylist.size != 0) {
                 store.dispatch(MusicAction.MUSIC_ACTION_CONTROL_LIST_MUSIC(true))
               } else {
-                store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(false))
+                val checkListWithoutCurrentInRecentlyPlayed = Music.getMusicListWithout(musicState.currentMusic!!, genreState.recentlyPlayed)
+
+                if(checkListWithoutCurrentInRecentlyPlayed.size > 0){
+                  store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_MUSIC_TO_SERVICE(checkListWithoutCurrentInRecentlyPlayed[0]))
+
+                }else{
+                  store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(false))
+                }
 
                 pauseScheduleWhenMusicStop()
               }
