@@ -94,7 +94,7 @@ class MusicInterfaceNotification {
         } else musicState.currentMusic!!
         notificationLayout.setTextViewText(
           R.id.tvNextMusicTitle,
-          "${music.title} - ${music.singer}"
+          music.title
         )
       }
 

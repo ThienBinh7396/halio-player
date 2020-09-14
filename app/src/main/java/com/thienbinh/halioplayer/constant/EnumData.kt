@@ -10,7 +10,8 @@ enum class EDisplayStyle {
   BLOCK_STYLE,
   LIST_STYLE,
   IN_ALBUM,
-  IN_PLAYLIST
+  IN_PLAYLIST,
+  LIST_STYLE_IN_PLAYLIST
 }
 
 enum class EMusicPlayRepeat {
@@ -19,12 +20,18 @@ enum class EMusicPlayRepeat {
   REPEAT_ALL
 }
 
+enum class EMusicListTypeSort{
+  SORT_BY_TITLE,
+  SORT_BY_COUNT
+}
+
 enum class EFragmentName(val titleFragment: String) {
   LYRIC_FRAGMENT("Lyric"),
   HOME_FRAGMENT("Home"),
   RECENT_FRAGMENT("Recently played"),
-  ALBUM_FRAGMENT("ALBUM_FRAGMENT"),
-  PLAYLIST_FRAGMENT("PLAYLIST_FRAGMENT")
+  ALBUM_FRAGMENT("Album"),
+  GENRE_FRAGMENT("Genre detail"),
+  PLAYLIST_FRAGMENT("Playlist")
 }
 
 enum class EMusicRecycleView{
@@ -32,5 +39,6 @@ enum class EMusicRecycleView{
 }
 
 enum class ETypeWidgetButton{
-  REMOVE_FROM_RECENTLY_PLAYED_LIST
+  REMOVE_FROM_RECENTLY_PLAYED_LIST,
+  REMOVE_FROM_PLAYLIST
 }

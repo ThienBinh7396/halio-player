@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="86dp"
+  android:layout_height="116dp"
   android:background="@drawable/notification_interface_music_background"
   android:clipToPadding="true">
 
   <LinearLayout
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="90dp"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/notification_interface_music_container_padding_horizontal">
 
@@ -24,7 +24,7 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:layout_marginEnd="@dimen/dimen_10"
+      android:layout_marginEnd="@dimen/dimen_16"
       android:layout_weight="1"
       android:orientation="vertical">
 
@@ -113,8 +113,8 @@
     android:layout_alignParentEnd="true"
     android:layout_alignParentBottom="true"
     android:layout_marginEnd="@dimen/dimen_12"
-    android:layout_marginBottom="@dimen/dimen_10"
-    android:translationY="-2dp">
+    android:translationY="-4dp"
+    android:layout_marginBottom="@dimen/dimen_10">
 
     <TextView
       android:layout_width="wrap_content"
@@ -125,10 +125,16 @@
 
     <TextView
       android:id="@+id/tvNextMusicTitle"
-      android:layout_width="150dp"
+      android:layout_width="wrap_content"
+      android:maxWidth="150dp"
       android:layout_height="wrap_content"
-      android:singleLine="true"
+      android:ellipsize="marquee"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
       android:freezesText="true"
+      android:marqueeRepeatLimit="marquee_forever"
+      android:scrollHorizontally="true"
+      android:singleLine="true"
       android:textColor="@color/colorLyricActive"
       android:textSize="@dimen/font_size__sm" />
   </LinearLayout>

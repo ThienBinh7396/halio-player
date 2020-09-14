@@ -1,10 +1,15 @@
 package com.thienbinh.halioplayer.model
 
 import android.graphics.Bitmap
+import android.os.Handler
 import android.util.Log
 import androidx.constraintlayout.solver.widgets.Helper
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.thienbinh.halioplayer.customInterface.ICustomSnackbarEventListener
+import com.thienbinh.halioplayer.sharePreference.MusicSharePreference
+import com.thienbinh.halioplayer.store
+import com.thienbinh.halioplayer.ui.snackbar.CustomSnackbar
 import java.io.Serializable
 
 
@@ -377,5 +382,6 @@ class Music(
       music: Music,
       list: MutableList<Music> = mutableListOf()
     ): MutableList<Music> = list.filter { it.id != music.id }.toMutableList()
+
   }
 }

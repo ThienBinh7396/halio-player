@@ -9,10 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thienbinh.halioplayer.R
 import com.thienbinh.halioplayer.constant.EDisplayStyle
 import com.thienbinh.halioplayer.customInterface.IMusicBlockEventListener
-import com.thienbinh.halioplayer.databinding.MusicBlockLayoutBinding
-import com.thienbinh.halioplayer.databinding.MusicInAlbumLayoutBinding
-import com.thienbinh.halioplayer.databinding.MusicInPlaylistLayoutBinding
-import com.thienbinh.halioplayer.databinding.MusicListLayoutBinding
+import com.thienbinh.halioplayer.databinding.*
 import com.thienbinh.halioplayer.model.Music
 import com.thienbinh.halioplayer.viewModel.MusicStoreViewModel
 
@@ -26,6 +23,31 @@ class MusicListAdapter(
 
   class MusicListStyleViewHolder(private val binding: MusicListLayoutBinding) :
     RecyclerView.ViewHolder(binding.root) {
+
+    fun bindingData(data: Music) {
+      binding.music = data
+
+      if (binding.musicStoreViewModel == null) {
+        binding.musicStoreViewModel = MusicStoreViewModel()
+      }
+
+    }
+  }
+
+  class MusicListStyleInPlaylistViewHolder(
+    private val binding: MusicListStyleInPlaylistLayoutBinding,
+    mEventListener: IMusicBlockEventListener? = null
+  ) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    init {
+
+      if (mEventListener != null) {
+        binding.apply {
+          eventListener = mEventListener
+        }
+      }
+    }
 
     fun bindingData(data: Music) {
       binding.music = data
@@ -133,6 +155,16 @@ class MusicListAdapter(
         )
       )
 
+      EDisplayStyle.LIST_STYLE_IN_PLAYLIST -> return MusicListStyleInPlaylistViewHolder(
+        DataBindingUtil.inflate(
+          LayoutInflater.from(parent.context),
+          R.layout.music_list_style_in_playlist_layout,
+          null,
+          false
+        ),
+        eventListener
+      )
+
       else ->
         return MusicBlockStyleViewHolder(
           DataBindingUtil.inflate(
@@ -162,6 +194,11 @@ class MusicListAdapter(
         (holder as MusicInPlaylistStyleViewHolder).bindingData(
           data = mMusicList[position],
           position + 1
+        )
+      }
+      EDisplayStyle.LIST_STYLE_IN_PLAYLIST -> {
+        (holder as MusicListStyleInPlaylistViewHolder).bindingData(
+          data = mMusicList[position]
         )
       }
       else ->
@@ -196,7 +233,7 @@ class MusicListAdapter(
       oldList[oldItemPosition].id == newList[newItemPosition].id
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-      oldList[oldItemPosition].count_play == newList[newItemPosition].count_play
+      oldList[oldItemPosition].count_play == newList[newItemPosition].count_play && oldList[oldItemPosition].title == newList[newItemPosition].title
 
   }
 }

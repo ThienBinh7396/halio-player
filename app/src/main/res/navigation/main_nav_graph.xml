@@ -30,6 +30,11 @@
       app:destination="@id/playlistFragment"
       app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
       app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+    <action
+      android:id="@+id/action_homeFragment_to_genreFragment"
+      app:destination="@id/genreFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size"/>
 
   </fragment>
   <fragment
@@ -94,5 +99,25 @@
       app:destination="@id/homeFragment"
       app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
       app:exitAnim="@anim/exit_slide_fade_effect_from_half_size" />
+    <action
+      android:id="@+id/action_playlistFragment_to_genreFragment"
+      app:destination="@id/genreFragment" />
+  </fragment>
+  <fragment
+    android:id="@+id/genreFragment"
+    android:name="com.thienbinh.halioplayer.ui.fragment.GenreFragment"
+    android:label="GenreFragment" >
+    <argument
+      android:name="genre"
+      app:argType="com.thienbinh.halioplayer.model.Genre"
+      app:nullable="true" />
+    <action
+      android:id="@+id/action_genreFragment_to_homeFragment"
+      app:destination="@id/homeFragment"
+      app:enterAnim="@anim/enter_slide_fade_effect_from_half_size"
+      app:exitAnim="@anim/exit_slide_fade_effect_from_half_size"/>
+    <action
+      android:id="@+id/action_genreFragment_to_playlistFragment"
+      app:destination="@id/playlistFragment" />
   </fragment>
 </navigation>

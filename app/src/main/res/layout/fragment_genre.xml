@@ -10,12 +10,12 @@
     <import type="com.thienbinh.halioplayer.utils.Helper" />
 
     <variable
-      name="genreViewModel"
-      type="com.thienbinh.halioplayer.viewModel.GenreViewModel" />
-
-    <variable
       name="musicViewModel"
       type="com.thienbinh.halioplayer.viewModel.MusicStoreViewModel" />
+
+    <variable
+      name="genre"
+      type="com.thienbinh.halioplayer.model.Genre" />
   </data>
 
   <LinearLayout
@@ -51,14 +51,13 @@
           android:layout_gravity="center"
           android:layout_weight="1"
           android:fontFamily="@font/averta_extra"
-          android:text="@string/recent_played"
+          android:text="@{genre.title}"
           android:textAlignment="center"
           android:textColor="@color/colorWhite"
           android:textSize="16sp"
           android:textStyle="bold" />
 
         <ImageButton
-          android:id="@+id/btnSort"
           android:layout_width="wrap_content"
           android:layout_height="@dimen/dimen_18"
           android:layout_gravity="center"
@@ -80,14 +79,14 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/dimen_24"
         android:paddingVertical="@dimen/dimen_16"
-        app:bindMusicList="@{ genreViewModel.recentlyPlayed }"
+        app:bindMusicList="@{ genre.musicList }"
         app:bindMusicListDisplayStyle="@{EDisplayStyle.LIST_STYLE}" />
 
       <include
         layout="@layout/no_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:showUnless="@{Helper.checkListIsEmpty(genreViewModel.recentlyPlayed)}" />
+        app:showUnless="@{Helper.checkListIsEmpty(genre.musicList)}" />
     </FrameLayout>
   </LinearLayout>
 </layout>

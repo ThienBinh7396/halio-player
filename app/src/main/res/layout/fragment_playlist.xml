@@ -7,6 +7,8 @@
 
     <import type="com.thienbinh.halioplayer.constant.EDisplayStyle" />
 
+    <import type="com.thienbinh.halioplayer.constant.ETypeWidgetButton" />
+
     <import type="com.thienbinh.halioplayer.utils.Helper" />
 
     <import type="com.thienbinh.halioplayer.viewModel.GenreViewModel" />
@@ -104,7 +106,8 @@
           android:layout_height="wrap_content"
           android:layout_margin="@dimen/dimen_16"
           app:bindMusicList="@{GenreViewModel.getPlaylistWithout(mMusicStoreViewModel.music, mGenreViewModel.playlist)}"
-          app:bindMusicListDisplayStyle="@{EDisplayStyle.LIST_STYLE}" />
+          app:bindMusicListDisplayStyle="@{EDisplayStyle.LIST_STYLE_IN_PLAYLIST}"
+          app:bindWidgetButtonType="@{ETypeWidgetButton.REMOVE_FROM_PLAYLIST}" />
 
 
         <LinearLayout

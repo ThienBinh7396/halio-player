@@ -33,4 +33,6 @@ class GenreListAdapter : RecyclerView.Adapter<GenreListAdapter.GenreListViewHold
   }
 
   override fun getItemCount(): Int = genres.size
+
+  fun getItemAt(position: Int) = genres[position]
 }

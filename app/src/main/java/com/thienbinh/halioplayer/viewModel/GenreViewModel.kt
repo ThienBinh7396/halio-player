@@ -94,6 +94,7 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       mRecentlyPlayedList = state.recentlyPlayed
 
       notifyPropertyChanged(BR.recentlyPlayed)
+      notifyPropertyChanged(BR.genreViewModel)
     }
 
     if (!Music.checkMusicListAreTheSame(mPlaylist!!, state.playlists)) {

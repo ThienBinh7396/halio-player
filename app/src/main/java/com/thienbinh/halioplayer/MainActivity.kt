@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
       EFragmentName.ALBUM_FRAGMENT to mapOf(
         EFragmentName.HOME_FRAGMENT to R.id.action_albumDetailsFragment_to_homeFragment,
         EFragmentName.PLAYLIST_FRAGMENT to R.id.action_albumDetailsFragment_to_playlistFragment
+      ),
+      EFragmentName.GENRE_FRAGMENT to mapOf(
+        EFragmentName.PLAYLIST_FRAGMENT to R.id.action_genreFragment_to_playlistFragment
       )
     )
 

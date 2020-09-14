@@ -49,7 +49,10 @@ class DataBindingHelper {
       view.layoutParams = layoutParams
     }
 
-    @BindingAdapter(value = ["app:bindPaddingTop", "app:bindPaddingRight", "app:bindPaddingBottom", "app:bindPaddingLeft"], requireAll = false)
+    @BindingAdapter(
+      value = ["app:bindPaddingTop", "app:bindPaddingRight", "app:bindPaddingBottom", "app:bindPaddingLeft"],
+      requireAll = false
+    )
     @JvmStatic
     fun bindingPadding(
       view: View,
@@ -58,7 +61,12 @@ class DataBindingHelper {
       paddingBottom: Float = 0f,
       paddingLeft: Float = 0f
     ) {
-      view.setPadding(paddingLeft.toInt(), paddingTop.toInt(), paddingRight.toInt(), paddingBottom.toInt())
+      view.setPadding(
+        paddingLeft.toInt(),
+        paddingTop.toInt(),
+        paddingRight.toInt(),
+        paddingBottom.toInt()
+      )
     }
 
     private var enterSlideBottomAnimation: Animation? = null
@@ -307,8 +315,11 @@ class DataBindingHelper {
           override fun onWidgetButtonClickListener(musicId: Int) {
             when (widgetButtonType) {
               ETypeWidgetButton.REMOVE_FROM_RECENTLY_PLAYED_LIST -> {
-                Log.d("Binh", "Position: $musicId")
                 MusicSharePreference.removeMusicWhere(musicId)
+              }
+
+              ETypeWidgetButton.REMOVE_FROM_PLAYLIST -> {
+                MusicSharePreference.removeMusicFromPlaylistWhere(musicId)
               }
             }
           }
@@ -332,8 +343,6 @@ class DataBindingHelper {
           eventListener = musicBlockEventListener
         )
 
-        rcv.setHasFixedSize(true)
-
         rcv.adapter = adapter
 
         rcv.layoutManager = if (displayStyle == EDisplayStyle.BLOCK_STYLE) LinearLayoutManager(
@@ -353,35 +362,39 @@ class DataBindingHelper {
         else {
           rcv.addItemDecoration(SpaceItemDecoration(18 * SCALE_DP_PX.toInt(), 0))
 
-          rcv.addOnItemTouchListener(
-            RecyclerViewTouchListener(
-              rcv.context,
-              rcv,
-              object : RecyclerViewTouchListener.ClickListener {
-                override fun onClick(view: View?, position: Int) {
-                  val music = adapter.getItemAt(position) ?: return
+          if (displayStyle != EDisplayStyle.LIST_STYLE_IN_PLAYLIST) {
+            rcv.addOnItemTouchListener(
+              RecyclerViewTouchListener(
+                rcv.context,
+                rcv,
+                object : RecyclerViewTouchListener.ClickListener {
+                  override fun onClick(view: View?, position: Int) {
+                    val music = adapter.getItemAt(position) ?: return
 
-                  val intent = Intent()
+                    val intent = Intent()
 
-                  val bundle = Bundle()
-                  bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, music)
+                    val bundle = Bundle()
+                    bundle.putSerializable(ACTION_MUSIC_DATA_BUNDLE_MUSIC, music)
 
-                  intent.action = ACTION_MUSIC_UPDATE
-                  intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
+                    intent.action = ACTION_MUSIC_UPDATE
+                    intent.putExtra(ACTION_MUSIC_DATA_BUNDLE, bundle)
 
-                  rcv.context.sendBroadcast(intent)
-                }
+                    rcv.context.sendBroadcast(intent)
+                  }
 
-                override fun onLongClick(view: View?, position: Int) {
-                }
-              })
-          )
+                  override fun onLongClick(view: View?, position: Int) {
+                  }
+                })
+            )
+          }
         }
       }
 
       adapter = rcv.adapter as MusicListAdapter
 
       if (musicList != null) {
+        Log.d("Binh", "Update recently playlist")
+
         adapter.updateList(musicList)
       }
     }
@@ -393,7 +406,8 @@ class DataBindingHelper {
       someThing: Any
     ) {
       if (rcv.adapter == null) {
-        rcv.adapter = GenreListAdapter()
+        val adapter = GenreListAdapter()
+        rcv.adapter = adapter
 
         rcv.layoutManager = LinearLayoutManager(
           rcv.context,
@@ -402,6 +416,21 @@ class DataBindingHelper {
         )
 
         rcv.addItemDecoration(SpaceItemDecoration(0, 12 * SCALE_DP_PX.toInt()))
+
+        rcv.addOnItemTouchListener(RecyclerViewTouchListener(
+          rcv.context,
+          rcv,
+          object : RecyclerViewTouchListener.ClickListener {
+            override fun onClick(view: View?, position: Int) {
+              val bundle = bundleOf("genre" to adapter.getItemAt(position))
+
+              MainActivity.navigate(R.id.action_homeFragment_to_genreFragment, bundle)
+            }
+
+            override fun onLongClick(view: View?, position: Int) {
+            }
+          }
+        ))
       }
     }
 
