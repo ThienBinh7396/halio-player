@@ -6,6 +6,7 @@
   <data>
 
     <import type="com.thienbinh.halioplayer.utils.Helper" />
+
     <import type="com.thienbinh.halioplayer.utils.MapContentUriWithBitmap" />
 
     <variable
@@ -44,9 +45,9 @@
           android:layout_gravity="center"
           android:layout_marginEnd="@dimen/dimen_12"
           android:clipToPadding="true"
-          app:cardElevation="0dp"
+          android:foreground="@drawable/black_mask_background_circle"
           app:cardBackgroundColor="@color/colorTransparent"
-          android:foreground="@drawable/black_mask_background_circle">
+          app:cardElevation="0dp">
 
           <ImageView
             android:id="@+id/imvThumbnail"
@@ -101,38 +102,56 @@
           android:layout_gravity="center"
           android:orientation="horizontal">
 
-          <ImageButton
-            android:id="@+id/btnPrevious"
-            android:layout_width="@dimen/notification_interface_music_button_control_size"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/ripple_background_transparent_circle"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_previous"
-            android:tint="@color/textColorLight" />
+          <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center">
 
-          <ImageButton
-            android:id="@+id/btnToggleState"
-            android:layout_width="@dimen/notification_interface_music_button_control_size__lg"
-            android:layout_height="@dimen/notification_interface_music_button_control_size__lg"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/dimen_10"
-            android:background="@drawable/ripple_background_transparent_circle"
-            android:onClick="@{() -> musicStoreViewModel.eventListener.onToggleButtonClickListener()}"
-            android:scaleType="fitXY"
-            android:src="@{musicStoreViewModel.isPlaying ?  @drawable/ic_baseline_pause_24 :  @drawable/ic_baseline_play_arrow_24 }"
-            android:tint="@color/textColorLight" />
+            <ImageButton
+              android:id="@+id/btnPrevious"
+              android:layout_width="@dimen/notification_interface_music_button_control_size"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:background="@drawable/ripple_background_transparent_circle"
+              android:scaleType="centerCrop"
+              android:src="@drawable/ic_previous"
+              android:tint="@color/textColorLight" />
+          </RelativeLayout>
 
-          <ImageButton
-            android:id="@+id/btnNext"
-            android:layout_width="@dimen/notification_interface_music_button_control_size"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/ripple_background_transparent_circle"
-            android:rotation="180"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_previous"
-            android:tint="@color/textColorLight" />
+          <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center">
+
+            <ImageButton
+              android:id="@+id/btnToggleState"
+              android:layout_width="@dimen/notification_interface_music_button_control_size__lg"
+              android:layout_height="@dimen/notification_interface_music_button_control_size__lg"
+              android:layout_centerVertical="true"
+              android:layout_gravity="center"
+              android:background="@drawable/ripple_background_transparent_circle"
+              android:onClick="@{() -> musicStoreViewModel.eventListener.onToggleButtonClickListener()}"
+              android:scaleType="fitXY"
+              android:src="@{musicStoreViewModel.isPlaying ?  @drawable/ic_baseline_pause_24 :  @drawable/ic_baseline_play_arrow_24 }"
+              android:tint="@color/textColorLight" />
+          </RelativeLayout>
+
+          <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center">
+
+            <ImageButton
+              android:id="@+id/btnNext"
+              android:layout_width="@dimen/notification_interface_music_button_control_size"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:background="@drawable/ripple_background_transparent_circle"
+              android:rotation="180"
+              android:scaleType="centerCrop"
+              android:src="@drawable/ic_previous"
+              android:tint="@color/textColorLight" />
+          </RelativeLayout>
         </LinearLayout>
       </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.thienbinh.halioplayer.model
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.constraintlayout.solver.widgets.Helper
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
@@ -370,5 +371,11 @@ class Music(
     fun deepCloneMusicList(musicList: MutableList<Music>): MutableList<Music> {
       return gson.fromJson(gson.toJson(musicList), Array<Music>::class.java).toMutableList()
     }
+
+    @JvmStatic
+    fun getMusicListWithout(
+      music: Music,
+      list: MutableList<Music> = mutableListOf()
+    ): MutableList<Music> = list.filter { it.id != music.id }.toMutableList()
   }
 }

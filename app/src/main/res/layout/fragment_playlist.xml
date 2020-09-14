@@ -54,7 +54,6 @@
         android:textSize="18sp" />
     </LinearLayout>
 
-
     <include
       layout="@layout/music_in_playlist_layout"
       app:isActive="@{true}"
@@ -66,7 +65,7 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
-      android:paddingBottom="@dimen/bottom_music_sheet_min_height">
+      app:bindPaddingBottom="@{mMusicStoreViewModel.music != null ? @dimen/bottom_music_sheet_min_height : @dimen/bottom_tab_layout_height }">
 
       <LinearLayout
         android:layout_width="match_parent"
@@ -99,6 +98,14 @@
           layout="@layout/text_no_content"
           app:genreViewModel="@{mGenreViewModel}"
           app:musicStoreViewModel="@{mMusicStoreViewModel}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dimen_16"
+          app:bindMusicList="@{GenreViewModel.getPlaylistWithout(mMusicStoreViewModel.music, mGenreViewModel.playlist)}"
+          app:bindMusicListDisplayStyle="@{EDisplayStyle.LIST_STYLE}" />
+
 
         <LinearLayout
           android:layout_width="match_parent"

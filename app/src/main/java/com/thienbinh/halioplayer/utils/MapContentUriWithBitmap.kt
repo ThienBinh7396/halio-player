@@ -9,8 +9,6 @@ class MapContentUriWithBitmap {
 
     @JvmStatic
     fun getBitmapByContentUri(uri: String?): Bitmap{
-      Log.d("Binh", "Get bitmap: $uri")
-
       return mapContentUriWithBitmap[uri]!!
     }
 

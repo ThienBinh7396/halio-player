@@ -49,6 +49,17 @@ class DataBindingHelper {
       view.layoutParams = layoutParams
     }
 
+    @BindingAdapter(value = ["app:bindPaddingTop", "app:bindPaddingRight", "app:bindPaddingBottom", "app:bindPaddingLeft"], requireAll = false)
+    @JvmStatic
+    fun bindingPadding(
+      view: View,
+      paddingTop: Float = 0f,
+      paddingRight: Float = 0f,
+      paddingBottom: Float = 0f,
+      paddingLeft: Float = 0f
+    ) {
+      view.setPadding(paddingLeft.toInt(), paddingTop.toInt(), paddingRight.toInt(), paddingBottom.toInt())
+    }
 
     private var enterSlideBottomAnimation: Animation? = null
     private var exitSlideBottomAnimation: Animation? = null

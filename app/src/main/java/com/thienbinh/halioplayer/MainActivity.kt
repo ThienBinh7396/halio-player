@@ -221,4 +221,10 @@ class MainActivity : AppCompatActivity(), IMusicControlEventListener, IMainActiv
 
     setUpTabLayoutView()
   }
+
+  override fun onStart() {
+    super.onStart()
+
+    MainApplication.currentActivity = this
+  }
 }

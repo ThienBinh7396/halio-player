@@ -17,8 +17,8 @@
       android:layout_width="@dimen/notification_interface_music_image_size"
       android:layout_height="@dimen/notification_interface_music_image_size"
       android:layout_gravity="center"
-      android:src="@drawable/music_thumbnail_placeholder"
-      android:layout_marginEnd="@dimen/dimen_8" />
+      android:layout_marginEnd="@dimen/dimen_8"
+      android:src="@drawable/music_thumbnail_placeholder" />
 
     <LinearLayout
       android:layout_width="0dp"
@@ -104,4 +104,32 @@
     android:layout_marginEnd="@dimen/dimen_12"
     android:textColor="@color/textColor"
     android:textSize="@dimen/font_size__sm" />
+
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentBottom="true"
+    android:layout_marginEnd="@dimen/dimen_12"
+    android:layout_marginBottom="@dimen/dimen_10"
+    android:translationY="-2dp">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Next: "
+      android:textColor="@color/colorLyricActive"
+      android:textSize="@dimen/font_size__sm" />
+
+    <TextView
+      android:id="@+id/tvNextMusicTitle"
+      android:layout_width="150dp"
+      android:layout_height="wrap_content"
+      android:singleLine="true"
+      android:freezesText="true"
+      android:textColor="@color/colorLyricActive"
+      android:textSize="@dimen/font_size__sm" />
+  </LinearLayout>
 </RelativeLayout>

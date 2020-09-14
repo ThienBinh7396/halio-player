@@ -101,6 +101,7 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       mPlaylist = Music.deepCloneMusicList(state.playlists)
 
       notifyPropertyChanged(BR.playlist)
+      notifyPropertyChanged(BR.genreViewModel)
     }
 
     if (!Album.checkListAreTheSame(mAlbums!!, state.albums)) {
@@ -145,6 +146,8 @@ class GenreViewModel : BaseObservable(), StoreSubscriber<GenreState> {
       if (music == null) return list ?: mutableListOf()
 
       val getList = list?.filter { it.id != music.id }?.toMutableList()
+
+      Log.d("Binh", "Notify without music: ${music.id} ${getList?.size}")
 
       return getList ?: mutableListOf()
     }

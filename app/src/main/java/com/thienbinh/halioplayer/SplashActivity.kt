@@ -76,4 +76,10 @@ class SplashActivity : Activity() {
       finish()
     }, 1000)
   }
+  override fun onStart() {
+    super.onStart()
+
+    MainApplication.currentActivity = this
+  }
+
 }

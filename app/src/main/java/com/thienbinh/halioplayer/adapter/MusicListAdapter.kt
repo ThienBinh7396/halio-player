@@ -33,6 +33,8 @@ class MusicListAdapter(
       if (binding.musicStoreViewModel == null) {
         binding.musicStoreViewModel = MusicStoreViewModel()
       }
+
+      binding.executePendingBindings()
     }
   }
 

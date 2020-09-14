@@ -27,11 +27,9 @@ fun addMusicIntoPlaylist(music: Music) {
   store.state.genreState.apply {
     val getIndexInPlaylist = playlists.indexOfFirst { it.id == music.id }
 
-    if (getIndexInPlaylist > -1){
-      playlists.removeAt(getIndexInPlaylist)
+    if (getIndexInPlaylist == -1) {
+      playlists.add(music)
     }
-
-    playlists.add(0, music)
 
     store.dispatch(GenreAction.GENRE_ACTION_UPDATE_PLAYLIST(playlists))
   }

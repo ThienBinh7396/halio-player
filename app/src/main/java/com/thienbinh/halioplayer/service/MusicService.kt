@@ -11,6 +11,7 @@ import android.media.TimedMetaData
 import android.net.Uri
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.WIFI_MODE_FULL_HIGH_PERF
+import android.os.Bundle
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
@@ -58,6 +59,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
     val intentFilter = IntentFilter()
 
     intentFilter.addAction(ACTION_MUSIC_TOGGLE)
+    intentFilter.addAction(ACTION_MUSIC_CONTROL_LIST)
     intentFilter.addAction(ACTION_MUSIC_PLAY)
     intentFilter.addAction(ACTION_MUSIC_PAUSE)
     intentFilter.addAction(ACTION_MUSIC_UPDATE)
@@ -80,9 +82,19 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         }
 
         ACTION_MUSIC_TOGGLE -> {
-
           Log.d("Binh", "Intent toggle")
           toggleStateMediaPlayer()
+        }
+
+        ACTION_MUSIC_CONTROL_LIST -> {
+          store.dispatch(
+            MusicAction.MUSIC_ACTION_CONTROL_LIST_MUSIC(
+              intent.getBooleanExtra(
+                "isNext",
+                true
+              )
+            )
+          )
         }
       }
     }
@@ -114,6 +126,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     try {
       if (data is Music) {
+        if (mMediaPlayer!!.isPlaying) mMediaPlayer!!.pause()
         mMediaPlayer!!.reset()
 
         Log.d("Binh", "Data Music: $data")
@@ -135,7 +148,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_CURRENT_MUSIC(data))
         store.dispatch(GenreAction.GENRE_ACTION_ADD_MUSIC_INTO_PLAYLIST(data))
 
-        if(!data.isFromDevice){
+        if (!data.isFromDevice) {
           MusicSharePreference.updateRecentlyPlayedMusic(data)
         }
 
@@ -200,17 +213,38 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(true))
 
-    MusicInterfaceNotification.showNotification(applicationContext)
+    MusicInterfaceNotification.showNotification(applicationContext, this)
 
     scheduledFuture = mScheduledExecutorService!!.scheduleWithFixedDelay({
-//      Log.d("Binh", "Time update: ${mMediaPlayer?.currentPosition}")
+      Log.d("Binh", "Time update: ${mMediaPlayer?.currentPosition} ${mMediaPlayer?.duration}")
       store.dispatch(
         MusicAction.MUSIC_ACTION_UPDATE_CURRENT_POSITION(
           mMediaPlayer?.currentPosition ?: 0
         )
       )
 
-      MusicInterfaceNotification.showNotification(applicationContext)
+      mMediaPlayer?.apply {
+        if (currentPosition > 1 && duration > 1 && currentPosition / 1000 == duration / 1000) {
+          Log.d("Binh", "Music end")
+
+          store.state.apply {
+            if (musicState.currentMusic != null) {
+              val checkListWithoutCurrent =
+                Music.getMusicListWithout(musicState.currentMusic!!, genreState.playlists)
+
+              if (checkListWithoutCurrent.size != 0) {
+                store.dispatch(MusicAction.MUSIC_ACTION_CONTROL_LIST_MUSIC(true))
+              } else {
+                store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(false))
+
+                pauseScheduleWhenMusicStop()
+              }
+            }
+          }
+        }
+      }
+
+      MusicInterfaceNotification.showNotification(applicationContext, this)
     }, TIME_DELAY, TIME_DELAY, TimeUnit.MILLISECONDS)
   }
 
@@ -219,15 +253,16 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
       scheduledFuture!!.cancel(true)
     }
     store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PLAY_STATE(false))
-    MusicInterfaceNotification.showNotification(applicationContext)
+    MusicInterfaceNotification.showNotification(applicationContext, this)
   }
 
   override fun onPrepared(p0: MediaPlayer?) {
     if (isRunning && mMediaPlayer != null) {
       store.dispatch(MusicAction.MUSIC_ACTION_UPDATE_PREPARING_STATE(false))
       mMediaPlayer!!.start()
+
+      startScheduleWhenMusicRunning()
     }
-    startScheduleWhenMusicRunning()
   }
 
   override fun onError(mediaPlayer: MediaPlayer?, p1: Int, p2: Int): Boolean {

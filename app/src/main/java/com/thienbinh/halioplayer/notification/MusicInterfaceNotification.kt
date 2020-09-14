@@ -1,12 +1,11 @@
 package com.thienbinh.halioplayer.notification
 
-import android.app.Notification
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -20,6 +19,7 @@ import com.bumptech.glide.request.target.NotificationTarget
 import com.thienbinh.halioplayer.GlideApp
 import com.thienbinh.halioplayer.MainActivity
 import com.thienbinh.halioplayer.R
+import com.thienbinh.halioplayer.constant.ACTION_MUSIC_CONTROL_LIST
 import com.thienbinh.halioplayer.constant.ACTION_MUSIC_TOGGLE
 import com.thienbinh.halioplayer.store
 import com.thienbinh.halioplayer.utils.Helper
@@ -37,7 +37,7 @@ class MusicInterfaceNotification {
     val MUSIC_INTERFACE_NOTIFICATION_CHANNEL_DESCRIPTION =
       "com.thienbinh.halioplayer.music.MUSIC_INTERFACE_NOTIFICATION_CHANNEL_DESCRIPTION"
     val MUSIC_INTERFACE_NOTIFICATION_CHANNEL_INPORTANCE =
-      if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         NotificationManager.IMPORTANCE_MAX
       } else {
         Notification.PRIORITY_MAX
@@ -51,11 +51,25 @@ class MusicInterfaceNotification {
       val intent = Intent()
       intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
-      var pendingIntent: PendingIntent? = null
+      val pendingIntent: PendingIntent
 
       when (id) {
         R.id.btnToggleState -> {
           intent.action = ACTION_MUSIC_TOGGLE
+          pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0)
+        }
+
+        R.id.btnNext -> {
+          Log.d("Binh", "Next notify")
+
+          intent.action = ACTION_MUSIC_CONTROL_LIST
+          intent.putExtra("isNext", true)
+          pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0)
+        }
+
+        R.id.btnPrevious -> {
+          intent.action = ACTION_MUSIC_CONTROL_LIST
+          intent.putExtra("isNext", false)
           pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0)
         }
 
@@ -71,8 +85,23 @@ class MusicInterfaceNotification {
       val notificationLayout =
         RemoteViews(context.packageName, R.layout.notification_interface_music_large)
 
+      store.state.apply {
+        val musicCurrentIndex =
+          genreState.playlists.indexOfFirst { it.id == musicState.currentMusic!!.id }
+
+        val music = if (genreState.playlists.size > 1) {
+          genreState.playlists[if (musicCurrentIndex < genreState.playlists.size - 1) musicCurrentIndex + 1 else 0]
+        } else musicState.currentMusic!!
+        notificationLayout.setTextViewText(
+          R.id.tvNextMusicTitle,
+          "${music.title} - ${music.singer}"
+        )
+      }
+
       store.state.musicState.apply {
         onButtonNotificationClick(notificationLayout, R.id.btnToggleState)
+        onButtonNotificationClick(notificationLayout, R.id.btnPrevious)
+        onButtonNotificationClick(notificationLayout, R.id.btnNext)
 
         notificationLayout.setTextViewText(
           R.id.tvCurrentDuration,
@@ -97,8 +126,24 @@ class MusicInterfaceNotification {
       return notificationLayout
     }
 
-    fun showNotification(context: Context) {
+    private fun createNotificationChannel(context: Context) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val serviceChannel = NotificationChannel(
+          MUSIC_INTERFACE_NOTIFICATION_CHANNEL_ID,
+          MUSIC_INTERFACE_NOTIFICATION_CHANNEL_NAME,
+          NotificationManager.IMPORTANCE_HIGH
+        )
+
+        (context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
+          serviceChannel
+        )
+      }
+    }
+
+    fun showNotification(context: Context, service: Service) {
       mContext = context
+
+      createNotificationChannel(context)
 
       val notificationExpandLayout = generateExpandLayout(context)
 
@@ -121,7 +166,8 @@ class MusicInterfaceNotification {
 
       notification.flags = Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR
 
-      (context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(
+
+      service.startForeground(
         MUSIC_INTERFACE_NOTIFICATION_ID,
         notification
       )
